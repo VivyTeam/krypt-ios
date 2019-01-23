@@ -1,0 +1,23 @@
+PODS:
+  - CryptoSwift (0.13.1)
+  - Krypt (0.1.0):
+    - CryptoSwift
+
+DEPENDENCIES:
+  - Krypt (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CryptoSwift
+
+EXTERNAL SOURCES:
+  Krypt:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CryptoSwift: ff68c35a53e03177d31aaa2c1e8b3e010aeed6cb
+  Krypt: 830e7d1e6a0b953094cdcec4b12d30345e18ba97
+
+PODFILE CHECKSUM: 187b25fe8e2776cba6b82056dd9889d8c553073c
+
+COCOAPODS: 1.5.3

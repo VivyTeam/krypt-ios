@@ -1,0 +1,28 @@
+{
+  "name": "Krypt",
+  "version": "0.1.0",
+  "summary": "Crypto used in Vivy iOS app",
+  "description": "Crypto used in Vivy iOS app.",
+  "homepage": "https://vivy.com",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Vivy GmbH": "ios@vivy.com"
+  },
+  "source": {
+    "git": "https://github.com/UvitaTeam/Krypt.git",
+    "tag": "0.1.0"
+  },
+  "social_media_url": "https://twitter.com/vivy_health",
+  "platforms": {
+    "ios": "11.0"
+  },
+  "source_files": "Krypt/Source/*.swift",
+  "dependencies": {
+    "CryptoSwift": [
+
+    ]
+  }
+}
