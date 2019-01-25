@@ -12,7 +12,13 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		AD1568BF21F8D494008572DA /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568BE21F8D494008572DA /* RSATests.swift */; };
+		AD1568C621F9D2AD008572DA /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568C521F9D2AD008572DA /* TestData.swift */; };
+		AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568C721F9E0CB008572DA /* KeyTests.swift */; };
+		AD1568CE21F9E3CC008572DA /* openssl-public-key-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD1568CC21F9E3CB008572DA /* openssl-public-key-pkcs8-pem */; };
+		AD1568CF21F9E3CC008572DA /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD1568CD21F9E3CB008572DA /* openssl-private-key-pkcs1-pem */; };
 		AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2BC30C21F76AA700DD674F /* AES256Tests.swift */; };
+		AD4513DB21FB3E8D0053C76B /* E2EETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4513DA21FB3E8D0053C76B /* E2EETests.swift */; };
 		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
 		F8FE7631CB357489E6F46CAE /* Pods_Krypt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */; };
 /* End PBXBuildFile section */
@@ -41,7 +47,13 @@
 		607FACE51AFB9204008FA782 /* Krypt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Krypt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		AD1568BE21F8D494008572DA /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
+		AD1568C521F9D2AD008572DA /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		AD1568C721F9E0CB008572DA /* KeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyTests.swift; sourceTree = "<group>"; };
+		AD1568CC21F9E3CB008572DA /* openssl-public-key-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "openssl-public-key-pkcs8-pem"; path = "Tests/Files/openssl-public-key-pkcs8-pem"; sourceTree = SOURCE_ROOT; };
+		AD1568CD21F9E3CB008572DA /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "openssl-private-key-pkcs1-pem"; path = "Tests/Files/openssl-private-key-pkcs1-pem"; sourceTree = SOURCE_ROOT; };
 		AD2BC30C21F76AA700DD674F /* AES256Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256Tests.swift; sourceTree = "<group>"; };
+		AD4513DA21FB3E8D0053C76B /* E2EETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = E2EETests.swift; sourceTree = "<group>"; };
 		B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F37220164E1147DCE29591 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; };
@@ -124,8 +136,13 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				AD1568C521F9D2AD008572DA /* TestData.swift */,
+				AD1568CB21F9E389008572DA /* Files */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 				AD2BC30C21F76AA700DD674F /* AES256Tests.swift */,
+				AD1568BE21F8D494008572DA /* RSATests.swift */,
+				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
+				AD4513DA21FB3E8D0053C76B /* E2EETests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -146,6 +163,16 @@
 				47AC99E24C799CBB6E81D238 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		AD1568CB21F9E389008572DA /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				AD1568CC21F9E3CB008572DA /* openssl-public-key-pkcs8-pem */,
+				AD1568CD21F9E3CB008572DA /* openssl-private-key-pkcs1-pem */,
+			);
+			name = Files;
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		E38B0AF28938F7A1A29FA561 /* Pods */ = {
@@ -255,6 +282,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1568CE21F9E3CC008572DA /* openssl-public-key-pkcs8-pem in Resources */,
+				AD1568CF21F9E3CC008572DA /* openssl-private-key-pkcs1-pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +374,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD1568C621F9D2AD008572DA /* TestData.swift in Sources */,
+				AD4513DB21FB3E8D0053C76B /* E2EETests.swift in Sources */,
+				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
+				AD1568BF21F8D494008572DA /* RSATests.swift in Sources */,
 				AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
