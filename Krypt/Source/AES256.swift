@@ -10,7 +10,7 @@ import CommonCrypto
 import CryptoSwift
 import Foundation
 
-public final class AES256 {
+public struct AES256 {
   public enum Error: LocalizedError {
     case ccError(status: CCCryptorStatus)
   }
