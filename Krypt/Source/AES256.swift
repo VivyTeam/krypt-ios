@@ -20,12 +20,12 @@ public struct AES256 {
     case cbc
   }
 
-  public static func encrypt(data: Data, blockMode: BlockMode) throws -> (encrypted: Data, key: Data, iv: Data) {
+  public static func encrypt(data: Data, key: Data? = nil, iv: Data? = nil, blockMode: BlockMode) throws -> (encrypted: Data, key: Data, iv: Data) {
     switch blockMode {
     case .gcm:
       return try encryptGCM(data: data)
     case .cbc:
-      return try cryptCBCPKCS7(data: data, key: nil, iv: nil, operation: CCOperation(kCCEncrypt))
+      return try cryptCBCPKCS7(data: data, key: key, iv: iv, operation: CCOperation(kCCEncrypt))
     }
   }
 

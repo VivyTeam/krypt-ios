@@ -74,7 +74,12 @@
 		A40347FBA49DCAF786314B76D48EDD88 /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CD1AC8262CB7B7CD5C98A19964BFDE /* Authenticator.swift */; };
 		AD2BC30F21F87CFB00DD674F /* RSA.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2BC30E21F87CFB00DD674F /* RSA.swift */; };
 		AD2BC31121F8903400DD674F /* Key.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2BC31021F8903400DD674F /* Key.swift */; };
-		AD4513D921FB28610053C76B /* E2EE.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4513D821FB28610053C76B /* E2EE.swift */; };
+		AD4513D921FB28610053C76B /* EHREncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4513D821FB28610053C76B /* EHREncryption.swift */; };
+		AD8199BC220052FF005AC98D /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8199BB220052FF005AC98D /* PBKDF2.swift */; };
+		AD8199BE2200532E005AC98D /* Scrypt.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8199BD2200532E005AC98D /* Scrypt.swift */; };
+		AD8199C02200587F005AC98D /* MedStickerEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8199BF2200587F005AC98D /* MedStickerEncryption.swift */; };
+		AD8199C422006E86005AC98D /* CipherAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8199C322006E86005AC98D /* CipherAuth.swift */; };
+		AD8199C622006F06005AC98D /* PublicError.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD8199C522006F06005AC98D /* PublicError.swift */; };
 		BF1CBE2864240ABA0FFCA1990215D2C5 /* Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2576D3127C49BD0DA574DB88CC1C9A18 /* Padding.swift */; };
 		C21ECA6A97280845FBA399B1416C6680 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4CBD273EAF205F1DBCFA9EE85B1F042 /* Foundation.framework */; };
 		C24C8129942D5E9A3B78137618F4B4FA /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D6EAC319B501F3F8BBE778D3605268D5 /* CryptoSwift.framework */; };
@@ -215,7 +220,12 @@
 		A21A34B40C09140F5DB7D9D02D48D24C /* Pods-Krypt_Tests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Krypt_Tests-resources.sh"; sourceTree = "<group>"; };
 		AD2BC30E21F87CFB00DD674F /* RSA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RSA.swift; path = Krypt/Source/RSA.swift; sourceTree = "<group>"; };
 		AD2BC31021F8903400DD674F /* Key.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Key.swift; path = Krypt/Source/Key.swift; sourceTree = "<group>"; };
-		AD4513D821FB28610053C76B /* E2EE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = E2EE.swift; path = Krypt/Source/E2EE.swift; sourceTree = "<group>"; };
+		AD4513D821FB28610053C76B /* EHREncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EHREncryption.swift; path = Krypt/Source/EHREncryption.swift; sourceTree = "<group>"; };
+		AD8199BB220052FF005AC98D /* PBKDF2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PBKDF2.swift; path = Krypt/Source/PBKDF2.swift; sourceTree = "<group>"; };
+		AD8199BD2200532E005AC98D /* Scrypt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Scrypt.swift; path = Krypt/Source/Scrypt.swift; sourceTree = "<group>"; };
+		AD8199BF2200587F005AC98D /* MedStickerEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MedStickerEncryption.swift; path = Krypt/Source/MedStickerEncryption.swift; sourceTree = "<group>"; };
+		AD8199C322006E86005AC98D /* CipherAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CipherAuth.swift; path = Krypt/Source/CipherAuth.swift; sourceTree = "<group>"; };
+		AD8199C522006F06005AC98D /* PublicError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PublicError.swift; path = Krypt/Source/PublicError.swift; sourceTree = "<group>"; };
 		ADA5DF5E4593C22C15D58E698EF6A07A /* ChaCha20.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChaCha20.swift; path = Sources/CryptoSwift/ChaCha20.swift; sourceTree = "<group>"; };
 		AF8F529847FE0B73A8010ED326E0D66C /* Digest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Digest.swift; path = Sources/CryptoSwift/Digest.swift; sourceTree = "<group>"; };
 		B38DEFFA3B06AA8E782C8163894B3280 /* CMAC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CMAC.swift; path = Sources/CryptoSwift/CMAC.swift; sourceTree = "<group>"; };
@@ -515,10 +525,15 @@
 		F23DBC4E5BE5469B368E1139D5FB6766 /* Krypt */ = {
 			isa = PBXGroup;
 			children = (
-				AD4513D821FB28610053C76B /* E2EE.swift */,
 				8CAD066A97042803B8087F1FCBC873B4 /* AES256.swift */,
+				AD8199C322006E86005AC98D /* CipherAuth.swift */,
+				AD4513D821FB28610053C76B /* EHREncryption.swift */,
 				AD2BC31021F8903400DD674F /* Key.swift */,
+				AD8199BF2200587F005AC98D /* MedStickerEncryption.swift */,
+				AD8199BB220052FF005AC98D /* PBKDF2.swift */,
+				AD8199C522006F06005AC98D /* PublicError.swift */,
 				AD2BC30E21F87CFB00DD674F /* RSA.swift */,
+				AD8199BD2200532E005AC98D /* Scrypt.swift */,
 				DE2966FA305F86404726217A56BA04CE /* Pod */,
 				47B0CEF95F4787807E585CA4D6D07DB0 /* Support Files */,
 			);
@@ -713,11 +728,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD8199BC220052FF005AC98D /* PBKDF2.swift in Sources */,
+				AD8199C622006F06005AC98D /* PublicError.swift in Sources */,
 				2FDBDFC61788402A0FE547F95D53E3B4 /* AES256.swift in Sources */,
 				AD2BC31121F8903400DD674F /* Key.swift in Sources */,
-				AD4513D921FB28610053C76B /* E2EE.swift in Sources */,
+				AD8199C02200587F005AC98D /* MedStickerEncryption.swift in Sources */,
+				AD4513D921FB28610053C76B /* EHREncryption.swift in Sources */,
 				2651665ABE522998BCB8E311C34BEE45 /* Krypt-dummy.m in Sources */,
+				AD8199C422006E86005AC98D /* CipherAuth.swift in Sources */,
 				AD2BC30F21F87CFB00DD674F /* RSA.swift in Sources */,
+				AD8199BE2200532E005AC98D /* Scrypt.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
