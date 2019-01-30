@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// DTO for AES256 authentication
 struct CipherAuth: Codable {
   let key: Data
   let iv: Data

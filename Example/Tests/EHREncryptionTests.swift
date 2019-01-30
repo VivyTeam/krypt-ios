@@ -6,7 +6,7 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import Krypt
+@testable import Krypt
 import XCTest
 
 final class EHREncryptionTests: XCTestCase {
@@ -24,5 +24,20 @@ final class EHREncryptionTests: XCTestCase {
 
     // then
     XCTAssertEqual(String(data: decrypted, encoding: .utf8), message)
+  }
+
+  func testGCMOAEP_encrypt__shouldHaveProperlyBase64EncodedCipherAuth() {
+    // given
+    let message = UUID().uuidString
+    let messageData = message.data(using: .utf8)!
+
+    // when
+    let encrypted = try! EHREncryption.encrypt(data: messageData, with: publicKey)
+    let decryptedCipherKey = try! RSA.decrypt(data: Data(base64Encoded: encrypted.cipherKey)!, with: privateKey, padding: .oaep)
+    let cipherAuth = try! JSONDecoder().decode(CipherAuth.self, from: decryptedCipherKey)
+
+    // then
+    XCTAssertEqual(cipherAuth.key.count, 32)
+    XCTAssertEqual(cipherAuth.iv.count, 16)
   }
 }

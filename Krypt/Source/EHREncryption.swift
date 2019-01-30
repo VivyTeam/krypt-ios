@@ -7,18 +7,31 @@
 
 import Foundation
 
+/// (EHR) Electronic Health Record (E2EE) End to End Encryption used in Vivy
 public struct EHREncryption {
+  /// All encryption versions that are currently supported in Vivy
+  ///
+  /// - gcmOAEP: AES 256 GCM symetric | RSA OAEP SHA256 asymetric
+  /// - cbcPKCS1: AES 256 CBC symetric | RSA PKCS7 asymetric
   public enum Version: String {
     case gcmOAEP = "oeapgcm"
     case cbcPKCS1
   }
 
+  /// I/O object when interacting with EHR E2EE
   public struct EncryptedData {
     let cipherKey: String
     let data: Data
     let version: String
   }
 
+  /// Asymetrically encrypts the provided data with AES 256 GCM and RSA OAEP SHA256
+  ///
+  /// - Parameters:
+  ///   - data: data to encrypt
+  ///   - key: RSA public key to encrypts with
+  /// - Returns: `EncryptedData` object
+  /// - Throws: `PublicError.encryptionFailed`
   public static func encrypt(data: Data, with key: Key) throws -> EncryptedData {
     do {
       // Encrypting only with AES 256 GCM and RSA OAEP SHA256
@@ -45,6 +58,13 @@ public struct EHREncryption {
     }
   }
 
+  /// Asymetrically decrypts the provided encrypted data depending on the version provided
+  ///
+  /// - Parameters:
+  ///   - encryptedData: `EncryptedData` object that contains data, cipher key and version
+  ///   - key: RSA private key to decrypt with
+  /// - Returns: decrypted data
+  /// - Throws: `PublicError.decryptionFailed`
   public static func decrypt(encryptedData: EncryptedData, with key: Key) throws -> Data {
     do {
       // 1. Decrypt meta message
@@ -70,6 +90,7 @@ public struct EHREncryption {
 }
 
 private extension EHREncryption.Version {
+  /// returns AES block mode depending on Vivy encryption version
   var aesBlockMode: AES256.BlockMode {
     switch self {
     case .gcmOAEP:
@@ -79,6 +100,7 @@ private extension EHREncryption.Version {
     }
   }
 
+  /// returns RSA padding depending on Vivy encryption version
   var rsaPadding: RSA.Padding {
     switch self {
     case .gcmOAEP:
