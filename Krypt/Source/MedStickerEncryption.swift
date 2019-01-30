@@ -9,6 +9,19 @@ import Foundation
 
 /// Encryption for medical sticker data using scrypt
 public struct MedStickerEncryption {
+
+  /// Version to determine block size
+  ///
+  /// - aes: iOS version 1
+  /// - pkcs1: Android version 1
+  /// - aes_r10: iOS & Android version 2
+  /// iOS and Android used different version names for the first version
+  public enum Version: String {
+    case aes = "scryptaes"
+    case pkcs1 = "scryptpkcs1"
+    case aes_r10 = "scryptaes_r10"
+  }
+
   /// Encrypts provided data with scrypt key and AES IV by using AES 256 CBC
   ///
   /// - Parameters:
@@ -92,20 +105,14 @@ public struct MedStickerEncryption {
   }
 }
 
-public extension MedStickerEncryption {
-  // Version to determine block size
-  public enum Version: String {
-    case aes = "scryptaes"
-    case pkcs1 = "scryptpkcs1"
-    case aes_r10 = "scryptaes_r10"
-
-    var blockSize: Int {
-      switch self {
-      case .aes, .pkcs1:
-        return 8
-      case .aes_r10:
-        return 10
-      }
+private extension MedStickerEncryption.Version {
+  /// Returns block size by version
+  var blockSize: Int {
+    switch self {
+    case .aes, .pkcs1:
+      return 8
+    case .aes_r10:
+      return 10
     }
   }
 }
