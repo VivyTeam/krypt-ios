@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Encryption for medical sticker data using scrypt
 public struct MedStickerEncryption {
   /// Encrypts provided data with scrypt key and AES IV by using AES 256 CBC
   ///
@@ -57,7 +58,7 @@ public struct MedStickerEncryption {
   ///   - code: Used as salt for scrypt key
   ///   - version: Version to determine block size
   /// - Returns: Decrypted data
-  /// - Throws: `PublicError.encryptionFailed`
+  /// - Throws: `PublicError.decryptionFailed`
   public static func decrypt(data: Data, pin: Data, code: Data, version: Version) throws -> Data {
     do {
       let scryptKey = Scrypt().scrypt(
