@@ -8,13 +8,35 @@
 import Foundation
 
 public struct MedStickerEncryption {
-  public static func encrypt(data: Data, pin: Data, code: Data) throws -> Data {
+  public enum Version: String {
+    case aes = "scryptaes"
+    case pkcs1 = "scryptpkcs1"
+    case aes_r10 = "scryptaes_r10"
+  }
+
+  public enum Error: LocalizedError {
+    case invalidVersion
+  }
+
+  public static func encrypt(data: Data, pin: Data, code: Data, version: Version) throws -> Data {
     do {
+      var blockSize: Int?
+      switch version {
+      case .pkcs1, .aes:
+        blockSize = 8
+      case .aes_r10:
+        blockSize = 10
+      }
+
+      guard let r = blockSize else {
+        throw Error.invalidVersion
+      }
+      
       let scryptKey = Scrypt().scrypt(
         passphrase: [UInt8](pin),
         salt: [UInt8](code),
         n: 16384,
-        r: 8,
+        r: r,
         p: 1,
         dkLen: 32
       )
@@ -23,7 +45,7 @@ public struct MedStickerEncryption {
         passphrase: scryptKey,
         salt: [UInt8](pin),
         n: 16384,
-        r: 8,
+        r: r,
         p: 1,
         dkLen: 16
       )
@@ -40,13 +62,25 @@ public struct MedStickerEncryption {
     }
   }
 
-  public static func decrypt(data: Data, pin: Data, code: Data) throws -> Data {
+  public static func decrypt(data: Data, pin: Data, code: Data, version: Version) throws -> Data {
     do {
+      var blockSize: Int?
+      switch version {
+      case .pkcs1, .aes:
+        blockSize = 8
+      case .aes_r10:
+        blockSize = 10
+      }
+
+      guard let r = blockSize else {
+        throw Error.invalidVersion
+      }
+
       let scryptKey = Scrypt().scrypt(
         passphrase: [UInt8](pin),
         salt: [UInt8](code),
         n: 16384,
-        r: 8,
+        r: r,
         p: 1,
         dkLen: 32
       )
@@ -55,7 +89,7 @@ public struct MedStickerEncryption {
         passphrase: scryptKey,
         salt: [UInt8](pin),
         n: 16384,
-        r: 8,
+        r: r,
         p: 1,
         dkLen: 16
       )
