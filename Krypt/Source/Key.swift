@@ -9,7 +9,7 @@ import Foundation
 import Security
 
 /// High level object representing an RSA key to be used for asymetric encryption.
-/// Currently only RSA keys with 4096 bits length are supported.
+/// Currently only RSA keys 4096 bits long are supported.
 public final class Key {
   /// Error object containing erros that might occur during converting keys to different formats
   ///

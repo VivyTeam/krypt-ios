@@ -13,16 +13,21 @@ public struct EHREncryption {
   ///
   /// - gcmOAEP: AES 256 GCM symetric | RSA OAEP SHA256 asymetric
   /// - cbcPKCS1: AES 256 CBC symetric | RSA PKCS7 asymetric
-  public enum Version: String {
-    case gcmOAEP = "oeapgcm"
+  public enum Version {
+    case gcmOAEP
     case cbcPKCS1
   }
 
   /// I/O object when interacting with EHR E2EE
   public struct EncryptedData {
-    let cipherKey: String
-    let data: Data
-    let version: String
+    /// base64 encoded
+    public let cipherKey: String
+
+    /// encrypted data
+    public let data: Data
+
+    /// raw value of `EHREncryption.Version`
+    public let version: Version
   }
 
   /// Asymetrically encrypts the provided data with AES 256 GCM and RSA OAEP SHA256
@@ -40,7 +45,7 @@ public struct EHREncryption {
       // 1. Encrypt content with AES
       let (encryptedData, aesKey, aesIV) = try AES256.encrypt(data: data, blockMode: version.aesBlockMode)
 
-      // 2. Create meta message from the AES key and IV
+      // 2. Create cipher auth from the AES key and IV
       let cipherAuth = CipherAuth(key: aesKey, iv: aesIV)
       let cipherAuthJSONData = try JSONEncoder().encode(cipherAuth)
 
@@ -51,7 +56,7 @@ public struct EHREncryption {
       return EncryptedData(
         cipherKey: encryptedCipherAuthBase64,
         data: encryptedData,
-        version: version.rawValue
+        version: version
       )
     } catch {
       throw PublicError.encryptionFailed
@@ -67,15 +72,16 @@ public struct EHREncryption {
   /// - Throws: `PublicError.decryptionFailed`
   public static func decrypt(encryptedData: EncryptedData, with key: Key) throws -> Data {
     do {
-      // 1. Decrypt meta message
-      guard let encryptedMetaMessage = Data(base64Encoded: encryptedData.cipherKey) else {
+      let version = encryptedData.version
+
+      // 1. Decrypt cipher auth
+      guard let encryptedCipherAuth = Data(base64Encoded: encryptedData.cipherKey) else {
         throw PublicError.decryptionFailed
       }
-      let version: Version = Version(rawValue: encryptedData.version) ?? .cbcPKCS1
-      let decryptedMetaMessage = try RSA.decrypt(data: encryptedMetaMessage, with: key, padding: version.rsaPadding)
+      let cipherAuthData = try RSA.decrypt(data: encryptedCipherAuth, with: key, padding: version.rsaPadding)
 
-      // 2. Decode meta message with the AES key in IV
-      guard let cipherAuth = try? JSONDecoder().decode(CipherAuth.self, from: decryptedMetaMessage) else {
+      // 2. Decode cipher auth with the AES key in IV
+      guard let cipherAuth = try? JSONDecoder().decode(CipherAuth.self, from: cipherAuthData) else {
         throw PublicError.decryptionFailed
       }
 
