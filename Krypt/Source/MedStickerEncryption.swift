@@ -8,35 +8,22 @@
 import Foundation
 
 public struct MedStickerEncryption {
-  public enum Version: String {
-    case aes = "scryptaes"
-    case pkcs1 = "scryptpkcs1"
-    case aes_r10 = "scryptaes_r10"
-  }
-
-  public enum Error: LocalizedError {
-    case invalidVersion
-  }
-
+  /// Encrypts provided data with scrypt key and AES IV by using AES 256 CBC
+  ///
+  /// - Parameters:
+  ///   - data: Data to encrypt
+  ///   - pin: Used as passphrase for scrypt key and as salt for AES IV
+  ///   - code: Used as salt for scrypt key
+  ///   - version: Version to determine block size
+  /// - Returns: Encrypted data
+  /// - Throws: `PublicError.encryptionFailed`
   public static func encrypt(data: Data, pin: Data, code: Data, version: Version) throws -> Data {
     do {
-      var blockSize: Int?
-      switch version {
-      case .pkcs1, .aes:
-        blockSize = 8
-      case .aes_r10:
-        blockSize = 10
-      }
-
-      guard let r = blockSize else {
-        throw Error.invalidVersion
-      }
-      
       let scryptKey = Scrypt().scrypt(
         passphrase: [UInt8](pin),
         salt: [UInt8](code),
         n: 16384,
-        r: r,
+        r: version.blockSize,
         p: 1,
         dkLen: 32
       )
@@ -45,7 +32,7 @@ public struct MedStickerEncryption {
         passphrase: scryptKey,
         salt: [UInt8](pin),
         n: 16384,
-        r: r,
+        r: version.blockSize,
         p: 1,
         dkLen: 16
       )
@@ -62,25 +49,22 @@ public struct MedStickerEncryption {
     }
   }
 
+  /// Decrypts provided data with scrypt key and AES IV by using AES 256 CBC
+  ///
+  /// - Parameters:
+  ///   - data: Data to encrypt
+  ///   - pin: Used as passphrase for scrypt key and as salt for AES IV
+  ///   - code: Used as salt for scrypt key
+  ///   - version: Version to determine block size
+  /// - Returns: Decrypted data
+  /// - Throws: `PublicError.encryptionFailed`
   public static func decrypt(data: Data, pin: Data, code: Data, version: Version) throws -> Data {
     do {
-      var blockSize: Int?
-      switch version {
-      case .pkcs1, .aes:
-        blockSize = 8
-      case .aes_r10:
-        blockSize = 10
-      }
-
-      guard let r = blockSize else {
-        throw Error.invalidVersion
-      }
-
       let scryptKey = Scrypt().scrypt(
         passphrase: [UInt8](pin),
         salt: [UInt8](code),
         n: 16384,
-        r: r,
+        r: version.blockSize,
         p: 1,
         dkLen: 32
       )
@@ -89,7 +73,7 @@ public struct MedStickerEncryption {
         passphrase: scryptKey,
         salt: [UInt8](pin),
         n: 16384,
-        r: r,
+        r: version.blockSize,
         p: 1,
         dkLen: 16
       )
@@ -103,6 +87,24 @@ public struct MedStickerEncryption {
       return decrypted
     } catch {
       throw PublicError.encryptionFailed
+    }
+  }
+}
+
+public extension MedStickerEncryption {
+  // Version to determine block size
+  public enum Version: String {
+    case aes = "scryptaes"
+    case pkcs1 = "scryptpkcs1"
+    case aes_r10 = "scryptaes_r10"
+
+    var blockSize: Int {
+      switch self {
+      case .aes, .pkcs1:
+        return 8
+      case .aes_r10:
+        return 10
+      }
     }
   }
 }
