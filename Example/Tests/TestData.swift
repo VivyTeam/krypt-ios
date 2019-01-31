@@ -13,6 +13,10 @@ private final class TestDataClass {}
 enum TestData: String {
   case openSSLPrivateKeyPEM = "openssl-private-key-pkcs1-pem"
   case openSSLPublicKeyPEM = "openssl-public-key-pkcs8-pem"
+  case ehrContractGCMMessage = "ehr-gcm-contract-message-base64"
+  case ehrContractGCMCipherKey = "ehr-gcm-contract-cipher-key-base64"
+  case ehrContractCBCMessage = "ehr-cbc-contract-message-base64"
+  case ehrContractCBCCipherKey = "ehr-cbc-contract-cipher-key-base64"
 
   var data: Data {
     guard
@@ -23,5 +27,10 @@ enum TestData: String {
       fatalError("No file found")
     }
     return data
+  }
+
+  var base64Decoded: Data {
+    let trimmed = String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
+    return Data(base64Encoded: trimmed)!
   }
 }

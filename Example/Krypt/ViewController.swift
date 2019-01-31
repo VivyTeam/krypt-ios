@@ -1,34 +1,32 @@
 //
 //  ViewController.swift
-//  Krypt
+//  Krypt_Example
 //
-//  Created by markobyte on 01/21/2019.
-//  Copyright (c) 2019 markobyte. All rights reserved.
+//  Created by marko on 30.01.19.
+//  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
 import Krypt
+import Security
 import UIKit
 
 class ViewController: UIViewController {
+  lazy var privateKey: SecKey? = {
+    let attributes: [String: Any] = [
+      kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+      kSecAttrKeySizeInBits as String: 4096
+    ]
+    return SecKeyCreateRandomKey(attributes as CFDictionary, nil)
+  }()
+
+  lazy var publicKey: SecKey? = {
+    guard let privateKey = privateKey else {
+      return nil
+    }
+    return SecKeyCopyPublicKey(privateKey)
+  }()
+
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    let text = "Encrypt everything"
-    let textData = text.data(using: .utf8)!
-
-    let cbcEncrypted = try! AES256.encrypt(data: textData, blockMode: .cbc)
-    print(cbcEncrypted)
-    let cbcDecrypted = try! AES256.decrypt(data: cbcEncrypted.encrypted, key: cbcEncrypted.key, iv: cbcEncrypted.iv, blockMode: .cbc)
-    print(String(data: cbcDecrypted, encoding: .utf8)!)
-
-    let gcmEncrypted = try! AES256.encrypt(data: textData, blockMode: .gcm)
-    print(gcmEncrypted)
-    let gcmDecrypted = try! AES256.decrypt(data: gcmEncrypted.encrypted, key: gcmEncrypted.key, iv: gcmEncrypted.iv, blockMode: .gcm)
-    print(String(data: gcmDecrypted, encoding: .utf8)!)
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
   }
 }
