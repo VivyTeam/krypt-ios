@@ -10,6 +10,8 @@
 import XCTest
 
 final class EHREncryptionTests: XCTestCase {
+  let slogan = "A Healthier Life is a Happier Life"
+
   let publicKey = try! Key(pem: TestData.openSSLPublicKeyPEM.data, access: .public)
   let privateKey = try! Key(pem: TestData.openSSLPrivateKeyPEM.data, access: .private)
 
@@ -159,5 +161,31 @@ final class EHREncryptionTests: XCTestCase {
       // then
       XCTAssertEqual($0 as? PublicError, PublicError.decryptionFailed)
     }
+  }
+
+  func testContract_decrypt_gcmOAEP__decryptedMessageShouldMatchSlogan() throws {
+    // given
+    let encryptedContractData = TestData.ehrContractGCMMessage.base64Decoded
+    let contractCipherKey = String(data: TestData.ehrContractGCMCipherKey.data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
+    let encryptedData = EHREncryption.EncryptedData(cipherKey: contractCipherKey, data: encryptedContractData, version: .gcmOAEP)
+
+    // when
+    let decrypted = try EHREncryption.decrypt(encryptedData: encryptedData, with: privateKey)
+
+    // then
+    XCTAssertEqual(String(data: decrypted, encoding: .utf8)!, slogan)
+  }
+
+  func testContract_decrypt_cbcPKCS1__decryptedMessageShouldMatchSlogan() throws {
+    // given
+    let encryptedContractData = TestData.ehrContractCBCMessage.base64Decoded
+    let contractCipherKey = String(data: TestData.ehrContractCBCCipherKey.data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
+    let encryptedData = EHREncryption.EncryptedData(cipherKey: contractCipherKey, data: encryptedContractData, version: .cbcPKCS1)
+
+    // when
+    let decrypted = try EHREncryption.decrypt(encryptedData: encryptedData, with: privateKey)
+
+    // then
+    XCTAssertEqual(String(data: decrypted, encoding: .utf8)!, slogan)
   }
 }
