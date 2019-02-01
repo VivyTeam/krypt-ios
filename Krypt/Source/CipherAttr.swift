@@ -1,5 +1,5 @@
 //
-//  CipherAuth.swift
+//  CipherAttr.swift
 //  Krypt
 //
 //  Created by marko on 29.01.19.
@@ -8,7 +8,7 @@
 import Foundation
 
 /// DTO for AES256 authentication
-struct CipherAuth: Codable {
+struct CipherAttr: Codable {
   let key: Data
   let iv: Data
 

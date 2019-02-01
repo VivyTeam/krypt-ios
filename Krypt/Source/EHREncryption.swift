@@ -46,15 +46,15 @@ public struct EHREncryption {
       let (encryptedData, aesKey, aesIV) = try AES256.encrypt(data: data, blockMode: version.aesBlockMode)
 
       // 2. Create cipher auth from the AES key and IV
-      let cipherAuth = CipherAuth(key: aesKey, iv: aesIV)
-      let cipherAuthJSONData = try JSONEncoder().encode(cipherAuth)
+      let cipherAttr = CipherAttr(key: aesKey, iv: aesIV)
+      let cipherAttrJSONData = try JSONEncoder().encode(cipherAttr)
 
       // 3. Encrypt meta message with RSA
-      let encryptedCipherAuth = try RSA.encrypt(data: cipherAuthJSONData, with: key, padding: version.rsaPadding)
-      let encryptedCipherAuthBase64 = encryptedCipherAuth.base64EncodedString()
+      let encryptedCipherAttr = try RSA.encrypt(data: cipherAttrJSONData, with: key, padding: version.rsaPadding)
+      let encryptedCipherAttrBase64 = encryptedCipherAttr.base64EncodedString()
 
       return EncryptedData(
-        cipherKey: encryptedCipherAuthBase64,
+        cipherKey: encryptedCipherAttrBase64,
         data: encryptedData,
         version: version
       )
@@ -78,15 +78,15 @@ public struct EHREncryption {
       guard let encryptedCipherAuth = Data(base64Encoded: encryptedData.cipherKey) else {
         throw PublicError.decryptionFailed
       }
-      let cipherAuthData = try RSA.decrypt(data: encryptedCipherAuth, with: key, padding: version.rsaPadding)
+      let cipherAttrData = try RSA.decrypt(data: encryptedCipherAuth, with: key, padding: version.rsaPadding)
 
       // 2. Decode cipher auth with the AES key in IV
-      guard let cipherAuth = try? JSONDecoder().decode(CipherAuth.self, from: cipherAuthData) else {
+      guard let cipherAttr = try? JSONDecoder().decode(CipherAttr.self, from: cipherAttrData) else {
         throw PublicError.decryptionFailed
       }
 
       // 3. Decrypt content with AES
-      let decryptedData = try AES256.decrypt(data: encryptedData.data, key: cipherAuth.key, iv: cipherAuth.iv, blockMode: version.aesBlockMode)
+      let decryptedData = try AES256.decrypt(data: encryptedData.data, key: cipherAttr.key, iv: cipherAttr.iv, blockMode: version.aesBlockMode)
 
       return decryptedData
     } catch {
