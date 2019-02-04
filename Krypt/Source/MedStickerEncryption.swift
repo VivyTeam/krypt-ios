@@ -98,7 +98,7 @@ public struct MedStickerEncryption {
       .reduce([UInt8](), +)
     let combinedData = Data(bytes: combinedBytes)
     let digest = SHA256.digest(combinedData)
-    return digest.base64EncodedString()
+    return "sha256" + digest.base64EncodedString()
   }
 }
 
