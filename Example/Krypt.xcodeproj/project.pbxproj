@@ -17,6 +17,7 @@
 		AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2BC30C21F76AA700DD674F /* AES256Tests.swift */; };
 		AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */; };
 		AD536F332201F76D00075B09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD536F322201F76D00075B09 /* ViewController.swift */; };
+		ADB6EE75220840470044C963 /* MedStickerEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */; };
 		ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */; };
 		ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */; };
 		ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */; };
@@ -56,6 +57,7 @@
 		AD2BC30C21F76AA700DD674F /* AES256Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256Tests.swift; sourceTree = "<group>"; };
 		AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EHREncryptionTests.swift; sourceTree = "<group>"; };
 		AD536F322201F76D00075B09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedStickerEncryptionTests.swift; sourceTree = "<group>"; };
 		ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-cipher-key-base64"; sourceTree = "<group>"; };
 		ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-cipher-key-base64"; sourceTree = "<group>"; };
 		ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-pem"; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				AD2BC30C21F76AA700DD674F /* AES256Tests.swift */,
 				AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */,
 				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
+				ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
 				AD1568C521F9D2AD008572DA /* TestData.swift */,
 				ADC231F62204478800A57D6A /* Files */,
@@ -176,12 +179,12 @@
 		ADC231F62204478800A57D6A /* Files */ = {
 			isa = PBXGroup;
 			children = (
-				ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */,
 				ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */,
-				ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */,
 				ADC231FA2204478800A57D6A /* ehr-cbc-contract-message-base64 */,
-				ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */,
+				ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */,
 				ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */,
+				ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */,
+				ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -393,6 +396,7 @@
 				AD1568C621F9D2AD008572DA /* TestData.swift in Sources */,
 				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
 				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
+				ADB6EE75220840470044C963 /* MedStickerEncryptionTests.swift in Sources */,
 				AD1568BF21F8D494008572DA /* RSATests.swift in Sources */,
 				AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */,
 			);
