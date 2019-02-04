@@ -29,6 +29,12 @@ public struct MedStickerEncryption {
 
     /// Medical ID Sticker encryption version
     public let version: Version
+
+    public init(key: Data, iv: Data, version: Version) {
+      self.key = key
+      self.iv = iv
+      self.version = version
+    }
   }
 
   /// I/O object when interacting with Medical ID Sticker encryption
@@ -43,16 +49,16 @@ public struct MedStickerEncryption {
   public static func encrypt(data: Data, pin: Data, code: Data) throws -> EncryptedMedSticker {
     do {
       let version = Version.britney
-      let medStickerKey = deriveKey(pin: pin, code: code, version: version)
+      let cipherAttr = deriveKey(pin: pin, code: code, version: version)
 
       let (encrypted, _, _) = try AES256.encrypt(
         data: data,
-        key: medStickerKey.key,
-        iv: medStickerKey.iv,
+        key: cipherAttr.key,
+        iv: cipherAttr.iv,
         blockMode: version.aesBlockMode
       )
 
-      let encryptedMedSticker = EncryptedMedSticker(data: encrypted, attr: medStickerKey)
+      let encryptedMedSticker = EncryptedMedSticker(data: encrypted, attr: cipherAttr)
 
       return encryptedMedSticker
     } catch {
