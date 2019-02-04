@@ -41,7 +41,7 @@ public struct AES256 {
   public static func encrypt(data: Data, key: Data? = nil, iv: Data? = nil, blockMode: BlockMode) throws -> (encrypted: Data, key: Data, iv: Data) {
     switch blockMode {
     case .gcm:
-      return try encryptGCM(data: data)
+      return try encryptGCM(data: data, key: key, iv: iv)
     case .cbc:
       return try cryptCBCPKCS7(data: data, key: key, iv: iv, operation: CCOperation(kCCEncrypt))
     }
@@ -87,9 +87,9 @@ private extension AES256 {
   /// - Parameter data: data to encrypt
   /// - Returns: tuple of encrypted data, authentication key and initialization vector
   /// - Throws: any errors throws by CryptoSwift
-  static func encryptGCM(data: Data) throws -> (encrypted: Data, key: Data, iv: Data) {
-    let key = randomData(count: kCCKeySizeAES256)
-    let iv = randomData(count: kCCKeySizeAES128)
+  static func encryptGCM(data: Data, key: Data?, iv: Data?) throws -> (encrypted: Data, key: Data, iv: Data) {
+    let key = key ?? randomData(count: kCCKeySizeAES256)
+    let iv = iv ?? randomData(count: kCCKeySizeAES128)
 
     let aes = try AES(key: key.bytes, blockMode: GCM(iv: iv.bytes, mode: .combined), padding: .noPadding)
     let digest = try aes.encrypt(data.bytes)

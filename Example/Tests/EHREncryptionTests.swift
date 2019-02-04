@@ -36,11 +36,11 @@ final class EHREncryptionTests: XCTestCase {
     // when
     let encrypted = try EHREncryption.encrypt(data: messageData, with: publicKey)
     let decryptedCipherKey = try RSA.decrypt(data: Data(base64Encoded: encrypted.cipherKey)!, with: privateKey, padding: .oaep)
-    let cipherAuth = try JSONDecoder().decode(CipherAuth.self, from: decryptedCipherKey)
+    let cipherAttr = try JSONDecoder().decode(CipherAttr.self, from: decryptedCipherKey)
 
     // then
-    XCTAssertEqual(cipherAuth.key.count, 32)
-    XCTAssertEqual(cipherAuth.iv.count, 16)
+    XCTAssertEqual(cipherAttr.key.count, 32)
+    XCTAssertEqual(cipherAttr.iv.count, 16)
   }
 
   func testEncrypt__shouldEncryptWithGCMOAEP() throws {
@@ -72,7 +72,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .gcm)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .oaep).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .gcmOAEP)
 
@@ -88,7 +88,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .cbc)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .pkcs1).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .cbcPKCS1)
 
@@ -104,7 +104,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .cbc)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .oaep).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .cbcPKCS1)
 
@@ -120,7 +120,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .gcm)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .pkcs1).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .gcmOAEP)
 
@@ -136,7 +136,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .gcm)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .oaep).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .cbcPKCS1)
 
@@ -152,7 +152,7 @@ final class EHREncryptionTests: XCTestCase {
     let message = UUID().uuidString
     let messageData = message.data(using: .utf8)!
     let (encrypted, key, iv) = try AES256.encrypt(data: messageData, blockMode: .gcm)
-    let cipherKeyData = try JSONEncoder().encode(CipherAuth(key: key, iv: iv))
+    let cipherKeyData = try JSONEncoder().encode(CipherAttr(key: key, iv: iv))
     let cipherKeyEncryptedBase64 = try RSA.encrypt(data: cipherKeyData, with: publicKey, padding: .oaep).base64EncodedString()
     let encryptedData = EHREncryption.EncryptedData(cipherKey: cipherKeyEncryptedBase64, data: encrypted, version: .gcmOAEP)
 

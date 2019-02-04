@@ -13,7 +13,7 @@ pod 'Krypt'
 run `pod install`
 
 ## Usage
-#### (EHR) Electronic Health Record Encryption
+#### (EHR) Electronic Health Record Encryption and LocalEncryption
 
 ```swift
 // Encrypt
@@ -31,8 +31,34 @@ let privateKey: Key = ...
 let decrypted = try EHREncryption.decrypt(encryptedData: encrypted, with: privateKey) // Data
 ```
 
+#### Medical ID Sticker Encryption
+
+```swift
+// Encrypt
+let dataToEncrypt: Data = ...
+let pin: Data = ...
+let code: Data = ...
+let encrypted = try MedStickerEncryption.encrypt(data: dataToEncrypt, pin: pin, code: code)
+
+encrypted.data // Data
+encrypted.attr.key // AES key
+encrypted.attr.iv // AES IV
+encrypted.attr.version // britney
+
+// Decrypt
+let decrypted = try MedStickerEncryption.decrypt(data: encrypted.data, with attr: encrypted.attr) // Data
+
+// Signature
+let salt: Data = ...
+
+let signature = MedStickerEncryption.accessSignature(attr: encrypted.attr, salt: salt) // base64 string
+```
+
+
+
 ## Dev setup
-- run `./bootstrap.sh` from root of cloned repo to setup SwiftFormat
+1. clone the repo
+2. run `./bootstrap.sh` from root of cloned repo to setup SwiftFormat
 
 ## License
 

@@ -10,7 +10,7 @@ import Krypt
 import Security
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
   lazy var privateKey: SecKey? = {
     let attributes: [String: Any] = [
       kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
