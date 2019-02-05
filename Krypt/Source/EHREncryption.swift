@@ -28,6 +28,12 @@ public struct EHREncryption {
 
     /// raw value of `EHREncryption.Version`
     public let version: Version
+
+    public init(cipherKey: String, data: Data, version: Version) {
+      self.cipherKey = cipherKey
+      self.data = data
+      self.version = version
+    }
   }
 
   /// Asymetrically encrypts the provided data with AES 256 GCM and RSA OAEP SHA256
