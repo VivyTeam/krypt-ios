@@ -14,7 +14,7 @@ public struct MedStickerEncryption {
   ///
   /// - adam: legacy version, only used for backwards compatibility | Scrypt r = 8; AES 256 CBC
   /// - britney: this is the default value | Scrypt.r = 10; AES 256 GCM
-  public enum Version {
+  public enum Version: String {
     case adam
     case britney
   }
@@ -92,13 +92,21 @@ public struct MedStickerEncryption {
     return CipherAttr(key: aesKey, iv: aesIV, version: version)
   }
 
+  /// Creates signature for access
+  /// Needs to be in this format: `${version}-${hashing_function}:${hash}`
+  ///
+  /// - Parameters:
+  ///   - attr: `CipherAttr`
+  ///   - salt: `Data`
+  /// - Returns: created signature as `String`
   public static func accessSignature(attr: CipherAttr, salt: Data) -> String {
     let combinedBytes = [attr.key, attr.iv, salt]
       .compactMap([UInt8].init)
       .reduce([UInt8](), +)
     let combinedData = Data(bytes: combinedBytes)
     let digest = SHA256.digest(combinedData)
-    return "sha256" + digest.base64EncodedString()
+    let algorithm = [attr.version.rawValue, "sha256"].joined(separator: "-")
+    return [algorithm, digest.base64EncodedString()].joined(separator: ":")
   }
 }
 
