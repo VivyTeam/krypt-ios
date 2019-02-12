@@ -113,14 +113,14 @@ final class MedStickerEncryptionTests: XCTestCase {
     XCTAssertEqual(cipherAttr.iv.base64EncodedString(), expectedDerivedIVBase64)
   }
 
-  func testSignature_britney_shouldCreateSignature() {
+  func testSignature_britney__shouldCreateSignature() {
     // given
     let cipherAttr = MedStickerEncryption.CipherAttr(
       key: Data(base64Encoded: "1v6YGdN6BW2AR1uEylOmjSwKu/kUr5qNYR42X0Che3U=")!,
       iv: Data(base64Encoded: "aoiywBzTwYxzKQz45UxWaQ==")!,
       version: .britney
     )
-    let expectedSignature = "sha256RonmY2BVOex5wlGRrLPkXn/MZV1Rhot4wRc9+cuK0zY="
+    let expectedSignature = "britney-sha256:RonmY2BVOex5wlGRrLPkXn/MZV1Rhot4wRc9+cuK0zY="
 
     // when
     let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
@@ -129,14 +129,14 @@ final class MedStickerEncryptionTests: XCTestCase {
     XCTAssertEqual(signature, expectedSignature)
   }
 
-  func testSignature_adam_shouldCreateSignature() {
+  func testSignature_adam__shouldCreateSignature() {
     // given
     let cipherAttr = MedStickerEncryption.CipherAttr(
       key: Data(base64Encoded: "Pivil9wBlqECOP8qulkJnHFnIiIwSffQt4rXo27X4Uk=")!,
       iv: Data(base64Encoded: "gi44bZGuBBdLpMISpeppWQ==")!,
       version: .adam
     )
-    let expectedSignature = "sha256hpK5lcLpZoZ2AHIXUi4IgyRnwGCDqApocWM0DDc++zk="
+    let expectedSignature = "adam-sha256:hpK5lcLpZoZ2AHIXUi4IgyRnwGCDqApocWM0DDc++zk="
 
     // when
     let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
@@ -145,7 +145,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     XCTAssertEqual(signature, expectedSignature)
   }
 
-  func testSignature_shouldHaveSHA256Prefix() {
+  func testSignature_britney__shouldHaveRightAlgorithmPrefix() {
     // given
     let cipherAttr = MedStickerEncryption.CipherAttr(
       key: Data(base64Encoded: "1v6YGdN6BW2AR1uEylOmjSwKu/kUr5qNYR42X0Che3U=")!,
@@ -157,6 +157,21 @@ final class MedStickerEncryptionTests: XCTestCase {
     let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
 
     // then
-    XCTAssertTrue(signature.hasPrefix("sha256"))
+    XCTAssertTrue(signature.hasPrefix("britney-sha256"))
+  }
+
+  func testSignature_adam__shouldHaveRightAlgorithmPrefix() {
+    // given
+    let cipherAttr = MedStickerEncryption.CipherAttr(
+      key: Data(base64Encoded: "Pivil9wBlqECOP8qulkJnHFnIiIwSffQt4rXo27X4Uk=")!,
+      iv: Data(base64Encoded: "gi44bZGuBBdLpMISpeppWQ==")!,
+      version: .adam
+    )
+
+    // when
+    let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
+
+    // then
+    XCTAssertTrue(signature.hasPrefix("adam-sha256"))
   }
 }

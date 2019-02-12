@@ -63,3 +63,11 @@ let signature = MedStickerEncryption.accessSignature(attr: encrypted.attr, salt:
 ## License
 
 Krypt is available under the MIT license. See the LICENSE file for more info.
+
+## Acknowledgements
+
+#### CryptoSwift
+This product includes software developed by the "Marcin Krzyzanowski" (http://krzyzanowskim.com/).
+
+#### Scrypt
+neo-swift: [Source](https://github.com/CityOfZion/neo-swift) [LICENSE](https://github.com/CityOfZion/neo-swift/blob/master/LICENSE)
