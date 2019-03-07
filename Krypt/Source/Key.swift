@@ -58,17 +58,23 @@ public extension Key {
   /// Initializes `Key` from PEM data
   ///
   /// - Parameters:
-  ///   - pem: `Data` in PKCS#8 format for public | PKCS#1 for private access
+  ///   - pem: `Data` in PKCS#1 or PKCS#8
   ///   - access: `Access` level of the key
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
   public convenience init(pem: Data, access: Access) throws {
     guard let pemString = String(data: pem, encoding: .utf8) else {
       throw Error.invalidPEMData
     }
-    guard pemString.hasPrefix(access.pemHeader), let footerRange = pemString.range(of: access.pemFooter) else {
+    // Check if the provided key is in PKCS#1 or PKCS#8
+    let isPKCS1 = pemString.hasPrefix(access.pemHeaderPKCS1)
+
+    let pemHeader = isPKCS1 ? access.pemHeaderPKCS1 : access.pemHeaderPKCS8
+    let pemFooter = isPKCS1 ? access.pemFooterPKCS1 : access.pemFooterPKCS8
+
+    guard pemString.hasPrefix(pemHeader), let footerRange = pemString.range(of: pemFooter) else {
       throw Error.invalidPEMData
     }
-    let stripped = String(pemString[access.pemHeader.endIndex ..< footerRange.lowerBound]).replacingOccurrences(of: "\n", with: "")
+    let stripped = String(pemString[pemHeader.endIndex ..< footerRange.lowerBound]).replacingOccurrences(of: "\n", with: "")
     guard let der = Data(base64Encoded: stripped) else {
       throw Error.invalidPEMData
     }
@@ -86,6 +92,30 @@ public extension Key {
     }
     return der
   }
+
+  /// Converts the underlying `secRef` to PEM
+  ///
+  /// - Returns: `String` in PKCS#1 PEM
+  /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
+  public func convertedToPEM() throws -> String {
+    let der = try convertedToDER()
+    let keyBase64 = der.base64EncodedString()
+
+    // Insert newline `\n` every 64 characters
+    var index = 0
+    var splits = [String]()
+    while index < keyBase64.count {
+      let startIndex = keyBase64.index(keyBase64.startIndex, offsetBy: index)
+      let endIndex = keyBase64.index(startIndex, offsetBy: 64, limitedBy: keyBase64.endIndex) ?? keyBase64.endIndex
+      index = endIndex.encodedOffset
+
+      let chunk = String(keyBase64[startIndex ..< endIndex])
+      splits.append(chunk)
+    }
+    let keyBase64WithNewlines = splits.joined(separator: "\n")
+
+    return [access.pemHeaderPKCS1, keyBase64WithNewlines, access.pemFooterPKCS1].joined()
+  }
 }
 
 private extension Key.Access {
@@ -99,25 +129,39 @@ private extension Key.Access {
     }
   }
 
-  /// PEM header used when importing keys.
-  /// Currently supports only PKCS#8 format for public and PKCS#1 for private
-  var pemHeader: String {
+  var pemHeaderPKCS1: String {
     switch self {
     case .public:
-      return "-----BEGIN PUBLIC KEY-----\n"
+      return "-----BEGIN RSA PUBLIC KEY-----\n"
     case .private:
       return "-----BEGIN RSA PRIVATE KEY-----\n"
     }
   }
 
-  /// PEM footer used when importing keys.
-  /// Currently supports only PKCS#8 format for public and PKCS#1 for private
-  var pemFooter: String {
+  var pemFooterPKCS1: String {
+    switch self {
+    case .public:
+      return "\n-----END RSA PUBLIC KEY-----"
+    case .private:
+      return "\n-----END RSA PRIVATE KEY-----"
+    }
+  }
+
+  var pemHeaderPKCS8: String {
+    switch self {
+    case .public:
+      return "-----BEGIN PUBLIC KEY-----\n"
+    case .private:
+      return "-----BEGIN PRIVATE KEY-----\n"
+    }
+  }
+
+  var pemFooterPKCS8: String {
     switch self {
     case .public:
       return "\n-----END PUBLIC KEY-----"
     case .private:
-      return "\n-----END RSA PRIVATE KEY-----"
+      return "\n-----END PRIVATE KEY-----"
     }
   }
 }

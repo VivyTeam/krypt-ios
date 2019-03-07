@@ -1,5 +1,8 @@
 use_frameworks!
 
+source 'https://github.com/UvitaTeam/specs-ios.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
 target 'Krypt_Example' do
   pod 'Krypt', :path => '../'
 
