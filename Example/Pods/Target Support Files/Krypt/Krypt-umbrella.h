@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "csr.h"
 
 FOUNDATION_EXPORT double KryptVersionNumber;
 FOUNDATION_EXPORT const unsigned char KryptVersionString[];

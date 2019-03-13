@@ -1,6 +1,6 @@
 {
   "name": "Krypt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Crypto used in Vivy iOS app",
   "description": "Crypto used in Vivy iOS app.",
   "homepage": "https://vivy.com",
@@ -12,15 +12,24 @@
     "Vivy GmbH": "ios@vivy.com"
   },
   "source": {
-    "git": "https://github.com/UvitaTeam/Krypt.git",
-    "tag": "0.1.0"
+    "git": "https://github.com/UvitaTeam/krypt-ios.git",
+    "tag": "0.1.1"
   },
   "social_media_url": "https://twitter.com/vivy_health",
   "platforms": {
     "ios": "11.0"
   },
-  "source_files": "Krypt/Source/*.swift",
+  "source_files": "Krypt/Source/**/*.{swift,c,h}",
+  "preserve_paths": "Krypt/Source/module.map",
+  "pod_target_xcconfig": {
+    "OTHER_LDFLAGS": "$(inherited) $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libcrypto.a $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libssl.a",
+    "LIBRARY_SEARCH_PATHS": "$(PROJECT_DIR)/OpenSSL/OpenSSL/lib/",
+    "SWIFT_INCLUDE_PATHS": "$(SRCROOT)/Krypt/Krypt/Source"
+  },
   "dependencies": {
+    "OpenSSL": [
+      "~> 1.1.1b"
+    ],
     "CryptoSwift": [
 
     ]
