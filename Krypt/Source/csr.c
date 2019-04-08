@@ -85,8 +85,8 @@ char *createCSR(const char *key,
 
   ret = X509_NAME_add_entry_by_txt(x509_name, "UID", MBSTRING_ASC, (const unsigned char*)uid, -1, -1, 0);
   if (ret != 1) {
-      freeAll(x509_req, out, privateKey);
-      return NULL;
+    freeAll(x509_req, out, privateKey);
+    return NULL;
   }
   
   ret = X509_NAME_add_entry_by_txt(x509_name, "GN", MBSTRING_ASC, (const unsigned char*)gn, -1, -1, 0);
