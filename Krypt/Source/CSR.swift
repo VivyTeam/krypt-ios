@@ -46,26 +46,24 @@ public struct CSR {
 
     let keyPEM = try key.convertedToPEM()
 
-    let keyCString = keyPEM.cString(using: .utf8)!
-    let countryCString = country.cString(using: .utf8)!
-    let stateCString = state.cString(using: .utf8)!
-    let locationCString = location.cString(using: .utf8)!
-    let organizationCString = organization.cString(using: .utf8)!
-    let organizationUnitCString = organizationUnit.cString(using: .utf8)!
-    let emailAddressCString = emailAddress.cString(using: .utf8)!
-
     let result = createCSR(
-      keyCString,
-      countryCString,
-      stateCString,
-      locationCString,
-      organizationCString,
-      organizationUnitCString,
-      emailAddressCString
+      keyPEM.unsafeUtf8cString,
+      country.unsafeUtf8cString,
+      state.unsafeUtf8cString,
+      location.unsafeUtf8cString,
+      organization.unsafeUtf8cString,
+      organizationUnit.unsafeUtf8cString,
+      emailAddress.unsafeUtf8cString
     )
     guard result != nil, let csrData = String(cString: result!).data(using: .utf8) else {
       throw Error.failedCreatingCSR
     }
     return csrData
+  }
+}
+
+private extension String {
+  var unsafeUtf8cString: [CChar] {
+    return cString(using: .utf8) ?? []
   }
 }
