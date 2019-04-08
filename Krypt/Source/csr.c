@@ -15,7 +15,16 @@
 EVP_PKEY *getPrivateKey(const char *key);
 void freeAll(X509_REQ *req, BIO *out, EVP_PKEY *key);
 
-char *createCSR(const char *key, const char *country, const char *state, const char *location, const char *organization, const char *organizationUnit, const char *emailAddress) {
+char *createCSR(const char *key,
+                const char *country,
+                const char *state,
+                const char *location,
+                const char *organization,
+                const char *organizationUnit,
+                const char *emailAddress,
+                const char *uid,
+                const char *gn,
+                const char *sn) {
 
   int             ret = 0;
   int             version = 0;
@@ -69,6 +78,24 @@ char *createCSR(const char *key, const char *country, const char *state, const c
   }
 
   ret = X509_NAME_add_entry_by_txt(x509_name, "emailAddress", MBSTRING_ASC, (const unsigned char*)emailAddress, -1, -1, 0);
+  if (ret != 1) {
+    freeAll(x509_req, out, privateKey);
+    return NULL;
+  }
+
+  ret = X509_NAME_add_entry_by_txt(x509_name, "UID", MBSTRING_ASC, (const unsigned char*)uid, -1, -1, 0);
+  if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+  }
+  
+  ret = X509_NAME_add_entry_by_txt(x509_name, "GN", MBSTRING_ASC, (const unsigned char*)gn, -1, -1, 0);
+  if (ret != 1) {
+    freeAll(x509_req, out, privateKey);
+    return NULL;
+  }
+
+  ret = X509_NAME_add_entry_by_txt(x509_name, "SN", MBSTRING_ASC, (const unsigned char*)sn, -1, -1, 0);
   if (ret != 1) {
     freeAll(x509_req, out, privateKey);
     return NULL;

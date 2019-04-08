@@ -20,7 +20,10 @@ final class CSRTests: XCTestCase {
     let organization = "Vivy GmbH"
     let organizationUnit = "IT"
     let email = "tech@vivy.com"
-
+    let uid = "someUID"
+    let gn = "someGN"
+    let sn = "someSN"
+    
     // when
     let result = try CSR.create(
       with: privateKey,
@@ -29,7 +32,10 @@ final class CSRTests: XCTestCase {
       location: location,
       organization: organization,
       organizationUnit: organizationUnit,
-      emailAddress: email
+      emailAddress: email,
+      uid: uid,
+      gn: gn,
+      sn: sn
     )
     let resultString = String(data: result, encoding: .utf8)!
 

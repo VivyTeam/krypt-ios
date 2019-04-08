@@ -38,7 +38,10 @@ public struct CSR {
     location: String,
     organization: String,
     organizationUnit: String,
-    emailAddress: String
+    emailAddress: String,
+    uid: String,
+    gn: String,
+    sn: String
   ) throws -> Data {
     guard key.access == .private else {
       throw Error.invalidKey
@@ -53,7 +56,10 @@ public struct CSR {
       location.unsafeUtf8cString,
       organization.unsafeUtf8cString,
       organizationUnit.unsafeUtf8cString,
-      emailAddress.unsafeUtf8cString
+      emailAddress.unsafeUtf8cString,
+      uid,
+      gn,
+      sn
     )
     guard result != nil, let csrData = String(cString: result!).data(using: .utf8) else {
       throw Error.failedCreatingCSR
