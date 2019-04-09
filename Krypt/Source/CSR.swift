@@ -18,31 +18,15 @@ public struct CSR {
     case invalidKey
     case failedCreatingCSR
   }
-
-  /// Creates a CSR with provided subjects
+  
+  /// Creates Certificate signing request (CSR)
   ///
   /// - Parameters:
-  ///   - key: private key to use
-  ///   - country: The two-letter country code where your company is legally located
-  ///   - state: The state/province where your company is legally located
-  ///   - location: The city where your company is legally located
-  ///   - organization: Your company's legally registered name (e.g., YourCompany, Inc.)
-  ///   - organizationUnit: The name of your department within the organization
-  ///   - emailAddress: Email address
-  /// - Returns: `Data` object representing the CSR in PEM format
-  /// - Throws: `CSR.Error`
-  public static func create(
-    with key: Key,
-    country: String,
-    state: String,
-    location: String,
-    organization: String,
-    organizationUnit: String,
-    emailAddress: String,
-    uid: String,
-    gn: String,
-    sn: String
-  ) throws -> Data {
+  ///   - key: Private key to use to create CSR
+  ///   - attributes: Object with attributes specified in X.509 standard
+  /// - Returns: `String` representing CSR
+  /// - Throws: `CSR.Error` or `Key.Error`
+  public static func create(with key: Key, attributes: CSRAttributes?) throws -> String {
     guard key.access == .private else {
       throw Error.invalidKey
     }
@@ -51,20 +35,22 @@ public struct CSR {
 
     let result = createCSR(
       keyPEM.unsafeUtf8cString,
-      country.unsafeUtf8cString,
-      state.unsafeUtf8cString,
-      location.unsafeUtf8cString,
-      organization.unsafeUtf8cString,
-      organizationUnit.unsafeUtf8cString,
-      emailAddress.unsafeUtf8cString,
-      uid,
-      gn,
-      sn
+      (attributes?.country ?? "").unsafeUtf8cString,
+      (attributes?.state ?? "").unsafeUtf8cString,
+      (attributes?.location ?? "").unsafeUtf8cString,
+      (attributes?.organization ?? "").unsafeUtf8cString,
+      (attributes?.organizationUnit ?? "").unsafeUtf8cString,
+      (attributes?.emailAddress ?? "").unsafeUtf8cString,
+      (attributes?.uniqueIdentifier ?? "").unsafeUtf8cString,
+      (attributes?.givenName ?? "").unsafeUtf8cString,
+      (attributes?.surname ?? "").unsafeUtf8cString
     )
-    guard result != nil, let csrData = String(cString: result!).data(using: .utf8) else {
+    
+    guard let csr = result else {
       throw Error.failedCreatingCSR
     }
-    return csrData
+    
+    return String(cString: csr)
   }
 }
 

@@ -10,36 +10,118 @@ import Krypt
 import XCTest
 
 final class CSRTests: XCTestCase {
-  func testCreateCSR_testSubjectFields__shouldMatchOpenSSLRequest() throws {
-    // given
-    let testPEM = TestData.opensslCSR.string
-    let privateKey = try Key(pem: TestData.openSSLPrivateKeyPEM.data, access: .private)
-    let country = "DE"
-    let state = "Berlin"
-    let location = "Berlin"
-    let organization = "Vivy GmbH"
-    let organizationUnit = "IT"
-    let email = "tech@vivy.com"
-    let uid = "someUID"
-    let gn = "someGN"
-    let sn = "someSN"
+  func testCreateCSR_withCorrectAttributes__shouldMatchExpectedCSR() {
+    let attributes = CSRAttributes.withCorrectAttributes
     
-    // when
-    let result = try CSR.create(
-      with: privateKey,
-      country: country,
-      state: state,
-      location: location,
-      organization: organization,
-      organizationUnit: organizationUnit,
-      emailAddress: email,
-      uid: uid,
-      gn: gn,
-      sn: sn
-    )
-    let resultString = String(data: result, encoding: .utf8)!
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
 
-    // then
-    XCTAssertEqual(resultString, testPEM)
+    XCTAssertEqual(result, expectedCSR)
+  } 
+  
+  func testCreateCSR_withWrongLocation__shouldNotMatchExpectedCSR() {
+    let attributes = CSRAttributes.withWrongLocation
+
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
+
+    XCTAssertNotEqual(result, expectedCSR)
+  }
+
+  func testCreateCSR_whenLocationAttributeEmpty__shouldNotMatchExpectedCSR() {
+    let attributes = CSRAttributes.withEmptyLocation
+
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
+
+    XCTAssertNotEqual(result, expectedCSR)
+  }
+
+  func testCreateCSR_whenAllAttributesEmpty__shouldNotMatchExpectedCSR() {
+    let attributes = CSRAttributes.withEmptyAttributes
+    
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    
+    XCTAssertNotEqual(result, expectedCSR)
+  }
+
+  func testCreateCSR_whenAllAttributesNil__shouldNotMatchExpectedCSR() {
+    let attributes = CSRAttributes.withNilAttributes
+    
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    
+    XCTAssertNotEqual(result, expectedCSR)
+  }
+
+  private var privateKey: Key {
+    return try! Key(pem: TestData.openSSLPrivateKeyPEM.data, access: .private)
+  }
+
+  private var expectedCSR: String {
+    return TestData.opensslCSR.string
+  }
+}
+
+private extension CSRAttributes {
+  static var withCorrectAttributes: CSRAttributes {
+    return CSRAttributes(
+      country: "DE",
+      state: "Berlin",
+      location: "Berlin",
+      organization: "Vivy GmbH",
+      organizationUnit: "IT",
+      emailAddress: "tech@vivy.com",
+      uniqueIdentifier: "someUID",
+      givenName: "someGN",
+      surname: "someSN")
+  }
+  
+  static var withWrongLocation: CSRAttributes {
+    return CSRAttributes(
+      country: "DE",
+      state: "Berlin",
+      location: "Hamburg",
+      organization: "Vivy GmbH",
+      organizationUnit: "IT",
+      emailAddress: "tech@vivy.com",
+      uniqueIdentifier: "someUID",
+      givenName: "someGN",
+      surname: "someSN")
+  }
+  
+  static var withEmptyLocation: CSRAttributes {
+    return CSRAttributes(
+      country: "DE",
+      state: "Berlin",
+      location: "",
+      organization: "Vivy GmbH",
+      organizationUnit: "IT",
+      emailAddress: "tech@vivy.com",
+      uniqueIdentifier: "someUID",
+      givenName: "someGN",
+      surname: "someSN")
+  }
+  
+  static var withEmptyAttributes: CSRAttributes {
+    return CSRAttributes(
+      country: "",
+      state: "",
+      location: "",
+      organization: "",
+      organizationUnit: "",
+      emailAddress: "",
+      uniqueIdentifier: "",
+      givenName: "",
+      surname: "")
+  }
+
+  static var withNilAttributes: CSRAttributes {
+    return CSRAttributes(
+      country: nil,
+      state: nil,
+      location: nil,
+      organization: nil,
+      organizationUnit: nil,
+      emailAddress: nil,
+      uniqueIdentifier: nil,
+      givenName: nil,
+      surname: nil)
   }
 }
