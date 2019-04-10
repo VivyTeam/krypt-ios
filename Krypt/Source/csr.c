@@ -15,7 +15,16 @@
 EVP_PKEY *getPrivateKey(const char *key);
 void freeAll(X509_REQ *req, BIO *out, EVP_PKEY *key);
 
-char *createCSR(const char *key, const char *country, const char *state, const char *location, const char *organization, const char *organizationUnit, const char *emailAddress) {
+char *createCSR(const char *key,
+                const char *country,
+                const char *state,
+                const char *location,
+                const char *organization,
+                const char *organizationUnit,
+                const char *emailAddress,
+                const char *uniqueIdentifier,
+                const char *givenName,
+                const char *surname) {
 
   int             ret = 0;
   int             version = 0;
@@ -37,49 +46,87 @@ char *createCSR(const char *key, const char *country, const char *state, const c
 
   // set subject of x509 req
   x509_name = X509_NAME_new();
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "C", MBSTRING_ASC, (const unsigned char*)country, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(country) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "C", MBSTRING_ASC, (const unsigned char*)country, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "ST", MBSTRING_ASC, (const unsigned char*)state, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(state) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "ST", MBSTRING_ASC, (const unsigned char*)state, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "L", MBSTRING_ASC, (const unsigned char*)location, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(location) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "L", MBSTRING_ASC, (const unsigned char*)location, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "O", MBSTRING_ASC, (const unsigned char*)organization, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(organization) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "O", MBSTRING_ASC, (const unsigned char*)organization, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "OU", MBSTRING_ASC, (const unsigned char*)organizationUnit, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(organizationUnit) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "OU", MBSTRING_ASC, (const unsigned char*)organizationUnit, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_NAME_add_entry_by_txt(x509_name, "emailAddress", MBSTRING_ASC, (const unsigned char*)emailAddress, -1, -1, 0);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(emailAddress) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "emailAddress", MBSTRING_ASC, (const unsigned char*)emailAddress, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
-  ret = X509_REQ_set_subject_name(x509_req, x509_name);
-  if (ret != 1) {
-    freeAll(x509_req, out, privateKey);
-    return NULL;
+  
+  if (strlen(uniqueIdentifier) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "UID", MBSTRING_ASC, (const unsigned char*)uniqueIdentifier, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
   }
-
+  
+  if (strlen(givenName) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "GN", MBSTRING_ASC, (const unsigned char*)givenName, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
+  }
+  
+  if (strlen(surname) != 0) {
+    ret = X509_NAME_add_entry_by_txt(x509_name, "SN", MBSTRING_ASC, (const unsigned char*)surname, -1, -1, 0);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
+  }
+  
+  if (strlen(country) != 0) {
+    ret = X509_REQ_set_subject_name(x509_req, x509_name);
+    if (ret != 1) {
+      freeAll(x509_req, out, privateKey);
+      return NULL;
+    }
+  }
+  
   // set public key of x509 req
   privateKey = getPrivateKey(key);
 
