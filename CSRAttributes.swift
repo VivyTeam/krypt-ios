@@ -1,6 +1,6 @@
 //
 //  CSRAttributes.swift
-//  CryptoSwift
+//  Krypt
 //
 //  Created by Miso Lubarda on 08.04.19.
 //
@@ -28,8 +28,8 @@ public struct CSRAttributes {
     emailAddress: String?,
     uniqueIdentifier: String?,
     givenName: String?,
-    surname: String?)
-  {
+    surname: String?
+    ) {
     self.country = country
     self.state = state
     self.location = location
