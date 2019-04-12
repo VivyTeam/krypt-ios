@@ -36,10 +36,14 @@ enum TestData: String {
   }
 
   var base64Decoded: Data {
-    return Data(base64Encoded: string)!
+    return Data(base64Encoded: stringTrimmingWhitespacesAndNewlines)!
+  }
+  
+  var string: String {
+    return String(data: data, encoding: .utf8)!
   }
 
-  var string: String {
-    return String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
+  var stringTrimmingWhitespacesAndNewlines: String {
+    return string.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }
