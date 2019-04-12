@@ -33,6 +33,15 @@ public final class Key {
     secRef = key
     self.access = access
   }
+
+  /// Supported Key sizes in Vivy
+  ///
+  /// - bit_4096: default
+  /// - bit_2048: used for integrations
+  public enum Size: Int {
+    case bit_4096 = 4096
+    case bit_2048 = 2048
+  }
 }
 
 public extension Key {
@@ -42,11 +51,11 @@ public extension Key {
   ///   - der: `Data` in DER format
   ///   - access: `Access` level of the key
   /// - Throws: any erros that are returned by `SecKeyCreateWithData`
-  public convenience init(der: Data, access: Access) throws {
+  convenience init(der: Data, access: Access, size: Size = .bit_4096) throws {
     let options: [String: Any] = [
       kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
       kSecAttrKeyClass as String: access.secAttr,
-      kSecAttrKeySizeInBits as String: 4096
+      kSecAttrKeySizeInBits as String: size.rawValue
     ]
     var error: Unmanaged<CFError>?
     guard let key = SecKeyCreateWithData(der as CFData, options as CFDictionary, &error) else {
@@ -61,7 +70,7 @@ public extension Key {
   ///   - pem: `Data` in PKCS#1 or PKCS#8
   ///   - access: `Access` level of the key
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
-  public convenience init(pem: Data, access: Access) throws {
+  convenience init(pem: Data, access: Access, size: Size = .bit_4096) throws {
     guard let pemString = String(data: pem, encoding: .utf8) else {
       throw Error.invalidPEMData
     }
@@ -78,14 +87,14 @@ public extension Key {
     guard let der = Data(base64Encoded: stripped) else {
       throw Error.invalidPEMData
     }
-    try self.init(der: der, access: access)
+    try self.init(der: der, access: access, size: size)
   }
 
   /// Converts the underlying `secRef` to PKCS#1 DER format for public and private access
   ///
   /// - Returns: `Data` representation of the key in DER format
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
-  public func convertedToDER() throws -> Data {
+  func convertedToDER() throws -> Data {
     var error: Unmanaged<CFError>?
     guard let der = SecKeyCopyExternalRepresentation(secRef, &error) as Data? else {
       throw error!.takeRetainedValue() as Swift.Error
@@ -97,7 +106,7 @@ public extension Key {
   ///
   /// - Returns: `String` in PKCS#1 PEM
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
-  public func convertedToPEM() throws -> String {
+  func convertedToPEM() throws -> String {
     let der = try convertedToDER()
     let keyBase64 = der.base64EncodedString()
 

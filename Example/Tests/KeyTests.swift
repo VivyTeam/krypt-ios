@@ -51,4 +51,12 @@ final class KeyTests: XCTestCase {
     let pem = try key.convertedToPEM()
     XCTAssertEqual(pem, testPEM)
   }
+
+  func testInit_privatePEMKVSafenet2048__shouldInitialize() throws {
+    // given
+    let pem = TestData.kvPrivateKeyOpenPEM.data
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .private, size: .bit_2048))
+  }
 }

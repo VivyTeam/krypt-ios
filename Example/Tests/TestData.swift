@@ -19,6 +19,10 @@ enum TestData: String {
   case ehrContractCBCMessage = "ehr-cbc-contract-message-base64"
   case ehrContractCBCCipherKey = "ehr-cbc-contract-cipher-key-base64"
   case opensslCSR = "openssl-csr"
+  case kvConnectEmail = "kvconnect-mail"
+  case kvConnectEmailDec = "kvconnect-mail-dec"
+  case kvPrivateKeyOpenPEM = "kvprivatekey-open-pem"
+  case kvRootAndVivyCAPEM = "kvroot-kvvivy-ca-pem"
 
   var data: Data {
     guard
@@ -32,11 +36,10 @@ enum TestData: String {
   }
 
   var base64Decoded: Data {
-    let trimmed = String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
-    return Data(base64Encoded: trimmed)!
+    return Data(base64Encoded: string)!
   }
 
   var string: String {
-    return String(data: data, encoding: .utf8)!
+    return String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }
