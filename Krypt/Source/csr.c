@@ -153,8 +153,8 @@ char *createCSR(const char *key,
 
   BUF_MEM* mem;
   BIO_get_mem_ptr(out, &mem);
-  data = malloc(mem->length + 1);
-  memcpy(data, mem->data, mem->length + 1);
+  data = malloc(mem->length);
+  memcpy(data, mem->data, mem->length);
   BIO_flush(out);
 
   return data;
