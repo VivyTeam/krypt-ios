@@ -12,6 +12,8 @@ private final class TestDataClass {}
 
 enum TestData: String {
   case openSSLPrivateKeyPEM = "openssl-private-key-pkcs1-pem"
+  case openSSLPrivateKey2048PEM = "openssl-private-key-pkcs1-2048-pem"
+  case openSSLPublicKey2048PEM = "openssl-public-key-pkcs8-2048-pem"
   case openSSLPublicKeyPKCS1PEM = "openssl-public-key-pkcs1-pem"
   case openSSLPublicKeyPEM = "openssl-public-key-pkcs8-pem"
   case ehrContractGCMMessage = "ehr-gcm-contract-message-base64"
