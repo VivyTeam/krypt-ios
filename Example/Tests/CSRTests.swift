@@ -13,7 +13,7 @@ final class CSRTests: XCTestCase {
   func testCreateCSR_withCorrectAttributes__shouldMatchExpectedCSR() {
     let attributes = CSRAttributes.withCorrectAttributes
     
-    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    let result = createCSR(from: attributes)
 
     XCTAssertEqual(result, expectedCSR)
   } 
@@ -21,7 +21,7 @@ final class CSRTests: XCTestCase {
   func testCreateCSR_withWrongLocation__shouldNotMatchExpectedCSR() {
     let attributes = CSRAttributes.withWrongLocation
 
-    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    let result = createCSR(from: attributes)
 
     XCTAssertNotEqual(result, expectedCSR)
   }
@@ -29,7 +29,7 @@ final class CSRTests: XCTestCase {
   func testCreateCSR_whenLocationAttributeEmpty__shouldNotMatchExpectedCSR() {
     let attributes = CSRAttributes.withEmptyLocation
 
-    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    let result = createCSR(from: attributes)
 
     XCTAssertNotEqual(result, expectedCSR)
   }
@@ -37,25 +37,27 @@ final class CSRTests: XCTestCase {
   func testCreateCSR_whenAllAttributesEmpty__shouldNotMatchExpectedCSR() {
     let attributes = CSRAttributes.withEmptyAttributes
     
-    let result = try! CSR.create(with: privateKey, attributes: attributes)
-    
+    let result = createCSR(from: attributes)
+
     XCTAssertNotEqual(result, expectedCSR)
   }
 
   func testCreateCSR_whenAllAttributesNil__shouldNotMatchExpectedCSR() {
     let attributes = CSRAttributes.withNilAttributes
     
-    let result = try! CSR.create(with: privateKey, attributes: attributes)
-    
+    let result = createCSR(from: attributes)
+
     XCTAssertNotEqual(result, expectedCSR)
   }
-
-  private var privateKey: Key {
-    return try! Key(pem: TestData.openSSLPrivateKeyPEM.data, access: .private)
+  
+  private func createCSR(from attributes: CSRAttributes) -> String {
+    let privateKey = try! Key(pem: TestData.openSSLPrivateKeyPEM.data, access: .private)
+    let result = try! CSR.create(with: privateKey, attributes: attributes)
+    return result.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 
   private var expectedCSR: String {
-    return TestData.opensslCSR.string
+    return TestData.opensslCSR.stringTrimmingWhitespacesAndNewlines
   }
 }
 

@@ -12,6 +12,8 @@ private final class TestDataClass {}
 
 enum TestData: String {
   case openSSLPrivateKeyPEM = "openssl-private-key-pkcs1-pem"
+  case openSSLPrivateKey2048PEM = "openssl-private-key-pkcs1-2048-pem"
+  case openSSLPublicKey2048PEM = "openssl-public-key-pkcs8-2048-pem"
   case openSSLPublicKeyPKCS1PEM = "openssl-public-key-pkcs1-pem"
   case openSSLPublicKeyPEM = "openssl-public-key-pkcs8-pem"
   case ehrContractGCMMessage = "ehr-gcm-contract-message-base64"
@@ -19,6 +21,10 @@ enum TestData: String {
   case ehrContractCBCMessage = "ehr-cbc-contract-message-base64"
   case ehrContractCBCCipherKey = "ehr-cbc-contract-cipher-key-base64"
   case opensslCSR = "openssl-csr"
+  case kvConnectEmail = "kvconnect-mail"
+  case kvConnectEmailDec = "kvconnect-mail-dec"
+  case kvPrivateKeyOpenPEM = "kvprivatekey-open-pem"
+  case kvRootAndVivyCAPEM = "kvroot-kvvivy-ca-pem"
 
   var data: Data {
     guard
@@ -32,11 +38,14 @@ enum TestData: String {
   }
 
   var base64Decoded: Data {
-    let trimmed = String(data: data, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
-    return Data(base64Encoded: trimmed)!
+    return Data(base64Encoded: stringTrimmingWhitespacesAndNewlines)!
   }
-
+  
   var string: String {
     return String(data: data, encoding: .utf8)!
+  }
+
+  var stringTrimmingWhitespacesAndNewlines: String {
+    return string.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }

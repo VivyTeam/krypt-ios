@@ -51,4 +51,20 @@ final class KeyTests: XCTestCase {
     let pem = try key.convertedToPEM()
     XCTAssertEqual(pem, testPEM)
   }
+
+  func testInit_privateKey2048__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPrivateKey2048PEM.data
+    
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .private, size: .bit_2048))
+  }
+
+  func testInit_publicKey2048__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPublicKey2048PEM.data
+    
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
+  }
 }
