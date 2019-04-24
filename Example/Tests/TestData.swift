@@ -22,9 +22,14 @@ enum TestData: String {
   case ehrContractCBCCipherKey = "ehr-cbc-contract-cipher-key-base64"
   case opensslCSR = "openssl-csr"
   case kvConnectEmail = "kvconnect-mail"
+  case kvConnectEmailCorrupted = "kvconnect-mail-corrupted"
   case kvConnectEmailDec = "kvconnect-mail-dec"
   case kvPrivateKeyOpenPEM = "kvprivatekey-open-pem"
+  case kvRootCAPEM = "kvroot-ca-pem"
+  case kvVivyCAPEM = "kvvivy-ca-pem"
   case kvRootAndVivyCAPEM = "kvroot-kvvivy-ca-pem"
+  case wrongPrivateKeyOpenPEM = "wrong-privatekey-open-pem"
+  case wrongCAPEM = "wrong-ca-pem"
 
   var data: Data {
     guard

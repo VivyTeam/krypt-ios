@@ -1,4 +1,5 @@
 module Krypt_internal {
   header "csr.h"
+  header "smime.h"
   export *
 }
