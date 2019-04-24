@@ -18,7 +18,7 @@ public struct CSR {
     case invalidKey
     case failedCreatingCSR
   }
-  
+
   /// Creates Certificate signing request (CSR)
   ///
   /// - Parameters:
@@ -45,17 +45,11 @@ public struct CSR {
       (attributes?.givenName ?? "").unsafeUtf8cString,
       (attributes?.surname ?? "").unsafeUtf8cString
     )
-    
+
     guard let csr = result else {
       throw Error.failedCreatingCSR
     }
-    
-    return String(cString: csr)
-  }
-}
 
-private extension String {
-  var unsafeUtf8cString: [CChar] {
-    return cString(using: .utf8) ?? []
+    return String(cString: csr)
   }
 }
