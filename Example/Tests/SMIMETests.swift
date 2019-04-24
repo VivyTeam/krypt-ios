@@ -35,8 +35,11 @@ final class SMIMETests: XCTestCase {
     let privateKeyPEM = TestData.wrongPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     
+    //when
+    let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
+
     // then
-    XCTAssertNil(SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines)
+    XCTAssertNil(decryptedEmail)
   }
 
   func testDecrypt_whileEncryptedEmailCorrupted__failsToDecrypt() {
@@ -45,8 +48,11 @@ final class SMIMETests: XCTestCase {
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     
+    //when
+    let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
+    
     // then
-    XCTAssertNil(SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines)
+    XCTAssertNil(decryptedEmail)
   }
 
   // MARK: VERIFICATION
@@ -55,24 +61,33 @@ final class SMIMETests: XCTestCase {
     // given
     let certificates = [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data]
     
+    //when
+    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
+    
     // then
-    XCTAssertTrue(SMIME.verify(data: decryptedEmail, certificates: certificates))
+    XCTAssertTrue(verified)
   }
 
   func testVerify_whenCACertificateChainIncomplete__verifyFails() {
     // given
     let certificates = [TestData.kvRootCAPEM.data]
-    
+
+    //when
+    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
+
     // then
-    XCTAssertFalse(SMIME.verify(data: decryptedEmail, certificates: certificates))
+    XCTAssertFalse(verified)
   }
   
   func testVerify_whenWrongCertificateChainProvided__verifyFails() {
     // given
     let certificates = [TestData.wrongCAPEM.data]
         
+    //when
+    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
+    
     // then
-    XCTAssertFalse(SMIME.verify(data: decryptedEmail, certificates: certificates))
+    XCTAssertFalse(verified)
   }
 }
 
