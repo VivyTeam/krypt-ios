@@ -145,6 +145,7 @@ char *createCSR(const char *key,
 
   // Convert to PEM
   out = BIO_new(BIO_s_mem());
+  BIO_set_mem_eof_return(out, 0);
   ret = PEM_write_bio_X509_REQ(out, x509_req);
   if (ret <= 0) {
     freeAll(x509_req, out, privateKey);
@@ -155,7 +156,7 @@ char *createCSR(const char *key,
   BIO_get_mem_ptr(out, &mem);
   data = malloc(mem->length);
   memcpy(data, mem->data, mem->length);
-  BIO_flush(out);
+  BIO_free(out);
 
   return data;
 }

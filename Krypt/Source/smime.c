@@ -83,7 +83,6 @@ char *decrypt_pkcs7(PKCS7 *pkcs7, EVP_PKEY *pkey) {
   BIO_get_mem_ptr(out, &mem);
   char *data = malloc(mem->length);
   memcpy(data, mem->data, mem->length);
-  BIO_flush(out);
   BIO_free(out);
   return data;
 }
