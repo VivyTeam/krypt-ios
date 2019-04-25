@@ -502,7 +502,7 @@
 		E79D922D646BC70DCEDFD7B5DEA7D4F2 /* Generics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Generics.swift; path = Sources/CryptoSwift/Generics.swift; sourceTree = "<group>"; };
 		E852E093BA70DB80C5AF239D557969CC /* store.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = store.h; path = OpenSSL/include/openssl/store.h; sourceTree = "<group>"; };
 		EB630B59A9DE2CAF4B26EBA6FD0BDC9F /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = OpenSSL/include/openssl/hmac.h; sourceTree = "<group>"; };
-		EBBBD8A2225B9E490078E17E /* CSRAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRAttributes.swift; sourceTree = "<group>"; };
+		EBBBD8A2225B9E490078E17E /* CSRAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CSRAttributes.swift; path = Krypt/Source/CSRAttributes.swift; sourceTree = "<group>"; };
 		EDAD8A2BB3C6B329181694BA18E162D5 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = Sources/CryptoSwift/Operators.swift; sourceTree = "<group>"; };
 		EE820A9A2EE3077B95AA3F0C1A80E49C /* SHA256.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SHA256.swift; path = Krypt/Source/SHA256.swift; sourceTree = "<group>"; };
 		EF4F6C398AD046896E23F3FCD69B5A76 /* Pods-Krypt_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Krypt_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
