@@ -20,7 +20,7 @@ final class SMIMETests: XCTestCase {
     let email = TestData.kvConnectEmail.data
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
-    let expectedDecryptedEmail = TestData.kvConnectEmailDec.stringTrimmingWhitespacesAndNewlines
+    let expectedDecryptedEmail = TestData.kvConnectEmailDecContentNoSignature.stringTrimmingWhitespacesAndNewlines
     
     // when
     let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
@@ -57,37 +57,39 @@ final class SMIMETests: XCTestCase {
 
   // MARK: VERIFICATION
   
-  func testVerify_whenCACertificateChainProvided__verifySucceeds() {
+  func testVerify_whenCACertificateChainProvided__returnsContentWithoutSignature() {
     // given
     let certificates = [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data]
+    let expectedContent = TestData.kvConnectEmailDecContentNoSignature.data.stringByTrimmingWhitespacesAndNewlines
     
     //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
+    let content = try! SMIME.verify(data: decryptedEmail, certificates: certificates)
+    
+    let contentByTrimmingThreeLines = Data(content.stringByTrimmingWhitespacesAndNewlines.trimmingFirstThreeLines.utf8)
+    
+    let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
+
+    let test = SMIME.decrypt(data: contentByTrimmingThreeLines, key: key)
     
     // then
-    XCTAssertTrue(verified)
+    XCTAssertEqual(content.stringByTrimmingWhitespacesAndNewlines, expectedContent)
   }
 
   func testVerify_whenCACertificateChainIncomplete__verifyFails() {
     // given
     let certificates = [TestData.kvRootCAPEM.data]
 
-    //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
-
     // then
-    XCTAssertFalse(verified)
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
   }
   
   func testVerify_whenWrongCertificateChainProvided__verifyFails() {
     // given
     let certificates = [TestData.wrongCAPEM.data]
-        
-    //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
-    
+
     // then
-    XCTAssertFalse(verified)
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
   }
 }
 

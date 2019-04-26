@@ -205,6 +205,8 @@
 		E14AEDC55D14BF4CEDA237489EFE8FA6 /* pkcs12err.h in Headers */ = {isa = PBXBuildFile; fileRef = 7D710968DBA4BAFD70025FD5C9DE3D8C /* pkcs12err.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E460136219233EE272129E76CB57C142 /* e_os2.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AE4EE91E0803270008CFBFE21E6ADDB /* e_os2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E626A7325A3EF10B8D65691C87C7215C /* StreamDecryptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E4BEF66C1406DF5A906003B25858492 /* StreamDecryptor.swift */; };
+		EB007E082271F79F001BD473 /* helper.h in Headers */ = {isa = PBXBuildFile; fileRef = EB007E062271F79F001BD473 /* helper.h */; };
+		EB007E092271F79F001BD473 /* helper.c in Sources */ = {isa = PBXBuildFile; fileRef = EB007E072271F79F001BD473 /* helper.c */; };
 		EB7FB139225BA97C00B415D0 /* CSRAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBBBD8A2225B9E490078E17E /* CSRAttributes.swift */; };
 		ECCDF6724F7FD337811DB6D3E34EC1A5 /* randerr.h in Headers */ = {isa = PBXBuildFile; fileRef = A92ACEE09A36021970E33022E8ED4DD5 /* randerr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ED208DDACD384708325C04AE602BD380 /* stack.h in Headers */ = {isa = PBXBuildFile; fileRef = 4BE0586D983F511EF10D290FAC5868D9 /* stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -501,6 +503,8 @@
 		E741C76E63692AA00B819F9368A78EAC /* CryptoSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = CryptoSwift.xcconfig; sourceTree = "<group>"; };
 		E79D922D646BC70DCEDFD7B5DEA7D4F2 /* Generics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Generics.swift; path = Sources/CryptoSwift/Generics.swift; sourceTree = "<group>"; };
 		E852E093BA70DB80C5AF239D557969CC /* store.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = store.h; path = OpenSSL/include/openssl/store.h; sourceTree = "<group>"; };
+		EB007E062271F79F001BD473 /* helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = helper.h; path = Krypt/Source/helper.h; sourceTree = "<group>"; };
+		EB007E072271F79F001BD473 /* helper.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = helper.c; path = Krypt/Source/helper.c; sourceTree = "<group>"; };
 		EB630B59A9DE2CAF4B26EBA6FD0BDC9F /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = OpenSSL/include/openssl/hmac.h; sourceTree = "<group>"; };
 		EBBBD8A2225B9E490078E17E /* CSRAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CSRAttributes.swift; path = Krypt/Source/CSRAttributes.swift; sourceTree = "<group>"; };
 		EDAD8A2BB3C6B329181694BA18E162D5 /* Operators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Operators.swift; path = Sources/CryptoSwift/Operators.swift; sourceTree = "<group>"; };
@@ -738,6 +742,8 @@
 				42951AA888803881ACDFEBF7F3D9139F /* CipherAttr.swift */,
 				BD0A375F0538503288D865C4DC843016 /* csr.c */,
 				4AE36D431E410C375F18C3C9A348D4FE /* csr.h */,
+				EB007E072271F79F001BD473 /* helper.c */,
+				EB007E062271F79F001BD473 /* helper.h */,
 				2CFE19A6EF9939CC5B58E155AA54FF7F /* CSR.swift */,
 				EBBBD8A2225B9E490078E17E /* CSRAttributes.swift */,
 				1CCD67031967C648177FF1E9B485E16C /* EHREncryption.swift */,
@@ -1094,6 +1100,7 @@
 			files = (
 				ADF26F43225F68820025D33A /* smime.h in Headers */,
 				1A302DBE57D66EAF5C20F0591E54D97F /* csr.h in Headers */,
+				EB007E082271F79F001BD473 /* helper.h in Headers */,
 				0FB8052D4F90FE52DDFD7C6254FCEA72 /* Krypt-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1300,6 +1307,7 @@
 				58E2684AB26C4A3F144B60EAA99B5336 /* LocalEncryption.swift in Sources */,
 				0A3C92CA85383F3F8739156C57ECD3F4 /* MedStickerEncryption.swift in Sources */,
 				7D9F01189958121F6CC30B3BB4C378FA /* PBKDF2.swift in Sources */,
+				EB007E092271F79F001BD473 /* helper.c in Sources */,
 				ADF26F46225F69EA0025D33A /* SMIME.swift in Sources */,
 				BEEF73BEC836A5635E5947188082F9B5 /* PublicError.swift in Sources */,
 				15D1F53ED02C14424280B55C89AD290A /* RSA.swift in Sources */,

@@ -14,14 +14,7 @@
 #include <openssl/ssl.h>
 #include <openssl/crypto.h>
 #include <openssl/rand.h>
-
-BIO *BIO_from_str(const char *str) {
-  BIO *membuf = BIO_new(BIO_s_mem());
-  if (BIO_puts(membuf, str) < 1) {
-    return NULL;
-  }
-  return membuf;
-}
+#include "helper.h"
 
 /*
  converts PEM encoded certificate to X509
@@ -158,9 +151,10 @@ X509_STORE *store_with_trusted_certs(const char** certs, int certCount) {
  @param decrypted Decrypted SMIME content
  @param certs Collection of certificate strings in form of a pointer to array of strings (char *certs[])
  @param certCount Number of provided certificate strings
+ @param content Returns content of verified MIME content (without signature)
  @return Verification status: 1 = success, 0 = failure
  */
-int smime_verify(const char *decrypted, const char** certs, int certCount) {
+int smime_verify(const char *decrypted, const char** certs, int certCount, char **content) {
   BIO *bcont = NULL;
   
   PKCS7 *pkcs7 = get_pkcs7(decrypted, &bcont);
@@ -174,10 +168,18 @@ int smime_verify(const char *decrypted, const char** certs, int certCount) {
     return 0;
   }
   
+  BIO *out = BIO_new(BIO_s_mem());
+
   int flags = PKCS7_DETACHED;
-  int ret = PKCS7_verify(pkcs7, NULL, store, bcont, NULL, flags);
+  int ret = PKCS7_verify(pkcs7, NULL, store, bcont, out, flags);
   PKCS7_free(pkcs7);
   X509_STORE_free(store);
+
+  if (content) {
+    *content = str_from_BIO(out);
+  }
+  
+  BIO_free(out);
 
   return ret;
 }

@@ -9,7 +9,6 @@ import Foundation
 import Krypt_internal
 
 public struct SMIME {
-  
   /// Decrypts encrypted SMIME content using private key
   ///
   /// - Parameters:
@@ -36,19 +35,30 @@ public struct SMIME {
   /// - Parameters:
   ///   - data: SMIME content
   ///   - certificates: collection of CA certificates to trust
-  /// - Returns: True in case verification succeeded
-  public static func verify(data: Data, certificates: [Data]) -> Bool {
+  /// - Returns: Decrypted SMIME content without signature
+  /// - Throws: In case of any error.
+  public static func verify(data: Data, certificates: [Data]) throws -> Data {
     guard let dataString = data.unsafeUtf8cString else {
-      return false
+      throw SMIMEError.error
     }
     
     let certificateStrings = certificates.map { String(decoding: $0, as: UTF8.self) }
     var certificateCStrings = certificateStrings.cStringsByCoping
     
-    let success = smime_verify(dataString, &certificateCStrings, Int32(certificateCStrings.count)) == 1
+    var contentWithoutSignature: UnsafeMutablePointer<Int8>?
+    
+    guard smime_verify(dataString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
+      throw SMIMEError.error
+    }
+    
+    guard let content = contentWithoutSignature?.data else {
+      throw SMIMEError.error
+    }
+    
     certificateCStrings.freePointers()
+    contentWithoutSignature?.deallocate()
 
-    return success
+    return content
   }
 }
 
@@ -74,4 +84,8 @@ private extension Collection where Element == UnsafePointer<Int8>? {
   func freePointers() {
     forEach { free(UnsafeMutablePointer(mutating: $0)) }
   }
+}
+
+enum SMIMEError: Error {
+  case error
 }
