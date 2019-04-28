@@ -14,20 +14,24 @@ public struct SMIME {
   /// - Parameters:
   ///   - data: encrypted SMIME content
   ///   - key: private key
-  /// - Returns: Decrypted SMIME content in case of successful decryption or nil in case of failure.
-  public static func decrypt(data: Data, key: Key) -> Data? {
-    guard key.access == .private else {
-      return nil
-    }
-    guard let dataString = data.unsafeUtf8cString else {
-      return nil
+  /// - Returns: Decrypted SMIME content
+  /// - Throws: In case of any error
+  public static func decrypt(data: Data, key: Key) throws -> Data {
+    guard key.access == .private,
+      let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
+      throw SMIMEError.error
     }
     
-    guard let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
-      return nil
+    guard let dataString = data.unsafeUtf8cString else {
+        throw SMIMEError.error
+    }
+    
+    guard let decryptedString = smime_decrypt(dataString, keyPEM),
+      let decryptedData = decryptedString.data else {
+      throw SMIMEError.error
     }
 
-    return smime_decrypt(dataString, keyPEM)?.data
+    return decryptedData
   }
   
   /// Verifies the decrypted SMIME content signature against trusted CA certificates. The certificate chain needs to be complete for verification to succeed.

@@ -60,6 +60,8 @@ PKCS7 *get_pkcs7(const char *smime_string, BIO **bcont) {
   return pkcs7;
 }
 
+// MARK: DECRYPTION
+
 /*
  decrypts the SMIME container
  */
@@ -72,11 +74,8 @@ char *decrypt_pkcs7(PKCS7 *pkcs7, EVP_PKEY *pkey) {
     return NULL;
   }
   
-  BUF_MEM* mem;
-  BIO_get_mem_ptr(out, &mem);
-  char *data = malloc(mem->length);
-  memcpy(data, mem->data, mem->length);
-  BIO_free(out);
+  char *data = str_from_BIO(out);
+
   return data;
 }
 
@@ -88,7 +87,6 @@ char *decrypt_pkcs7(PKCS7 *pkcs7, EVP_PKEY *pkey) {
  @return Decrypted SMIME content
  */
 char *smime_decrypt(const char *encrypted, const char *privateKey) {
-
   EVP_PKEY *pkey = get_key(privateKey);
   if (!pkey) {
     return NULL;
@@ -108,6 +106,8 @@ char *smime_decrypt(const char *encrypted, const char *privateKey) {
 
   return data;
 }
+
+// MARK: VERIFICATION
 
 /**
  Generates an instance of X509_STORE and populates it with trusted certificates
@@ -170,12 +170,23 @@ int smime_verify(const char *decrypted, const char** certs, int certCount, char 
   
   BIO *out = BIO_new(BIO_s_mem());
 
-  int flags = PKCS7_DETACHED;
+  int flags = 0;
+
+  // get_pkcs7() parses a message in S/MIME format using SMIME_read_PKCS7(). "If *bcont is not NULL then the message is clear text signed. *bcont can then be passed to PKCS7_verify() with the PKCS7_DETACHED flag set" (https://www.openssl.org/docs/man1.1.1/man3/SMIME_read_PKCS7.html)
+  if (bcont) {
+    flags |= PKCS7_DETACHED;
+  }
+
+  //  Prevents usage of any certificate contained in the message as untrusted CA.
+  //  "If PKCS7_NOCHAIN is set then the certificates contained in the message are not used as untrusted CAs. This means that the whole verify chain (apart from the signer's certificate) must be contained in the trusted store." (https://www.openssl.org/docs/man1.0.2/man3/PKCS7_verify.html)
+  flags |= PKCS7_NOCHAIN;
+  
   int ret = PKCS7_verify(pkcs7, NULL, store, bcont, out, flags);
   PKCS7_free(pkcs7);
   X509_STORE_free(store);
-
-  if (content) {
+  BIO_free(bcont);
+  
+  if (ret && content) {
     *content = str_from_BIO(out);
   }
   
