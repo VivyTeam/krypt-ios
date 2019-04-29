@@ -18,7 +18,7 @@
  */
 char *copy_mem_buf(BUF_MEM* mem) {
   char *str = malloc(mem->length + 1);
-  memcpy(str, mem->data, mem->length + 1);
+  memcpy(str, mem->data, mem->length);
   str[mem->length] = '\0';
   
   return str;
