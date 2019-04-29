@@ -41,13 +41,12 @@ public struct SMIME {
   ///   - certificates: collection of CA certificates to trust
   /// - Returns: Decrypted SMIME content without signature
   /// - Throws: In case of any error.
-  public static func verify(data: Data, certificates: [Data]) throws -> Data {
+  public static func verify(data: Data, caCertificates: CACertificates) throws -> Data {
     guard let dataString = data.unsafeUtf8cString else {
       throw SMIMEError.error
     }
     
-    let certificateStrings = certificates.map { String(decoding: $0, as: UTF8.self) }
-    var certificateCStrings = certificateStrings.cStringsByCoping
+    var certificateCStrings = caCertificates.certificateCStrings
     
     var contentWithoutSignature: UnsafeMutablePointer<Int8>?
     
@@ -63,7 +62,7 @@ public struct SMIME {
     contentWithoutSignature?.deallocate()
 
     return content
-  }
+  }  
 }
 
 private extension Data {
@@ -75,12 +74,6 @@ private extension Data {
 private extension UnsafeMutablePointer where Pointee == Int8 {
   var data: Data? {
     return String(cString: self).data(using: .utf8)
-  }
-}
-
-private extension Collection where Element == String {
-  var cStringsByCoping: [UnsafePointer<Int8>?] {
-    return map { UnsafePointer<Int8>(strdup($0)) }
   }
 }
 

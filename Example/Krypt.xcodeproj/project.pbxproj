@@ -34,7 +34,11 @@
 		ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */; };
 		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
 		EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */ = {isa = PBXBuildFile; fileRef = EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */; };
-		EB007E0B2272035E001BD473 /* kvconnect-mail-dec-content-no-signature in Resources */ = {isa = PBXBuildFile; fileRef = EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */; };
+		EB007E162276EA8F001BD473 /* KVConnectSMIMETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB007E142276EA61001BD473 /* KVConnectSMIMETests.swift */; };
+		EB007E1B2276F61C001BD473 /* kvconnect-mail-dec-verified in Resources */ = {isa = PBXBuildFile; fileRef = EB007E182276F61C001BD473 /* kvconnect-mail-dec-verified */; };
+		EB007E1C2276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB007E192276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem */; };
+		EB007E1D2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers in Resources */ = {isa = PBXBuildFile; fileRef = EB007E1A2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers */; };
+		EB007E2C22772C0F001BD473 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB007E2B22772C0F001BD473 /* Data+String.swift */; };
 		EB0A5E5722676CF9000FD79C /* wrong-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E5622676CF9000FD79C /* wrong-ca-pem */; };
 		EB0A5E592268750C000FD79C /* wrong-privatekey-open-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */; };
 		EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */; };
@@ -95,7 +99,11 @@
 		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail-corrupted"; sourceTree = "<group>"; };
-		EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail-dec-content-no-signature"; sourceTree = "<group>"; };
+		EB007E142276EA61001BD473 /* KVConnectSMIMETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVConnectSMIMETests.swift; sourceTree = "<group>"; };
+		EB007E182276F61C001BD473 /* kvconnect-mail-dec-verified */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-dec-verified"; sourceTree = "<group>"; };
+		EB007E192276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvroot-kvvivy-additional-ca-pem"; sourceTree = "<group>"; };
+		EB007E1A2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-dec-verified-both-layers"; sourceTree = "<group>"; };
+		EB007E2B22772C0F001BD473 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
 		EB0A5E5622676CF9000FD79C /* wrong-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrong-ca-pem"; sourceTree = "<group>"; };
 		EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrong-privatekey-open-pem"; sourceTree = "<group>"; };
 		EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvvivy-ca-pem"; sourceTree = "<group>"; };
@@ -182,10 +190,12 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				EB007E2A22772BFD001BD473 /* Extensions */,
 				AD2BC30C21F76AA700DD674F /* AES256Tests.swift */,
 				AD6B2D482231111D00C03EC1 /* CSRTests.swift */,
 				AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */,
 				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
+				EB007E142276EA61001BD473 /* KVConnectSMIMETests.swift */,
 				ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
 				AD13AB55225F7AAB00E65BBD /* SMIMETests.swift */,
@@ -245,21 +255,23 @@
 			path = CSR;
 			sourceTree = "<group>";
 		};
-		AD13AB50225F781600E65BBD /* SMIME */ = {
+		AD13AB50225F781600E65BBD /* KVConnect */ = {
 			isa = PBXGroup;
 			children = (
 				AD13AB4E225F781100E65BBD /* kvconnect-mail */,
 				EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */,
 				AD13AB57225F9DB200E65BBD /* kvconnect-mail-dec */,
-				EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */,
+				EB007E182276F61C001BD473 /* kvconnect-mail-dec-verified */,
+				EB007E1A2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers */,
 				AD13AB51225F789400E65BBD /* kvprivatekey-open-pem */,
-				AD13AB53225F78DA00E65BBD /* kvroot-kvvivy-ca-pem */,
 				EB0A5E5D2268B0D6000FD79C /* kvroot-ca-pem */,
+				EB007E192276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem */,
+				AD13AB53225F78DA00E65BBD /* kvroot-kvvivy-ca-pem */,
 				EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */,
-				EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */,
 				EB0A5E5622676CF9000FD79C /* wrong-ca-pem */,
+				EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */,
 			);
-			path = SMIME;
+			path = KVConnect;
 			sourceTree = "<group>";
 		};
 		ADC231F62204478800A57D6A /* Files */ = {
@@ -268,7 +280,7 @@
 				AD13AB4B225F778800E65BBD /* E2EE */,
 				AD13AB4C225F779500E65BBD /* OpenSSL */,
 				AD13AB4D225F77C500E65BBD /* CSR */,
-				AD13AB50225F781600E65BBD /* SMIME */,
+				AD13AB50225F781600E65BBD /* KVConnect */,
 			);
 			path = Files;
 			sourceTree = "<group>";
@@ -282,6 +294,14 @@
 				9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		EB007E2A22772BFD001BD473 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EB007E2B22772C0F001BD473 /* Data+String.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,18 +404,20 @@
 			files = (
 				ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */,
 				AD13AB54225F78DA00E65BBD /* kvroot-kvvivy-ca-pem in Resources */,
+				EB007E1B2276F61C001BD473 /* kvconnect-mail-dec-verified in Resources */,
 				ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */,
 				EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */,
-				EB007E0B2272035E001BD473 /* kvconnect-mail-dec-content-no-signature in Resources */,
 				AD13AB4F225F781100E65BBD /* kvconnect-mail in Resources */,
 				ADC232002204478800A57D6A /* ehr-cbc-contract-message-base64 in Resources */,
 				AD13AB52225F789400E65BBD /* kvprivatekey-open-pem in Resources */,
 				ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */,
+				EB007E1C2276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem in Resources */,
 				AD6B2D472231108C00C03EC1 /* openssl-csr in Resources */,
 				EB0A5E5722676CF9000FD79C /* wrong-ca-pem in Resources */,
 				EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */,
 				ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */,
 				ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */,
+				EB007E1D2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers in Resources */,
 				AD13AB58225F9DB200E65BBD /* kvconnect-mail-dec in Resources */,
 				EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */,
 				EB0A5E5F2268B0D6000FD79C /* kvroot-ca-pem in Resources */,
@@ -496,10 +518,12 @@
 			files = (
 				AD1568C621F9D2AD008572DA /* TestData.swift in Sources */,
 				AD13AB56225F7AAB00E65BBD /* SMIMETests.swift in Sources */,
+				EB007E2C22772C0F001BD473 /* Data+String.swift in Sources */,
 				AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */,
 				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
 				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
 				ADB6EE75220840470044C963 /* MedStickerEncryptionTests.swift in Sources */,
+				EB007E162276EA8F001BD473 /* KVConnectSMIMETests.swift in Sources */,
 				AD1568BF21F8D494008572DA /* RSATests.swift in Sources */,
 				AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */,
 			);

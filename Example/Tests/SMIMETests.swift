@@ -53,11 +53,11 @@ final class SMIMETests: XCTestCase {
   
   func testVerify_whenCACertificateChainProvided__returnsContentWithoutSignature() {
     // given
-    let caTrustedCerts = [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data]
-    let expectedContent = TestData.kvConnectEmailDecContentNoSignature.data.stringTrimmingWhitespacesAndNewlines
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
+    let expectedContent = TestData.kvConnectEmailDecVerified.stringTrimmingWhitespacesAndNewlines
     
     //when
-    let content = try! SMIME.verify(data: decryptedEmail, certificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
+    let content = try! SMIME.verify(data: decryptedEmail, caCertificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
 
     // then
     XCTAssertEqual(content, expectedContent)
@@ -65,30 +65,24 @@ final class SMIMETests: XCTestCase {
 
   func testVerify_whenCACertificateChainIncomplete__verifyFails() {
     // given
-    let certificates = [TestData.kvRootCAPEM.data]
+    let certificates = CACertificates(certificates: [TestData.kvRootCAPEM.data])
 
     // then
-    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, caCertificates: certificates))
   }
   
   func testVerify_whenWrongCertificateChainProvided__verifyFails() {
     // given
-    let certificates = [TestData.wrongCAPEM.data]
+    let certificates = CACertificates(certificates: [TestData.wrongCAPEM.data])
 
     // then
-    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
-  }
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, caCertificates: certificates))
+  }  
 }
 
 extension SMIMETests {
   var decryptedEmail: Data {
     let decryptedString = try! SMIME.decrypt(data: email, key: key).stringTrimmingWhitespacesAndNewlines
     return Data(decryptedString.utf8)
-  }
-}
-
-private extension Data {
-  var stringTrimmingWhitespacesAndNewlines: String {
-    return String(data: self, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }
