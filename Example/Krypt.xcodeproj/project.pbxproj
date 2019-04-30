@@ -34,6 +34,7 @@
 		ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */; };
 		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
 		EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */ = {isa = PBXBuildFile; fileRef = EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */; };
+		EB007E0B2272035E001BD473 /* kvconnect-mail-dec-content-no-signature in Resources */ = {isa = PBXBuildFile; fileRef = EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */; };
 		EB0A5E5722676CF9000FD79C /* wrong-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E5622676CF9000FD79C /* wrong-ca-pem */; };
 		EB0A5E592268750C000FD79C /* wrong-privatekey-open-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */; };
 		EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */; };
@@ -94,6 +95,7 @@
 		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail-corrupted"; sourceTree = "<group>"; };
+		EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail-dec-content-no-signature"; sourceTree = "<group>"; };
 		EB0A5E5622676CF9000FD79C /* wrong-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrong-ca-pem"; sourceTree = "<group>"; };
 		EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "wrong-privatekey-open-pem"; sourceTree = "<group>"; };
 		EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvvivy-ca-pem"; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				AD13AB4E225F781100E65BBD /* kvconnect-mail */,
 				EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */,
 				AD13AB57225F9DB200E65BBD /* kvconnect-mail-dec */,
+				EB007E0A227202DE001BD473 /* kvconnect-mail-dec-content-no-signature */,
 				AD13AB51225F789400E65BBD /* kvprivatekey-open-pem */,
 				AD13AB53225F78DA00E65BBD /* kvroot-kvvivy-ca-pem */,
 				EB0A5E5D2268B0D6000FD79C /* kvroot-ca-pem */,
@@ -383,6 +386,7 @@
 				AD13AB54225F78DA00E65BBD /* kvroot-kvvivy-ca-pem in Resources */,
 				ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */,
 				EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */,
+				EB007E0B2272035E001BD473 /* kvconnect-mail-dec-content-no-signature in Resources */,
 				AD13AB4F225F781100E65BBD /* kvconnect-mail in Resources */,
 				ADC232002204478800A57D6A /* ehr-cbc-contract-message-base64 in Resources */,
 				AD13AB52225F789400E65BBD /* kvprivatekey-open-pem in Resources */,

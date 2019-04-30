@@ -23,83 +23,72 @@ final class SMIMETests: XCTestCase {
     let expectedDecryptedEmail = TestData.kvConnectEmailDec.stringTrimmingWhitespacesAndNewlines
     
     // when
-    let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
+    let decryptedEmail = try! SMIME.decrypt(data: email, key: key).stringTrimmingWhitespacesAndNewlines
     
     // then
     XCTAssertEqual(decryptedEmail, expectedDecryptedEmail)
   }
 
-  func testDecrypt_whenWrongPrivateKeyProvided__failsToDecrypt() {
+  func testDecrypt_whenWrongPrivateKeyProvided__throwsError() {
     // given
     let email = TestData.kvConnectEmail.data
     let privateKeyPEM = TestData.wrongPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     
-    //when
-    let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
-
     // then
-    XCTAssertNil(decryptedEmail)
+    XCTAssertThrowsError(try SMIME.decrypt(data: email, key: key))
   }
 
-  func testDecrypt_whileEncryptedEmailCorrupted__failsToDecrypt() {
+  func testDecrypt_whileEncryptedEmailCorrupted__throwsError() {
     // given
     let email = TestData.kvConnectEmailCorrupted.data
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     
-    //when
-    let decryptedEmail = SMIME.decrypt(data: email, key: key)?.stringByTrimmingWhitespacesAndNewlines
-    
     // then
-    XCTAssertNil(decryptedEmail)
+    XCTAssertThrowsError(try SMIME.decrypt(data: email, key: key))
   }
 
   // MARK: VERIFICATION
   
-  func testVerify_whenCACertificateChainProvided__verifySucceeds() {
+  func testVerify_whenCACertificateChainProvided__returnsContentWithoutSignature() {
     // given
-    let certificates = [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data]
+    let caTrustedCerts = [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data]
+    let expectedContent = TestData.kvConnectEmailDecContentNoSignature.data.stringTrimmingWhitespacesAndNewlines
     
     //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
-    
+    let content = try! SMIME.verify(data: decryptedEmail, certificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
+
     // then
-    XCTAssertTrue(verified)
+    XCTAssertEqual(content, expectedContent)
   }
 
   func testVerify_whenCACertificateChainIncomplete__verifyFails() {
     // given
     let certificates = [TestData.kvRootCAPEM.data]
 
-    //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
-
     // then
-    XCTAssertFalse(verified)
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
   }
   
   func testVerify_whenWrongCertificateChainProvided__verifyFails() {
     // given
     let certificates = [TestData.wrongCAPEM.data]
-        
-    //when
-    let verified = SMIME.verify(data: decryptedEmail, certificates: certificates)
-    
+
     // then
-    XCTAssertFalse(verified)
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, certificates: certificates))
   }
 }
 
 extension SMIMETests {
   var decryptedEmail: Data {
-    let decryptedString = SMIME.decrypt(data: email, key: key)!.stringByTrimmingWhitespacesAndNewlines
+    let decryptedString = try! SMIME.decrypt(data: email, key: key).stringTrimmingWhitespacesAndNewlines
     return Data(decryptedString.utf8)
   }
 }
 
 private extension Data {
-  var stringByTrimmingWhitespacesAndNewlines: String {
+  var stringTrimmingWhitespacesAndNewlines: String {
     return String(data: self, encoding: .utf8)!.trimmingCharacters(in: .whitespacesAndNewlines)
   }
 }

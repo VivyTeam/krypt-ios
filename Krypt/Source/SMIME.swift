@@ -9,26 +9,29 @@ import Foundation
 import Krypt_internal
 
 public struct SMIME {
-  
   /// Decrypts encrypted SMIME content using private key
   ///
   /// - Parameters:
   ///   - data: encrypted SMIME content
   ///   - key: private key
-  /// - Returns: Decrypted SMIME content in case of successful decryption or nil in case of failure.
-  public static func decrypt(data: Data, key: Key) -> Data? {
-    guard key.access == .private else {
-      return nil
-    }
-    guard let dataString = data.unsafeUtf8cString else {
-      return nil
+  /// - Returns: Decrypted SMIME content
+  /// - Throws: In case of any error
+  public static func decrypt(data: Data, key: Key) throws -> Data {
+    guard key.access == .private,
+      let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
+      throw SMIMEError.error
     }
     
-    guard let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
-      return nil
+    guard let dataString = data.unsafeUtf8cString else {
+        throw SMIMEError.error
+    }
+    
+    guard let decryptedString = smime_decrypt(dataString, keyPEM),
+      let decryptedData = decryptedString.data else {
+      throw SMIMEError.error
     }
 
-    return smime_decrypt(dataString, keyPEM)?.data
+    return decryptedData
   }
   
   /// Verifies the decrypted SMIME content signature against trusted CA certificates. The certificate chain needs to be complete for verification to succeed.
@@ -36,19 +39,30 @@ public struct SMIME {
   /// - Parameters:
   ///   - data: SMIME content
   ///   - certificates: collection of CA certificates to trust
-  /// - Returns: True in case verification succeeded
-  public static func verify(data: Data, certificates: [Data]) -> Bool {
+  /// - Returns: Decrypted SMIME content without signature
+  /// - Throws: In case of any error.
+  public static func verify(data: Data, certificates: [Data]) throws -> Data {
     guard let dataString = data.unsafeUtf8cString else {
-      return false
+      throw SMIMEError.error
     }
     
     let certificateStrings = certificates.map { String(decoding: $0, as: UTF8.self) }
     var certificateCStrings = certificateStrings.cStringsByCoping
     
-    let success = smime_verify(dataString, &certificateCStrings, Int32(certificateCStrings.count)) == 1
+    var contentWithoutSignature: UnsafeMutablePointer<Int8>?
+    
+    guard smime_verify(dataString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
+      throw SMIMEError.error
+    }
+    
+    guard let content = contentWithoutSignature?.data else {
+      throw SMIMEError.error
+    }
+    
     certificateCStrings.freePointers()
+    contentWithoutSignature?.deallocate()
 
-    return success
+    return content
   }
 }
 
@@ -74,4 +88,8 @@ private extension Collection where Element == UnsafePointer<Int8>? {
   func freePointers() {
     forEach { free(UnsafeMutablePointer(mutating: $0)) }
   }
+}
+
+enum SMIMEError: Error {
+  case error
 }

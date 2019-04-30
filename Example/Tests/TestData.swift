@@ -24,6 +24,7 @@ enum TestData: String {
   case kvConnectEmail = "kvconnect-mail"
   case kvConnectEmailCorrupted = "kvconnect-mail-corrupted"
   case kvConnectEmailDec = "kvconnect-mail-dec"
+  case kvConnectEmailDecContentNoSignature = "kvconnect-mail-dec-content-no-signature"
   case kvPrivateKeyOpenPEM = "kvprivatekey-open-pem"
   case kvRootCAPEM = "kvroot-ca-pem"
   case kvVivyCAPEM = "kvvivy-ca-pem"
