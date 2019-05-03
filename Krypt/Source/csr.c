@@ -11,6 +11,7 @@
 #include <openssl/bio.h>
 #include <openssl/pem.h>
 #include <openssl/x509.h>
+#include "helper.h"
 
 EVP_PKEY *getPrivateKey(const char *key);
 void freeAll(X509_REQ *req, BIO *out, EVP_PKEY *key);
@@ -33,8 +34,6 @@ char *createCSR(const char *key,
   X509_NAME       *x509_name = NULL;
   EVP_PKEY        *privateKey = NULL;
   BIO             *out = NULL;
-
-  char *data = NULL;
 
   // set version of x509 req
   x509_req = X509_REQ_new();
@@ -152,11 +151,7 @@ char *createCSR(const char *key,
     return NULL;
   }
 
-  BUF_MEM* mem;
-  BIO_get_mem_ptr(out, &mem);
-  data = malloc(mem->length);
-  memcpy(data, mem->data, mem->length);
-  BIO_free(out);
+  char *data = str_from_BIO(out);
 
   return data;
 }
@@ -168,8 +163,7 @@ void freeAll(X509_REQ *req, BIO *out, EVP_PKEY *key) {
 }
 
 EVP_PKEY *getPrivateKey(const char *key) {
-  BIO *membuf = BIO_new(BIO_s_mem());
-  BIO_puts(membuf, key);
+  BIO *membuf = BIO_from_str(key);
   EVP_PKEY *privateKey = PEM_read_bio_PrivateKey(membuf, NULL, 0, NULL);
   return privateKey;
 }
