@@ -24,12 +24,13 @@ enum TestData: String {
   case kvConnectEmail = "kvconnect-mail"
   case kvConnectEmailCorrupted = "kvconnect-mail-corrupted"
   case kvConnectEmailDec = "kvconnect-mail-dec"
-  case kvConnectEmailDecContentNoSignature = "kvconnect-mail-dec-content-no-signature"
+  case kvConnectEmailDecVerified = "kvconnect-mail-dec-verified"
+  case kvConnectEmailDecVerifiedBothLayers = "kvconnect-mail-dec-verified-both-layers"
   case kvPrivateKeyOpenPEM = "kvprivatekey-open-pem"
+  case wrongPrivateKeyOpenPEM = "wrong-privatekey-open-pem"
   case kvRootCAPEM = "kvroot-ca-pem"
   case kvVivyCAPEM = "kvvivy-ca-pem"
   case kvRootAndVivyCAPEM = "kvroot-kvvivy-ca-pem"
-  case wrongPrivateKeyOpenPEM = "wrong-privatekey-open-pem"
   case wrongCAPEM = "wrong-ca-pem"
 
   var data: Data {
@@ -52,6 +53,6 @@ enum TestData: String {
   }
 
   var stringTrimmingWhitespacesAndNewlines: String {
-    return string.trimmingCharacters(in: .whitespacesAndNewlines)
+    return data.stringTrimmingWhitespacesAndNewlines
   }
 }
