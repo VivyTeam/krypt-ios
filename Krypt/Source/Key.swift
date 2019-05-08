@@ -95,22 +95,7 @@ public extension Key {
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
   func convertedToPEM() throws -> String {
     let der = try convertedToDER()
-    let keyBase64 = der.base64EncodedString()
-
-    // Insert newline `\n` every 64 characters
-    var index = 0
-    var splits = [String]()
-    while index < keyBase64.count {
-      let startIndex = keyBase64.index(keyBase64.startIndex, offsetBy: index)
-      let endIndex = keyBase64.index(startIndex, offsetBy: 64, limitedBy: keyBase64.endIndex) ?? keyBase64.endIndex
-      index = endIndex.encodedOffset
-
-      let chunk = String(keyBase64[startIndex ..< endIndex])
-      splits.append(chunk)
-    }
-    let keyBase64WithNewlines = splits.joined(separator: "\n")
-
-    return [access.pemHeaderPKCS1, keyBase64WithNewlines, access.pemFooterPKCS1].joined()
+    return PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
   }
 }
 
@@ -125,39 +110,12 @@ private extension Key.Access {
     }
   }
 
-  var pemHeaderPKCS1: String {
+  var pemFormat: PEMConverterFormat {
     switch self {
-    case .public:
-      return "-----BEGIN RSA PUBLIC KEY-----\n"
     case .private:
-      return "-----BEGIN RSA PRIVATE KEY-----\n"
-    }
-  }
-
-  var pemFooterPKCS1: String {
-    switch self {
+      return .privatePKCS1
     case .public:
-      return "\n-----END RSA PUBLIC KEY-----"
-    case .private:
-      return "\n-----END RSA PRIVATE KEY-----"
-    }
-  }
-
-  var pemHeaderPKCS8: String {
-    switch self {
-    case .public:
-      return "-----BEGIN PUBLIC KEY-----\n"
-    case .private:
-      return "-----BEGIN PRIVATE KEY-----\n"
-    }
-  }
-
-  var pemFooterPKCS8: String {
-    switch self {
-    case .public:
-      return "\n-----END PUBLIC KEY-----"
-    case .private:
-      return "\n-----END PRIVATE KEY-----"
+      return .publicPKCS1
     }
   }
 }
