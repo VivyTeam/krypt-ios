@@ -71,20 +71,7 @@ public extension Key {
   ///   - access: `Access` level of the key
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
   convenience init(pem: Data, access: Access, size: Size = .bit_4096) throws {
-    guard let pemString = String(data: pem, encoding: .utf8) else {
-      throw Error.invalidPEMData
-    }
-    // Check if the provided key is in PKCS#1 or PKCS#8
-    let isPKCS1 = pemString.hasPrefix(access.pemHeaderPKCS1)
-
-    let pemHeader = isPKCS1 ? access.pemHeaderPKCS1 : access.pemHeaderPKCS8
-    let pemFooter = isPKCS1 ? access.pemFooterPKCS1 : access.pemFooterPKCS8
-
-    guard pemString.hasPrefix(pemHeader), let footerRange = pemString.range(of: pemFooter) else {
-      throw Error.invalidPEMData
-    }
-    let stripped = String(pemString[pemHeader.endIndex ..< footerRange.lowerBound]).replacingOccurrences(of: "\n", with: "")
-    guard let der = Data(base64Encoded: stripped) else {
+    guard let der = PEMConverter.convertPEMToDER(String(decoding: pem, as: UTF8.self)) else {
       throw Error.invalidPEMData
     }
     try self.init(der: der, access: access, size: size)
