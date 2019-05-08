@@ -6,7 +6,7 @@
 //  Copyright © 2019 CocoaPods. All rights reserved.
 //
 
-import Krypt
+@testable import Krypt
 import XCTest
 
 final class PEMConverterTests: XCTestCase {
@@ -67,5 +67,41 @@ final class PEMConverterTests: XCTestCase {
 
     // then
     XCTAssertNotNil(SecCertificateCreateWithData(nil, data! as CFData))
+  }
+
+  func testConvertDERToPEM_privateKey__shouldGiveExpectedPEM() {
+    // given
+    let expectedPEM = TestData.openSSLPrivateKeyPEM.string
+    let der = PEMConverter.convertPEMToDER(expectedPEM)!
+
+    // when
+    let pem = PEMConverter.convertDER(der, toPEMFormat: .privatePKCS1)
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
+  }
+
+  func testConvertDERToPEM_publicKey__shouldGiveExpectedPEM() {
+    // given
+    let expectedPEM = TestData.openSSLPublicKeyPKCS1PEM.stringTrimmingWhitespacesAndNewlines
+    let der = PEMConverter.convertPEMToDER(expectedPEM)!
+
+    // when
+    let pem = PEMConverter.convertDER(der, toPEMFormat: .publicPKCS1)
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
+  }
+
+  func testConvertDERToPEM_certificate__shouldGiveExpectedPEM() {
+    // given
+    let expectedPEM = TestData.openSSLCertificateX509PEM.stringTrimmingWhitespacesAndNewlines
+    let der = PEMConverter.convertPEMToDER(expectedPEM)!
+
+    // when
+    let pem = PEMConverter.convertDER(der, toPEMFormat: .certificateX509)
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
   }
 }
