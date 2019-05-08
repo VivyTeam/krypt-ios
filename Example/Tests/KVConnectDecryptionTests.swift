@@ -11,7 +11,7 @@ import Foundation
 import Krypt
 import XCTest
 
-final class KVConnectSMIMETests: XCTestCase {
+final class KVConnectDecryptionTests: XCTestCase {
   private let email = TestData.kvConnectEmail.data
   private let key = try! Key(pem: TestData.kvPrivateKeyOpenPEM.data, access: .private, size: .bit_2048)
   
@@ -24,7 +24,7 @@ final class KVConnectSMIMETests: XCTestCase {
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
     let expectedMimeMessage = TestData.kvConnectEmailDecVerifiedBothLayers.stringTrimmingWhitespacesAndNewlines
-    let kvConnectSMIME = KVConnectSMIME(smime: email)
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
     
     // when
     let mimeMessage = try! kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
@@ -39,7 +39,7 @@ final class KVConnectSMIMETests: XCTestCase {
     let privateKeyPEM = TestData.wrongPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
-    let kvConnectSMIME = KVConnectSMIME(smime: email)
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
 
     // then
     XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
@@ -51,7 +51,7 @@ final class KVConnectSMIMETests: XCTestCase {
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
-    let kvConnectSMIME = KVConnectSMIME(smime: email)
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
 
     // then
     XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
@@ -63,7 +63,7 @@ final class KVConnectSMIMETests: XCTestCase {
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvVivyCAPEM.data])
-    let kvConnectSMIME = KVConnectSMIME(smime: email)
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
 
     // then
     XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
@@ -75,7 +75,7 @@ final class KVConnectSMIMETests: XCTestCase {
     let privateKeyPEM = TestData.kvPrivateKeyOpenPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private, size: .bit_2048)
     let caTrustedCerts = CACertificates(certificates: [TestData.wrongCAPEM.data])
-    let kvConnectSMIME = KVConnectSMIME(smime: email)
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
 
     // then
     XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))

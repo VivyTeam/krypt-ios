@@ -1,13 +1,13 @@
 //
-//  KVConnect.swift
-//  CryptoSwift
+//  KVConnectDecryption.swift
+//  Krypt
 //
 //  Created by Miso Lubarda on 29.04.19.
 //
 
 import Foundation
 
-public struct KVConnectSMIME {
+public struct KVConnectDecryption {
   private let smime: Data
   
   public init(smime: Data) {

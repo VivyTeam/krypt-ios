@@ -1,6 +1,6 @@
 //
 //  CACertificates.swift
-//  CryptoSwift
+//  Krypt
 //
 //  Created by Miso Lubarda on 28.04.19.
 //
