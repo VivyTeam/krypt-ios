@@ -9,7 +9,7 @@ import Foundation
 import Security
 
 /// High level object representing an RSA key to be used for asymetric encryption.
-/// Currently only RSA keys 4096 bits long are supported.
+/// Currently only RSA keys 4096 and 2048 bits long are supported.
 public final class Key {
   /// Error object containing erros that might occur during converting keys to different formats
   ///
@@ -64,6 +64,19 @@ public extension Key {
     self.init(key: key, access: access)
   }
 
+  /// Initializes `Key` from PEM string
+  ///
+  /// - Parameters:
+  ///   - pem: `String` in PKCS#1 or PKCS#8
+  ///   - access: `Access` level of the key
+  /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
+  convenience init(pem: String, access: Access, size: Size = .bit_4096) throws {
+    guard let der = PEMConverter.convertPEMToDER(pem) else {
+      throw Error.invalidPEMData
+    }
+    try self.init(der: der, access: access, size: size)
+  }
+
   /// Initializes `Key` from PEM data
   ///
   /// - Parameters:
@@ -71,10 +84,7 @@ public extension Key {
   ///   - access: `Access` level of the key
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
   convenience init(pem: Data, access: Access, size: Size = .bit_4096) throws {
-    guard let der = PEMConverter.convertPEMToDER(String(decoding: pem, as: UTF8.self)) else {
-      throw Error.invalidPEMData
-    }
-    try self.init(der: der, access: access, size: size)
+    try self.init(pem: String(decoding: pem, as: UTF8.self), access: access, size: size)
   }
 
   /// Converts the underlying `secRef` to PKCS#1 DER format for public and private access
