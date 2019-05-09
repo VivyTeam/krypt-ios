@@ -9,8 +9,8 @@ import Foundation
 
 struct PEMConverter {
   static func convertPEMToDER(_ pem: String) -> Data? {
-    let possibleHeaders = PEMConverterFormat.allCases.map { $0.header }
-    let possibleFooters = PEMConverterFormat.allCases.map { $0.footer }
+    let possibleHeaders = PEMFormat.allCases.map { $0.header }
+    let possibleFooters = PEMFormat.allCases.map { $0.footer }
     let possibleHeadersAndFooters = possibleHeaders + possibleFooters
 
     var stripped = ""
@@ -21,7 +21,7 @@ struct PEMConverter {
     return Data(base64Encoded: stripped)
   }
 
-  static func convertDER(_ der: Data, toPEMFormat format: PEMConverterFormat) -> String {
+  static func convertDER(_ der: Data, toPEMFormat format: PEMFormat) -> String {
     let base64 = der.base64EncodedString()
 
     // Insert newline `\n` every 64 characters
@@ -41,11 +41,11 @@ struct PEMConverter {
 }
 
 enum PEMConverterError: Error {
-  case errorInvalidPEMData
-  case errorInvalidFormat
+  case invalidPEMData
+  case invalidFormat
 }
 
-enum PEMConverterFormat: CaseIterable {
+enum PEMFormat: CaseIterable {
   case privatePKCS1
   case publicPKCS1
   case publicPKCS8

@@ -120,7 +120,7 @@ private extension Key.Access {
     }
   }
 
-  var pemFormat: PEMConverterFormat {
+  var pemFormat: PEMFormat {
     switch self {
     case .private:
       return .privatePKCS1
