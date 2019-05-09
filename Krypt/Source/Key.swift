@@ -9,7 +9,7 @@ import Foundation
 import Security
 
 /// High level object representing an RSA key to be used for asymetric encryption.
-/// Currently only RSA keys 4096 bits long are supported.
+/// Currently only RSA keys 4096 and 2048 bits long are supported.
 public final class Key {
   /// Error object containing erros that might occur during converting keys to different formats
   ///
@@ -64,6 +64,19 @@ public extension Key {
     self.init(key: key, access: access)
   }
 
+  /// Initializes `Key` from PEM string
+  ///
+  /// - Parameters:
+  ///   - pem: `String` in PKCS#1 or PKCS#8
+  ///   - access: `Access` level of the key
+  /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
+  convenience init(pem: String, access: Access, size: Size = .bit_4096) throws {
+    guard let der = PEMConverter.convertPEMToDER(pem) else {
+      throw Error.invalidPEMData
+    }
+    try self.init(der: der, access: access, size: size)
+  }
+
   /// Initializes `Key` from PEM data
   ///
   /// - Parameters:
@@ -71,23 +84,7 @@ public extension Key {
   ///   - access: `Access` level of the key
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
   convenience init(pem: Data, access: Access, size: Size = .bit_4096) throws {
-    guard let pemString = String(data: pem, encoding: .utf8) else {
-      throw Error.invalidPEMData
-    }
-    // Check if the provided key is in PKCS#1 or PKCS#8
-    let isPKCS1 = pemString.hasPrefix(access.pemHeaderPKCS1)
-
-    let pemHeader = isPKCS1 ? access.pemHeaderPKCS1 : access.pemHeaderPKCS8
-    let pemFooter = isPKCS1 ? access.pemFooterPKCS1 : access.pemFooterPKCS8
-
-    guard pemString.hasPrefix(pemHeader), let footerRange = pemString.range(of: pemFooter) else {
-      throw Error.invalidPEMData
-    }
-    let stripped = String(pemString[pemHeader.endIndex ..< footerRange.lowerBound]).replacingOccurrences(of: "\n", with: "")
-    guard let der = Data(base64Encoded: stripped) else {
-      throw Error.invalidPEMData
-    }
-    try self.init(der: der, access: access, size: size)
+    try self.init(pem: String(decoding: pem, as: UTF8.self), access: access, size: size)
   }
 
   /// Converts the underlying `secRef` to PKCS#1 DER format for public and private access
@@ -108,22 +105,7 @@ public extension Key {
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
   func convertedToPEM() throws -> String {
     let der = try convertedToDER()
-    let keyBase64 = der.base64EncodedString()
-
-    // Insert newline `\n` every 64 characters
-    var index = 0
-    var splits = [String]()
-    while index < keyBase64.count {
-      let startIndex = keyBase64.index(keyBase64.startIndex, offsetBy: index)
-      let endIndex = keyBase64.index(startIndex, offsetBy: 64, limitedBy: keyBase64.endIndex) ?? keyBase64.endIndex
-      index = endIndex.encodedOffset
-
-      let chunk = String(keyBase64[startIndex ..< endIndex])
-      splits.append(chunk)
-    }
-    let keyBase64WithNewlines = splits.joined(separator: "\n")
-
-    return [access.pemHeaderPKCS1, keyBase64WithNewlines, access.pemFooterPKCS1].joined()
+    return PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
   }
 }
 
@@ -138,39 +120,12 @@ private extension Key.Access {
     }
   }
 
-  var pemHeaderPKCS1: String {
+  var pemFormat: PEMFormat {
     switch self {
-    case .public:
-      return "-----BEGIN RSA PUBLIC KEY-----\n"
     case .private:
-      return "-----BEGIN RSA PRIVATE KEY-----\n"
-    }
-  }
-
-  var pemFooterPKCS1: String {
-    switch self {
+      return .privatePKCS1
     case .public:
-      return "\n-----END RSA PUBLIC KEY-----"
-    case .private:
-      return "\n-----END RSA PRIVATE KEY-----"
-    }
-  }
-
-  var pemHeaderPKCS8: String {
-    switch self {
-    case .public:
-      return "-----BEGIN PUBLIC KEY-----\n"
-    case .private:
-      return "-----BEGIN PRIVATE KEY-----\n"
-    }
-  }
-
-  var pemFooterPKCS8: String {
-    switch self {
-    case .public:
-      return "\n-----END PUBLIC KEY-----"
-    case .private:
-      return "\n-----END PRIVATE KEY-----"
+      return .publicPKCS1
     }
   }
 }

@@ -156,6 +156,7 @@
 		AAB7E30B97BDA86475C4EE28F8F0B459 /* kdf.h in Headers */ = {isa = PBXBuildFile; fileRef = 4FF0FEA8AE14C6221A2CEAAA83B836DA /* kdf.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AABFF98CBBC974565F2C6A5B4D5766C5 /* PKCS5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFAEDBD78A189083454037DDBB7566 /* PKCS5.swift */; };
 		AD13AB4A225F6CC400E65BBD /* String+CString.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD13AB49225F6CC400E65BBD /* String+CString.swift */; };
+		AD9EBA8222831EE700DB8E73 /* PEMConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EBA8122831EE700DB8E73 /* PEMConverter.swift */; };
 		ADD73FC71811AB8F17D2AACF178F276A /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CD0954F15C420D85C25C1680D94444 /* Collection+Extension.swift */; };
 		ADF26F43225F68820025D33A /* smime.h in Headers */ = {isa = PBXBuildFile; fileRef = ADF26F41225F68820025D33A /* smime.h */; };
 		ADF26F44225F68820025D33A /* smime.c in Sources */ = {isa = PBXBuildFile; fileRef = ADF26F42225F68820025D33A /* smime.c */; };
@@ -449,6 +450,7 @@
 		AA9CDB66D3F4F9B548846C33F3FFD4FD /* rsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rsa.h; path = OpenSSL/include/openssl/rsa.h; sourceTree = "<group>"; };
 		AB4E22EC4F49FCDFF336969273C81116 /* AEADChaCha20Poly1305.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AEADChaCha20Poly1305.swift; path = Sources/CryptoSwift/AEAD/AEADChaCha20Poly1305.swift; sourceTree = "<group>"; };
 		AD13AB49225F6CC400E65BBD /* String+CString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "String+CString.swift"; path = "Krypt/Source/String+CString.swift"; sourceTree = "<group>"; };
+		AD9EBA8122831EE700DB8E73 /* PEMConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PEMConverter.swift; path = Krypt/Source/PEMConverter.swift; sourceTree = "<group>"; };
 		ADF26F41225F68820025D33A /* smime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = smime.h; path = Krypt/Source/smime.h; sourceTree = "<group>"; };
 		ADF26F42225F68820025D33A /* smime.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = smime.c; path = Krypt/Source/smime.c; sourceTree = "<group>"; };
 		ADF26F45225F69EA0025D33A /* SMIME.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SMIME.swift; path = Krypt/Source/SMIME.swift; sourceTree = "<group>"; };
@@ -754,6 +756,7 @@
 				1CCD67031967C648177FF1E9B485E16C /* EHREncryption.swift */,
 				E07C6FEBC86DA321B6B672B8999E713D /* fnmatch.c */,
 				0A65B22A38EA84B5D36F5A5344DC54DE /* Key.swift */,
+				AD9EBA8122831EE700DB8E73 /* PEMConverter.swift */,
 				EB007E112276E9B6001BD473 /* KVConnectDecryption.swift */,
 				3CB95A68F55FEC5E21C571115B577DBE /* LocalEncryption.swift */,
 				0706EE6A3CFBA26AC58598B644BCA47B /* MedStickerEncryption.swift */,
@@ -1301,6 +1304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD9EBA8222831EE700DB8E73 /* PEMConverter.swift in Sources */,
 				9DD9610DF2CF06DE5EE2E559639ECE6F /* AES256.swift in Sources */,
 				B7BEA70002971751E952485634511D09 /* CipherAttr.swift in Sources */,
 				AD13AB4A225F6CC400E65BBD /* String+CString.swift in Sources */,

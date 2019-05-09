@@ -10,7 +10,7 @@ import Krypt
 import XCTest
 
 final class KeyTests: XCTestCase {
-  func testInit_publicPEMFromOpenSSL__shouldInitialize() throws {
+  func testInit_pemData_publicPEMFromOpenSSL__shouldInitialize() throws {
     // given
     let pem = TestData.openSSLPublicKeyPEM.data
 
@@ -18,9 +18,25 @@ final class KeyTests: XCTestCase {
     XCTAssertNoThrow(try Key(pem: pem, access: .public))
   }
 
-  func testInit_privatePEMFromOpenSSL__shouldInitialize() throws {
+  func testInit_pemString_publicPEMFromOpenSSL__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPublicKeyPEM.stringTrimmingWhitespacesAndNewlines
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .public))
+  }
+
+  func testInit_pemData_privatePEMFromOpenSSL__shouldInitialize() throws {
     // given
     let pem = TestData.openSSLPrivateKeyPEM.data
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .private))
+  }
+
+  func testInit_pemString_privatePEMFromOpenSSL__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPrivateKeyPEM.stringTrimmingWhitespacesAndNewlines
 
     // then
     XCTAssertNoThrow(try Key(pem: pem, access: .private))
@@ -52,18 +68,34 @@ final class KeyTests: XCTestCase {
     XCTAssertEqual(pem, testPEM)
   }
 
-  func testInit_privateKey2048__shouldInitialize() throws {
+  func testInit_pemData_privateKey2048__shouldInitialize() throws {
     // given
     let pem = TestData.openSSLPrivateKey2048PEM.data
-    
+
     // then
     XCTAssertNoThrow(try Key(pem: pem, access: .private, size: .bit_2048))
   }
 
-  func testInit_publicKey2048__shouldInitialize() throws {
+  func testInit_pemString_privateKey2048__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPrivateKey2048PEM.stringTrimmingWhitespacesAndNewlines
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .private, size: .bit_2048))
+  }
+
+  func testInit_pemData_publicKey2048__shouldInitialize() throws {
     // given
     let pem = TestData.openSSLPublicKey2048PEM.data
-    
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
+  }
+
+  func testInit_pemString_publicKey2048__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPublicKey2048PEM.stringTrimmingWhitespacesAndNewlines
+
     // then
     XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
   }

@@ -16,6 +16,7 @@ enum TestData: String {
   case openSSLPublicKey2048PEM = "openssl-public-key-pkcs8-2048-pem"
   case openSSLPublicKeyPKCS1PEM = "openssl-public-key-pkcs1-pem"
   case openSSLPublicKeyPEM = "openssl-public-key-pkcs8-pem"
+  case openSSLCertificateX509PEM = "openssl-certificate-x509-cer"
   case ehrContractGCMMessage = "ehr-gcm-contract-message-base64"
   case ehrContractGCMCipherKey = "ehr-gcm-contract-cipher-key-base64"
   case ehrContractCBCMessage = "ehr-cbc-contract-message-base64"
@@ -47,7 +48,7 @@ enum TestData: String {
   var base64Decoded: Data {
     return Data(base64Encoded: stringTrimmingWhitespacesAndNewlines)!
   }
-  
+
   var string: String {
     return String(data: data, encoding: .utf8)!
   }
