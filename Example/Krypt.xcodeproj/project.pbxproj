@@ -47,6 +47,14 @@
 		EB0A5E5F2268B0D6000FD79C /* kvroot-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB0A5E5D2268B0D6000FD79C /* kvroot-ca-pem */; };
 		EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */; };
 		EB3DD09E22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */; };
+		EBE7E18622845D91003029C8 /* kvconnect-mail-verification-not-hacked in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E17D22845D08003029C8 /* kvconnect-mail-verification-not-hacked */; };
+		EBE7E18722845D91003029C8 /* kvconnect-mail-verification-hacked1 in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18022845D08003029C8 /* kvconnect-mail-verification-hacked1 */; };
+		EBE7E18822845D91003029C8 /* kvconnect-mail-verification-hacked2 in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E17F22845D08003029C8 /* kvconnect-mail-verification-hacked2 */; };
+		EBE7E18922845D91003029C8 /* kvconnect-mail-verification-hacked3 in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E17E22845D08003029C8 /* kvconnect-mail-verification-hacked3 */; };
+		EBE7E18A22845D91003029C8 /* kvconnect-mail-verification-hacked4 in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E17C22845D07003029C8 /* kvconnect-mail-verification-hacked4 */; };
+		EBE7E19022848ACE003029C8 /* kvconnect-root-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18D22848A00003029C8 /* kvconnect-root-ca-pem */; };
+		EBE7E19122848ACE003029C8 /* kvconnect-user-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18E22848A98003029C8 /* kvconnect-user-ca-pem */; };
+		EBE7E19222848ACE003029C8 /* kvconnect-user-ca-pem-expired in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18F22848AC2003029C8 /* kvconnect-user-ca-pem-expired */; };
 		F8FE7631CB357489E6F46CAE /* Pods_Krypt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,6 +122,14 @@
 		EB0A5E5D2268B0D6000FD79C /* kvroot-ca-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvroot-ca-pem"; sourceTree = "<group>"; };
 		EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-2048-pem"; sourceTree = "<group>"; };
 		EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-2048-pem"; sourceTree = "<group>"; };
+		EBE7E17C22845D07003029C8 /* kvconnect-mail-verification-hacked4 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-verification-hacked4"; sourceTree = "<group>"; };
+		EBE7E17D22845D08003029C8 /* kvconnect-mail-verification-not-hacked */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-verification-not-hacked"; sourceTree = "<group>"; };
+		EBE7E17E22845D08003029C8 /* kvconnect-mail-verification-hacked3 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-verification-hacked3"; sourceTree = "<group>"; };
+		EBE7E17F22845D08003029C8 /* kvconnect-mail-verification-hacked2 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-verification-hacked2"; sourceTree = "<group>"; };
+		EBE7E18022845D08003029C8 /* kvconnect-mail-verification-hacked1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "kvconnect-mail-verification-hacked1"; sourceTree = "<group>"; };
+		EBE7E18D22848A00003029C8 /* kvconnect-root-ca-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-root-ca-pem"; sourceTree = "<group>"; };
+		EBE7E18E22848A98003029C8 /* kvconnect-user-ca-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-user-ca-pem"; sourceTree = "<group>"; };
+		EBE7E18F22848AC2003029C8 /* kvconnect-user-ca-pem-expired */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-user-ca-pem-expired"; sourceTree = "<group>"; };
 		EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -276,6 +292,14 @@
 				EB0A5E5C2268B0D6000FD79C /* kvvivy-ca-pem */,
 				EB0A5E5622676CF9000FD79C /* wrong-ca-pem */,
 				EB0A5E582268750C000FD79C /* wrong-privatekey-open-pem */,
+				EBE7E18D22848A00003029C8 /* kvconnect-root-ca-pem */,
+				EBE7E18E22848A98003029C8 /* kvconnect-user-ca-pem */,
+				EBE7E18F22848AC2003029C8 /* kvconnect-user-ca-pem-expired */,
+				EBE7E17D22845D08003029C8 /* kvconnect-mail-verification-not-hacked */,
+				EBE7E18022845D08003029C8 /* kvconnect-mail-verification-hacked1 */,
+				EBE7E17F22845D08003029C8 /* kvconnect-mail-verification-hacked2 */,
+				EBE7E17E22845D08003029C8 /* kvconnect-mail-verification-hacked3 */,
+				EBE7E17C22845D07003029C8 /* kvconnect-mail-verification-hacked4 */,
 			);
 			path = KVConnect;
 			sourceTree = "<group>";
@@ -409,27 +433,35 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */,
+				EBE7E18922845D91003029C8 /* kvconnect-mail-verification-hacked3 in Resources */,
 				AD13AB54225F78DA00E65BBD /* kvroot-kvvivy-ca-pem in Resources */,
+				EBE7E18822845D91003029C8 /* kvconnect-mail-verification-hacked2 in Resources */,
 				EB007E1B2276F61C001BD473 /* kvconnect-mail-dec-verified in Resources */,
 				ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */,
 				EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */,
 				AD13AB4F225F781100E65BBD /* kvconnect-mail in Resources */,
 				ADC232002204478800A57D6A /* ehr-cbc-contract-message-base64 in Resources */,
 				AD13AB52225F789400E65BBD /* kvprivatekey-open-pem in Resources */,
+				EBE7E19022848ACE003029C8 /* kvconnect-root-ca-pem in Resources */,
 				ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */,
 				EB007E1C2276F61C001BD473 /* kvroot-kvvivy-additional-ca-pem in Resources */,
 				AD6B2D472231108C00C03EC1 /* openssl-csr in Resources */,
+				EBE7E18722845D91003029C8 /* kvconnect-mail-verification-hacked1 in Resources */,
 				EB0A5E5722676CF9000FD79C /* wrong-ca-pem in Resources */,
 				AD9EBA8622832B9300DB8E73 /* openssl-certificate-x509-cer in Resources */,
 				EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */,
+				EBE7E19122848ACE003029C8 /* kvconnect-user-ca-pem in Resources */,
+				EBE7E18622845D91003029C8 /* kvconnect-mail-verification-not-hacked in Resources */,
 				ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */,
 				ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */,
 				EB007E1D2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers in Resources */,
 				AD13AB58225F9DB200E65BBD /* kvconnect-mail-dec in Resources */,
 				EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */,
 				EB0A5E5F2268B0D6000FD79C /* kvroot-ca-pem in Resources */,
+				EBE7E18A22845D91003029C8 /* kvconnect-mail-verification-hacked4 in Resources */,
 				ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */,
 				EB0A5E592268750C000FD79C /* wrong-privatekey-open-pem in Resources */,
+				EBE7E19222848ACE003029C8 /* kvconnect-user-ca-pem-expired in Resources */,
 				EB3DD09E22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -80,4 +80,67 @@ final class KVConnectDecryptionTests: XCTestCase {
     // then
     XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
   }
+
+  // MARK: Special verification checks
+
+  func testGetMime_whileEncryptedEmailVerificationNotHacked__doesntThrowError() {
+    // given
+    let email = TestData.kvConnectEmailVerificationNotHacked.data
+    let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private)
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
+
+    // then
+    XCTAssertNoThrow(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
+  }
+
+  func testGetMime_whileEncryptedEmailVerificationCorrupted1__throwsError() {
+    // given
+    let email = TestData.kvConnectEmailVerificationHacked1.data
+    let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private)
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
+
+    // then
+    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
+  }
+
+  func testGetMime_whileEncryptedEmailVerificationCorrupted2__throwsError() {
+    // given
+    let email = TestData.kvConnectEmailVerificationHacked2.data
+    let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private)
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
+
+
+    // then
+    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
+  }
+
+  func testGetMime_whileEncryptedEmailVerificationCorrupted3__throwsError() {
+    // given
+    let email = TestData.kvConnectEmailVerificationHacked3.data
+    let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private)
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
+
+    // then
+    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
+  }
+
+  func testGetMime_whileEncryptedEmailVerificationCorrupted4__throwsError() {
+    // given
+    let email = TestData.kvConnectEmailVerificationHacked4.data
+    let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
+    let key = try! Key(pem: privateKeyPEM, access: .private)
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
+    let kvConnectSMIME = KVConnectDecryption(smime: email)
+
+    // then
+    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts))
+  }
 }
