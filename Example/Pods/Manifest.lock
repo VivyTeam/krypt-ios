@@ -1,9 +1,11 @@
 PODS:
   - CryptoSwift (0.14.0)
-  - Krypt (0.1.1):
+  - Krypt (1.2.1):
     - CryptoSwift
     - OpenSSL (~> 1.1.1b)
+    - RFC2046
   - OpenSSL (1.1.1b)
+  - RFC2046 (0.1.2)
 
 DEPENDENCIES:
   - Krypt (from `../`)
@@ -13,6 +15,7 @@ SPEC REPOS:
     - CryptoSwift
   https://github.com/UvitaTeam/specs-ios.git:
     - OpenSSL
+    - RFC2046
 
 EXTERNAL SOURCES:
   Krypt:
@@ -20,9 +23,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CryptoSwift: 35a10419f4dbf0619c13f8c1c180037e115323fa
-  Krypt: a4394aced453703348b3b75b87eb48a01020eaf8
-  OpenSSL: 6cb470319b5ab0d01fd68a668a8c06ec9e609796
+  Krypt: e9e7d6b3c4fc28e2873dadec537b3d16c28888be
+  OpenSSL: 45a86981c77b9ec9183794aac531c657fa661546
+  RFC2046: 1249736efa17a55c29602acfe2279c01dfb20d0c
 
 PODFILE CHECKSUM: fc2e887cea3e1eb94aca140dc5b2c490f59436ea
 
-COCOAPODS: 1.6.0
+COCOAPODS: 1.6.1

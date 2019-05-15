@@ -1,6 +1,6 @@
 {
   "name": "Krypt",
-  "version": "0.1.1",
+  "version": "1.2.1",
   "summary": "Crypto used in Vivy iOS app",
   "description": "Crypto used in Vivy iOS app.",
   "homepage": "https://vivy.com",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/UvitaTeam/krypt-ios.git",
-    "tag": "0.1.1"
+    "tag": "1.2.1"
   },
   "social_media_url": "https://twitter.com/vivy_health",
   "platforms": {
@@ -31,6 +31,9 @@
       "~> 1.1.1b"
     ],
     "CryptoSwift": [
+
+    ],
+    "RFC2046": [
 
     ]
   }
