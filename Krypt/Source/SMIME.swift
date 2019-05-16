@@ -41,16 +41,17 @@ public struct SMIME {
   ///   - certificates: collection of CA certificates to trust
   /// - Returns: Decrypted SMIME content without signature
   /// - Throws: In case of any error.
-  public static func verify(data: Data, caCertificates: CACertificates) throws -> Data {
-    guard let dataString = data.unsafeUtf8cString else {
-      throw SMIMEError.error
+  public static func verify(data: Data, senderEmail: String, caCertificates: CACertificates) throws -> Data {
+    guard let dataString = data.unsafeUtf8cString,
+      let senderEmailCString = senderEmail.cString(using: .utf8) else {
+        throw SMIMEError.error
     }
     
     var certificateCStrings = caCertificates.certificateCStrings
     
     var contentWithoutSignature: UnsafeMutablePointer<Int8>?
-    
-    guard smime_verify(dataString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
+
+    guard smime_verify(dataString, senderEmailCString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
       throw SMIMEError.error
     }
     

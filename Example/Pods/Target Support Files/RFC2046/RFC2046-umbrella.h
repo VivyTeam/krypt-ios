@@ -10,10 +10,7 @@
 #endif
 #endif
 
-#import "csr.h"
-#import "helper.h"
-#import "smime.h"
 
-FOUNDATION_EXPORT double KryptVersionNumber;
-FOUNDATION_EXPORT const unsigned char KryptVersionString[];
+FOUNDATION_EXPORT double RFC2046VersionNumber;
+FOUNDATION_EXPORT const unsigned char RFC2046VersionString[];
 

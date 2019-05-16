@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.2.1'
+  s.version          = '1.2.2'
   s.summary          = 'Crypto used in Vivy iOS app'
   s.description      = <<-DESC
   Crypto used in Vivy iOS app.
@@ -24,5 +24,5 @@ Pod::Spec.new do |s|
   
   s.dependency 'OpenSSL', '~> 1.1.1b'
   s.dependency 'CryptoSwift'
-
+  s.dependency 'RFC2046'
 end

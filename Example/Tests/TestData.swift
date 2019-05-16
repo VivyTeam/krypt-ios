@@ -33,6 +33,14 @@ enum TestData: String {
   case kvVivyCAPEM = "kvvivy-ca-pem"
   case kvRootAndVivyCAPEM = "kvroot-kvvivy-ca-pem"
   case wrongCAPEM = "wrong-ca-pem"
+  case kvConnectEmailVerificationNotHacked = "kvconnect-mail-verification-not-hacked"
+  case kvConnectEmailVerificationHacked1 = "kvconnect-mail-verification-hacked1"
+  case kvConnectEmailVerificationHacked2 = "kvconnect-mail-verification-hacked2"
+  case kvConnectEmailVerificationHacked3 = "kvconnect-mail-verification-hacked3"
+  case kvConnectEmailVerificationHacked4 = "kvconnect-mail-verification-hacked4"
+  case kvConnectRootCAPEM = "kvconnect-root-ca-pem"
+  case kvConnectUserCAPEM = "kvconnect-user-ca-pem"
+  case kvConnectUserCAPEMExpired = "kvconnect-user-ca-pem-expired"
 
   var data: Data {
     guard
