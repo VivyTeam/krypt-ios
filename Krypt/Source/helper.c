@@ -7,6 +7,7 @@
 
 #include "helper.h"
 #include <string.h>
+#include <ctype.h>
 #include <openssl/buffer.h>
 
 
@@ -52,4 +53,8 @@ BIO *BIO_from_str(const char *str) {
     return NULL;
   }
   return membuf;
+}
+
+int str_equal(const char *str1, const char *str2) {
+  return strcasecmp(str1, str2) == 0 ? 1 : 0;
 }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RFC2046
 
 public struct KVConnectDecryption {
   private let smime: Data
@@ -15,12 +16,14 @@ public struct KVConnectDecryption {
   }
   
   public func getMime(identifyingWith privateKey: Key, trustedCACertificates: CACertificates) throws -> Data {
+    let emailAddressFirstLayer = try RFC2046Parser(text: String(decoding: smime, as: UTF8.self)).getSenderEmailAddress()
     let decryptedFirstLayer = try SMIME.decrypt(data: smime, key: privateKey)
-    let decryptedFirstLayerNoSignature = try SMIME.verify(data: decryptedFirstLayer, caCertificates: trustedCACertificates)
+    let decryptedFirstLayerNoSignature = try SMIME.verify(data: decryptedFirstLayer, senderEmail: emailAddressFirstLayer, caCertificates: trustedCACertificates)
     let decryptedFirstLayerNoSignatureTrimmed = try trimRedundantHeader(from: decryptedFirstLayerNoSignature)
+    let emailAddressSecondLayer = try RFC2046Parser(text: String(decoding: decryptedFirstLayerNoSignatureTrimmed, as: UTF8.self)).getSenderEmailAddress()
     let decryptedSecondLayer = try SMIME.decrypt(data: decryptedFirstLayerNoSignatureTrimmed, key: privateKey)
-    let decryptedSecondLayerNoSignature = try SMIME.verify(data: decryptedSecondLayer, caCertificates: trustedCACertificates)
-    
+    let decryptedSecondLayerNoSignature = try SMIME.verify(data: decryptedSecondLayer, senderEmail: emailAddressSecondLayer, caCertificates: trustedCACertificates)
+
     return decryptedSecondLayerNoSignature
   }
   
