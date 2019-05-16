@@ -6,7 +6,6 @@
   //
 
 #include "smime.h"
-#include <string.h>
 #include <openssl/bio.h>
 #include <openssl/cms.h>
 #include <openssl/err.h>
@@ -69,6 +68,8 @@ char *decrypt_pkcs7(PKCS7 *pkcs7, EVP_PKEY *pkey) {
   BIO *out = BIO_new(BIO_s_mem());
   
   if (PKCS7_decrypt(pkcs7, pkey, NULL, out, 0) != 1) {
+    unsigned long err = ERR_get_error();
+    char *err_descr = ERR_error_string(err, NULL);
     EVP_PKEY_free(pkey);
     PKCS7_free(pkcs7);
     return NULL;
@@ -144,6 +145,30 @@ X509_STORE *store_with_trusted_certs(const char** certs, int certCount) {
   return NULL;
 }
 
+/**
+ Checks whether the certificate in the PKCS7 signature belongs to the signer with specific email address.
+
+ @param pkcs7 PKCS7 message to check
+ @param email Email to look for in the signature certificate
+ @return Returns 1 if the email was found in the signature, otherwise 0.
+ @note
+ - If the signature contains more than one certificate, only the first one will be checked.
+ - If the signature certificate contains more than one email address, only the first one will be checked.
+ */
+int pkcs7_signature_contains_email(PKCS7 *pkcs7, const char *email) {
+  STACK_OF(X509) *cert_stack = PKCS7_get0_signers(pkcs7, NULL, 0);
+  X509 *cert = sk_X509_num(cert_stack) ? sk_X509_value(cert_stack, 0) : NULL;
+  if (!cert) {
+    return 0;
+  }
+  STACK_OF(OPENSSL_STRING) *emails = X509_get1_email(cert);
+  const char *cert_email = sk_OPENSSL_STRING_num(emails) ? sk_OPENSSL_STRING_value(emails, 0) : NULL;
+
+  sk_X509_free(cert_stack);
+  sk_OPENSSL_STRING_free(emails);
+
+  return str_equal(email, cert_email);
+}
 
 /**
  Verifies the signature of decrypted SMIME content against the trusted certificates
@@ -154,7 +179,7 @@ X509_STORE *store_with_trusted_certs(const char** certs, int certCount) {
  @param content Returns content of verified MIME content (without signature)
  @return Verification status: 1 = success, 0 = failure
  */
-int smime_verify(const char *decrypted, const char** certs, int certCount, char **content) {
+int smime_verify(const char *decrypted, const char *sender_email, const char** certs, int certCount, char **content) {
   BIO *bcont = NULL;
   
   PKCS7 *pkcs7 = get_pkcs7(decrypted, &bcont);
@@ -180,8 +205,17 @@ int smime_verify(const char *decrypted, const char** certs, int certCount, char 
   //  Prevents usage of any certificate contained in the message as untrusted CA.
   //  "If PKCS7_NOCHAIN is set then the certificates contained in the message are not used as untrusted CAs. This means that the whole verify chain (apart from the signer's certificate) must be contained in the trusted store." (https://www.openssl.org/docs/man1.0.2/man3/PKCS7_verify.html)
   flags |= PKCS7_NOCHAIN;
-  
+
+  if (!pkcs7_signature_contains_email(pkcs7, sender_email)) {
+    return 0;
+  }
+
   int ret = PKCS7_verify(pkcs7, NULL, store, bcont, out, flags);
+  if (ret == 0) {
+    unsigned long err = ERR_get_error();
+    char *err_descr = ERR_error_string(err, NULL);
+    printf("%s", err_descr);
+  }
   PKCS7_free(pkcs7);
   X509_STORE_free(store);
   BIO_free(bcont);

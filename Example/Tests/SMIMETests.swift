@@ -51,13 +51,13 @@ final class SMIMETests: XCTestCase {
 
   // MARK: VERIFICATION
   
-  func testVerify_whenCACertificateChainProvided__returnsContentWithoutSignature() {
+  func testVerify_whenRequiredInputProvided__returnsContentWithoutSignature() {
     // given
     let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
     let expectedContent = TestData.kvConnectEmailDecVerified.stringTrimmingWhitespacesAndNewlines
     
     //when
-    let content = try! SMIME.verify(data: decryptedEmail, caCertificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
+    let content = try! SMIME.verify(data: decryptedEmail, senderEmail: "kvcm.testmailer.KVTG@kv-safenet.de", caCertificates: caTrustedCerts).stringTrimmingWhitespacesAndNewlines
 
     // then
     XCTAssertEqual(content, expectedContent)
@@ -65,19 +65,27 @@ final class SMIMETests: XCTestCase {
 
   func testVerify_whenCACertificateChainIncomplete__verifyFails() {
     // given
-    let certificates = CACertificates(certificates: [TestData.kvRootCAPEM.data])
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data])
 
     // then
-    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, caCertificates: certificates))
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, senderEmail: "kvcm.testmailer.KVTG@kv-safenet.de", caCertificates: caTrustedCerts))
   }
   
   func testVerify_whenWrongCertificateChainProvided__verifyFails() {
     // given
-    let certificates = CACertificates(certificates: [TestData.wrongCAPEM.data])
+    let caTrustedCerts = CACertificates(certificates: [TestData.wrongCAPEM.data])
 
     // then
-    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, caCertificates: certificates))
-  }  
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, senderEmail: "kvcm.testmailer.KVTG@kv-safenet.de", caCertificates: caTrustedCerts))
+  }
+
+  func testVerify_whenSenderEmailAddress__verifyFails() {
+    // given
+    let caTrustedCerts = CACertificates(certificates: [TestData.kvRootCAPEM.data, TestData.kvVivyCAPEM.data])
+
+    // then
+    XCTAssertThrowsError(try SMIME.verify(data: decryptedEmail, senderEmail: "wrong.testmailer.KVTG@kv-safenet.de", caCertificates: caTrustedCerts))
+  }
 }
 
 extension SMIMETests {
