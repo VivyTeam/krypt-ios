@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.2.2'
+  s.version          = '1.2.3'
   s.summary          = 'Crypto used in Vivy iOS app'
   s.description      = <<-DESC
   Crypto used in Vivy iOS app.
@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     'OTHER_LDFLAGS' => '$(inherited) $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libcrypto.a $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libssl.a',
     'LIBRARY_SEARCH_PATHS' => '$(PROJECT_DIR)/OpenSSL/OpenSSL/lib/',
-    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source' 
+    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
   
   s.dependency 'OpenSSL', '~> 1.1.1b'

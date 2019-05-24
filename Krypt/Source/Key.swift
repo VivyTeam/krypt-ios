@@ -11,13 +11,6 @@ import Security
 /// High level object representing an RSA key to be used for asymetric encryption.
 /// Currently only RSA keys 4096 and 2048 bits long are supported.
 public final class Key {
-  /// Error object containing erros that might occur during converting keys to different formats
-  ///
-  /// - invalidPEMData: data was not in PKCS#1 (for private) or PKCS#8 (for public) format when initializing `Key` from PEM data
-  public enum Error: LocalizedError {
-    case invalidPEMData
-  }
-
   /// Access level of the key
   ///
   /// - `public`: for public key
@@ -57,9 +50,8 @@ public extension Key {
       kSecAttrKeyClass as String: access.secAttr,
       kSecAttrKeySizeInBits as String: size.rawValue
     ]
-    var error: Unmanaged<CFError>?
-    guard let key = SecKeyCreateWithData(der as CFData, options as CFDictionary, &error) else {
-      throw error!.takeRetainedValue() as Swift.Error
+    guard let key = SecKeyCreateWithData(der as CFData, options as CFDictionary, nil) else {
+      throw KeyError.creatingSecKey
     }
     self.init(key: key, access: access)
   }
@@ -72,7 +64,7 @@ public extension Key {
   /// - Throws: any errors that can occur while converting the key from PEM -> DER -> SecKey
   convenience init(pem: String, access: Access, size: Size = .bit_4096) throws {
     guard let der = PEMConverter.convertPEMToDER(pem) else {
-      throw Error.invalidPEMData
+      throw KeyError.invalidPEMData
     }
     try self.init(der: der, access: access, size: size)
   }
@@ -128,4 +120,12 @@ private extension Key.Access {
       return .publicPKCS1
     }
   }
+}
+
+/// Error object containing erros that might occur during converting keys to different formats
+///
+/// - invalidPEMData: data was not in PKCS#1 (for private) or PKCS#8 (for public) format when initializing `Key` from PEM data
+/// - creatingSecKey: converting data to SecKey failed
+public enum KeyError: LocalizedError {
+  case invalidPEMData, creatingSecKey
 }
