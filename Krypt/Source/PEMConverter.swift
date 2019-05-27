@@ -36,7 +36,7 @@ struct PEMConverter {
       splits.append(chunk)
     }
     let base64WithNewlines = splits.joined(separator: "\n")
-    return [format.header, base64WithNewlines, format.footer].joined(separator: "\n")
+    return [format.header, base64WithNewlines, format.footer].joined(separator: "\n").appending("\n")
   }
 }
 
