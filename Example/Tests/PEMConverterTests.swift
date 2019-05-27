@@ -83,7 +83,7 @@ final class PEMConverterTests: XCTestCase {
 
   func testConvertDERToPEM_publicKey__shouldGiveExpectedPEM() {
     // given
-    let expectedPEM = TestData.openSSLPublicKeyPKCS1PEM.stringTrimmingWhitespacesAndNewlines
+    let expectedPEM = TestData.openSSLPublicKeyPKCS1PEM.string
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
@@ -95,7 +95,7 @@ final class PEMConverterTests: XCTestCase {
 
   func testConvertDERToPEM_certificate__shouldGiveExpectedPEM() {
     // given
-    let expectedPEM = TestData.openSSLCertificateX509PEM.stringTrimmingWhitespacesAndNewlines
+    let expectedPEM = TestData.openSSLCertificateX509PEM.string
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
