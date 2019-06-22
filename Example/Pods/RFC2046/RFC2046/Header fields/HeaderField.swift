@@ -9,10 +9,10 @@ import Foundation
 
 protocol HeaderField {
   associatedtype Value
-  
+
   static var fieldName: String { get }
   var value: Value { get }
-  
+
   init(value: String, attributes: [String: String]?) throws
 }
 

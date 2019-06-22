@@ -11,11 +11,11 @@ public struct RFC2046Message {
   public enum ContentType {
     case textPlain, applicationXML, applicationPDF, imageJPEG, imageBMP, imagePNG, videoMP4, textHTML, unknown
   }
-  
+
   public let contentType: ContentType
   public let content: Data
   public let name: String?
-  
+
   public init(contentType: ContentType, content: Data, name: String? = nil) {
     self.contentType = contentType
     self.content = content

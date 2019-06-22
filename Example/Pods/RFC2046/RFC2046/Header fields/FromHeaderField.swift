@@ -12,14 +12,14 @@ struct FromHeaderField: HeaderField {
   let value: String
   let emailAddress: String
 
-  init(value: String, attributes: [String : String]?) throws {
+  init(value: String, attributes _: [String: String]?) throws {
     let trimmedValue = value.trimmingCharacters(in: .whitespacesAndNewlines)
 
     let bracketsSplit = trimmedValue.split { $0 == "<" || $0 == ">" }
     guard let email = bracketsSplit.first(where: { String($0).isValidEmailAddress }) else { throw HeaderFieldError.parsingValueFailed }
 
     self.value = trimmedValue
-    self.emailAddress = String(email)
+    emailAddress = String(email)
   }
 }
 

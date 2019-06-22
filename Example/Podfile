@@ -1,7 +1,7 @@
 use_frameworks!
 
-source 'https://github.com/UvitaTeam/specs-ios.git'
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://github.com/VivyTeam/specs-ios.git'
+source 'https://cdn.jsdelivr.net/cocoa/'
 
 target 'Krypt_Example' do
   pod 'Krypt', :path => '../'

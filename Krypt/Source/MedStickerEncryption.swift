@@ -17,6 +17,7 @@ public struct MedStickerEncryption {
   public enum Version: String {
     case adam
     case britney
+    case charlie
   }
 
   /// Holds key and IV used for AES
@@ -136,7 +137,7 @@ private extension MedStickerEncryption.Version {
     switch self {
     case .adam:
       return 8
-    case .britney:
+    case .britney, .charlie:
       return 10
     }
   }
@@ -145,7 +146,7 @@ private extension MedStickerEncryption.Version {
     switch self {
     case .adam:
       return .cbc
-    case .britney:
+    case .britney, .charlie:
       return .gcm
     }
   }

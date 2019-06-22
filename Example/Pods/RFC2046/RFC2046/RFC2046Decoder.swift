@@ -8,7 +8,6 @@
 import Foundation
 
 final class RFC2046Decoder {
-
   /// Searches for requested header field in header and decodes it in HeaderField object.
   ///
   /// - Parameters:
@@ -18,39 +17,9 @@ final class RFC2046Decoder {
   /// - Throws: Throws an error if header lines are malformed or the requested header doesn't exist.
   func decode<T>(_ headerField: T.Type, from header: String) throws -> T where T: HeaderField {
     let lines = header.splitToRFC2046HeaderLines
-    guard verifyHeaderLinesFormat(lines) else { throw RFC2046ParserError.headerMalformed }
     guard let line = getLine(fromLines: lines, containingFieldName: headerField.fieldName) else { throw RFC2046ParserError.noSuchField }
 
     return try parse(line: line, to: headerField)
-  }
-
-  /// Verify if header lines start with combination of letters and/or dashes (-) followed by colon (:)
-  ///
-  /// - Parameter lines: header lines
-  /// - Returns: True if header lines conform to rules (check the description)
-  /// - Example:
-  ///
-  /// Successful case:
-  /// ````
-  /// "Content-Type: multipart/mixed;charset=utf-8; boundary="------------020509070606080100000104""
-  /// ````
-  ///
-  /// Unsuccessful case:
-  /// ````
-  /// ":multipart/mixed;charset=utf-8; boundary="------------020509070606080100000104""
-  /// ````
-  private func verifyHeaderLinesFormat(_ lines: [String]) -> Bool {
-    let allowedCharacterSet = CharacterSet.letters.union(CharacterSet(charactersIn: "-"))
-    for line in lines {
-      guard let fieldName = line.split(separator: ":").first else { return false }
-      let containsForbiddenCharacters = fieldName.unicodeScalars.contains { (unicodeScalar) -> Bool in
-        return !allowedCharacterSet.contains(unicodeScalar)
-      }
-      if containsForbiddenCharacters == true {
-        return false
-      }
-    }
-    return true
   }
 
   /// Get line from header lines which contains field name at the beginning of the line
@@ -62,7 +31,6 @@ final class RFC2046Decoder {
   private func getLine(fromLines lines: [String], containingFieldName fieldname: String) -> String? {
     return lines.first { $0.lowercased().starts(with: fieldname.lowercased()) }
   }
-
 
   /// Parse header field line into HeaderField object
   ///
@@ -81,7 +49,6 @@ final class RFC2046Decoder {
     let fieldNameAndValue = field.split(separator: ":").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
     guard fieldNameAndValue.count == 2, fieldNameAndValue.first!.lowercased() == headerField.fieldName.lowercased(),
       let fieldValue = fieldNameAndValue.last else { throw RFC2046ParserError.noFieldValue }
-
 
     var attributesNameAndValues = [String: String]()
 
@@ -104,7 +71,7 @@ private extension String {
   /// Split header to array of lines since the delimited is CRLF as per RFC822
   var splitToRFC2046HeaderLines: [String] {
     var lines = [String]()
-    enumerateLines { (line, stop) in
+    enumerateLines { line, _ in
       lines.append(line)
     }
     return lines.reduce([]) { partialResult, line -> [String] in
