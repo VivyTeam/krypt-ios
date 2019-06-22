@@ -35,7 +35,7 @@
 		ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */; };
 		ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */; };
 		ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */; };
-		BE63E64B22BD263A00FBD008 /* MedStickerEncryptionV2Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE63E64A22BD263A00FBD008 /* MedStickerEncryptionV2Tests.swift */; };
+		BE63E64B22BD263A00FBD008 /* EmergencyStickerEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE63E64A22BD263A00FBD008 /* EmergencyStickerEncryptionTests.swift */; };
 		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
 		EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */ = {isa = PBXBuildFile; fileRef = EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */; };
 		EB007E162276EA8F001BD473 /* KVConnectDecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */; };
@@ -110,7 +110,7 @@
 		ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-message-base64"; sourceTree = "<group>"; };
 		ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs1-pem"; sourceTree = "<group>"; };
 		B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BE63E64A22BD263A00FBD008 /* MedStickerEncryptionV2Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedStickerEncryptionV2Tests.swift; sourceTree = "<group>"; };
+		BE63E64A22BD263A00FBD008 /* EmergencyStickerEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyStickerEncryptionTests.swift; sourceTree = "<group>"; };
 		C4F37220164E1147DCE29591 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
 				EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */,
 				ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */,
-				BE63E64A22BD263A00FBD008 /* MedStickerEncryptionV2Tests.swift */,
+				BE63E64A22BD263A00FBD008 /* EmergencyStickerEncryptionTests.swift */,
 				AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
 				AD13AB55225F7AAB00E65BBD /* SMIMETests.swift */,

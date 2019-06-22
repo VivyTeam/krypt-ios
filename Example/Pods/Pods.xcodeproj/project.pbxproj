@@ -426,7 +426,7 @@
 		B80ABF38C494FC72F4C74C4A1133E4D9 /* camellia.h in Headers */ = {isa = PBXBuildFile; fileRef = 8EE4F248B0D674D05492CB868235C84A /* camellia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B9AB4587E61F3DCCBA83D22B83530253 /* ts.h in Headers */ = {isa = PBXBuildFile; fileRef = C0A586B57E576939BC8D26FA1AF198FB /* ts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BA98917200FCC7D18CEEDDEB1DEE043D /* async.h in Headers */ = {isa = PBXBuildFile; fileRef = A124304AB8FEC70850A1CDD71A00F4B5 /* async.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BE555F5B22BCE2010004C8B1 /* MedStickerEncryptionV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE555F5A22BCE2010004C8B1 /* MedStickerEncryptionV2.swift */; };
+		BE555F5B22BCE2010004C8B1 /* EmergencyStickerEncryption.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE555F5A22BCE2010004C8B1 /* EmergencyStickerEncryption.swift */; };
 		BE990653B86E14F0190DB95C75B45B55 /* csr.h in Headers */ = {isa = PBXBuildFile; fileRef = F1413962E3442FC1AB6D15FFFD0B3156 /* csr.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		BEEB357D8BA78005A1987667964B4563 /* pem2.h in Headers */ = {isa = PBXBuildFile; fileRef = 7CE587FF15E5D9CA99FCF601E3A9F76A /* pem2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C0A78FFCEE3676468D4CFBC18BDF70C5 /* storeerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A66D5F84719EC234205798B5F8823B4 /* storeerr.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -741,7 +741,7 @@
 		BA4A8CA0780F678764424F9A4D827E25 /* srp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = srp.h; path = OpenSSL/include/openssl/srp.h; sourceTree = "<group>"; };
 		BACDE4D95FC86B7EB9EB84187FB2D317 /* e_os2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = e_os2.h; path = OpenSSL/include/openssl/e_os2.h; sourceTree = "<group>"; };
 		BDC271F42BD040AD3E90FB502DA2083E /* RFC2046-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "RFC2046-prefix.pch"; sourceTree = "<group>"; };
-		BE555F5A22BCE2010004C8B1 /* MedStickerEncryptionV2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedStickerEncryptionV2.swift; sourceTree = "<group>"; };
+		BE555F5A22BCE2010004C8B1 /* EmergencyStickerEncryption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmergencyStickerEncryption.swift; sourceTree = "<group>"; };
 		C0A586B57E576939BC8D26FA1AF198FB /* ts.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ts.h; path = OpenSSL/include/openssl/ts.h; sourceTree = "<group>"; };
 		C24DCEB375FAD87DC9E618EF96A5F365 /* ssl3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl3.h; path = OpenSSL/include/openssl/ssl3.h; sourceTree = "<group>"; };
 		C329F53E4EA4FD1FA292004C7CE2842F /* PKCS7Padding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PKCS7Padding.swift; path = Sources/CryptoSwift/PKCS/PKCS7Padding.swift; sourceTree = "<group>"; };
@@ -1260,7 +1260,7 @@
 				97E4653B7062B6D9AA155CE417714415 /* KVConnectDecryption.swift */,
 				3D9C13659FADC8B24835E3B8504E6AEF /* LocalEncryption.swift */,
 				9C640B479E0A50B9E0501139DF0419EF /* MedStickerEncryption.swift */,
-				BE555F5A22BCE2010004C8B1 /* MedStickerEncryptionV2.swift */,
+				BE555F5A22BCE2010004C8B1 /* EmergencyStickerEncryption.swift */,
 				ECC3FED2B44F04069008EC31C6A6B8D0 /* PBKDF2.swift */,
 				963EA427ABEDD58B35D34462DF52ED37 /* PEMConverter.swift */,
 				5021071022C12FE6008EFF62 /* pkcs8.c */,
@@ -1700,7 +1700,7 @@
 				645C630EE10769FC9EDF857F465B3A47 /* Scrypt.swift in Sources */,
 				C4C7ED471AA8F97CE4221784F937D699 /* SHA256.swift in Sources */,
 				19D4B76F3FE73E07EEE94DBE46C551C1 /* smime.c in Sources */,
-				BE555F5B22BCE2010004C8B1 /* MedStickerEncryptionV2.swift in Sources */,
+				BE555F5B22BCE2010004C8B1 /* EmergencyStickerEncryption.swift in Sources */,
 				066799E5035B8FA6EFA74DA8A9E04485 /* SMIME.swift in Sources */,
 				A334854A8D2625A7127E5C5307BE3E55 /* String+CString.swift in Sources */,
 			);

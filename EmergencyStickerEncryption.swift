@@ -1,5 +1,5 @@
 //
-//  MedStickerEncryptionV2.swift
+//  EmergencyStickerEncryption.swift
 //  Krypt
 //
 //  Created by Sun Bin Kim on 21.06.19.
@@ -8,7 +8,7 @@
 import CryptoSwift
 import Foundation
 
-public class MedStickerEncryptionV2 {
+public class EmergencyStickerEncryption {
   /// Errors
   ///
   /// - invalidSalt: Failed to process salt
@@ -50,6 +50,7 @@ public class MedStickerEncryptionV2 {
     do {
       guard let salt = firstSalt.data(using: .utf8) else { throw Error.invalidSalt }
       let result = try hash(secret: pin, salt: salt)
+
       return result[0 ..< fingerprintSecretLength]
     } catch {
       throw PublicError.encryptionFailed
@@ -143,7 +144,7 @@ public class MedStickerEncryptionV2 {
   }
 }
 
-private extension MedStickerEncryptionV2 {
+private extension EmergencyStickerEncryption {
   /// Hashes data
   ///
   /// - Parameters:
