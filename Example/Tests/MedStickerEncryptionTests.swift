@@ -193,10 +193,10 @@ final class MedStickerEncryptionTests: XCTestCase {
     let fakeBackendSecret = "fakeBackendSecret".data(using: .utf8)!
     let fakeSecondSalt = "fakeSecondSalt".data(using: .utf8)!
 
-    let subject = MedStickerEncryption.generateKeyAndFingerprint(withPin: fakePinData, secret: fakeBackendSecret, salt: fakeSecondSalt)
+    let subject = MedStickerEncryption.generateKeyAndFingerprintFile(withPin: fakePinData, secret: fakeBackendSecret, salt: fakeSecondSalt)
 
     XCTAssertEqual(subject.key.count, expectedKeyLength)
-    XCTAssertEqual(subject.fingerprint.count, expectedFingerprintFileLength)
-    XCTAssertTrue(subject.fingerprint.hasPrefix("charlie:"))
+    XCTAssertEqual(subject.fingerprintFile.count, expectedFingerprintFileLength)
+    XCTAssertTrue(subject.fingerprintFile.hasPrefix("charlie:"))
   }
 }

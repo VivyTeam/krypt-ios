@@ -182,7 +182,7 @@ extension MedStickerEncryption {
   ///            Key = First half part of the hash
   ///            Fingerprint file = Second half part of the hash
   /// - Throws: Public encryption failure error
-  public static func generateKeyAndFingerprint(
+  public static func generateKeyAndFingerprintFile(
     withPin pinData: Data,
     secret: Data,
     salt: Data
@@ -200,12 +200,12 @@ extension MedStickerEncryption {
     let split = hash.splitIntoTwo()
 
     let key = split.first
-    let fingerprintData = split.second
-    let fingerprintHex = fingerprintData.toHexString()
+    let fingerprintFileData = split.second
+    let fingerprintFileHex = fingerprintFileData.toHexString()
 
     let pair = KeyFingerprintPair(
       key: key,
-      fingerprint: [version.rawValue, fingerprintHex].joined(separator: ":")
+      fingerprintFile: [version.rawValue, fingerprintFileHex].joined(separator: ":")
     )
 
     return pair
