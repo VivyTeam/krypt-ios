@@ -10,13 +10,14 @@ import Krypt
 import XCTest
 
 final class EmergencyStickerEncryptionTests: XCTestCase {
-  func testGenerateFingerprintSecret__shouldGenerate256BitsStringAndContainVersionCharlie() {
-    let expectedLength = 32 // 32bytes = 256bits
+  func testGenerateFingerprintSecret__shouldGenerate72StringsAndContainVersionCharlie() {
+    let expectedLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
 
     let fakePinData = "fakePin".data(using: .utf8)!
     let subject = try! EmergencyStickerEncryption.generateFingerprintSecret(pin: fakePinData)
 
     XCTAssertEqual(subject.count, expectedLength)
+    XCTAssertTrue(subject.hasPrefix("charlie:"))
   }
 
   func testGenerateKeyAndFingerprintFile__shouldGenerate256BitsKeyAnd256BitsFingerprintFilePair() {

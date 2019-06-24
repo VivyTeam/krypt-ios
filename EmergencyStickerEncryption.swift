@@ -35,6 +35,8 @@ public class EmergencyStickerEncryption {
   /// First salt used during fingerprint secret generation
   private static let firstSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
 
+  private static let version: MedStickerEncryption.Version = .charlie
+
   /// Holds key and fingerprint file
   public struct KeyFingerprintFilePair {
     public let key: Data
@@ -46,12 +48,15 @@ public class EmergencyStickerEncryption {
   /// - Parameter pin: Secret to be used for hashing
   /// - Returns: Fingerprint secret
   /// - Throws: Public encryption failure error
-  public static func generateFingerprintSecret(pin: Data) throws -> Data {
+  public static func generateFingerprintSecret(pin: Data) throws -> String {
     do {
       guard let salt = firstSalt.data(using: .utf8) else { throw Error.invalidSalt }
       let result = try hash(secret: pin, salt: salt)
 
-      return result[0 ..< fingerprintSecretLength]
+      let fingerprintSecretData = result[0 ..< fingerprintSecretLength]
+      let fingerprintSecretHex = fingerprintSecretData.toHexString()
+
+      return [version.rawValue, fingerprintSecretHex].joined(separator: ":")
     } catch {
       throw PublicError.encryptionFailed
     }
