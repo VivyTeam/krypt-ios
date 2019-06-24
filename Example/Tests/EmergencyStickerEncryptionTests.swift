@@ -22,7 +22,7 @@ final class EmergencyStickerEncryptionTests: XCTestCase {
 
   func testGenerateKeyAndFingerprintFile__shouldGenerate256BitsKeyAnd256BitsFingerprintFilePair() {
     let expectedKeyLength = 32 // 32bytes = 256bits
-    let expectedFingerprintFileLength = 32 // 32bytes = 256bits
+    let expectedFingerprintFileLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
 
     let fakePinData = "fakePin".data(using: .utf8)!
     let fakeBackendSecret = "fakeBackendSecret".data(using: .utf8)!
@@ -32,5 +32,6 @@ final class EmergencyStickerEncryptionTests: XCTestCase {
 
     XCTAssertEqual(subject.key.count, expectedKeyLength)
     XCTAssertEqual(subject.fingerprintFile.count, expectedFingerprintFileLength)
+    XCTAssertTrue(subject.fingerprintFile.hasPrefix("charlie:"))
   }
 }

@@ -38,9 +38,10 @@ public class EmergencyStickerEncryption {
   private static let version: MedStickerEncryption.Version = .charlie
 
   /// Holds key and fingerprint file
+  //  fingerprintFile is hex encoded and contains version in front
   public struct KeyFingerprintFilePair {
     public let key: Data
-    public let fingerprintFile: Data
+    public let fingerprintFile: String
   }
 
   /// Generates fingerprint secret
@@ -85,9 +86,13 @@ public class EmergencyStickerEncryption {
 
       let result = try hash(secret: combinedSecret, salt: salt)
 
+      let key = result[0 ..< keyLength]
+      let fingerprintFileData = result[keyLength ..< keyLength + fingerprintFileLength]
+      let fingerprintFileHex = fingerprintFileData.toHexString()
+
       let pair = KeyFingerprintFilePair(
-        key: result[0 ..< keyLength],
-        fingerprintFile: result[keyLength ..< keyLength + fingerprintFileLength]
+        key: key,
+        fingerprintFile: [version.rawValue, fingerprintFileHex].joined(separator: ":")
       )
 
       return pair
