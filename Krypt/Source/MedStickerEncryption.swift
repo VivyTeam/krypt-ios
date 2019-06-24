@@ -151,3 +151,130 @@ private extension MedStickerEncryption.Version {
     }
   }
 }
+
+// Implements version charlie
+extension MedStickerEncryption {
+  /// Generates fingerprint secret
+  ///
+  /// - Parameter pin: Secret to be used for hashing, 24 bytes read from QR code
+  /// - Returns: Hex encoded fingerprint secret with version in front
+  /// - Throws: Public encryption failure error
+  public static func generateFingerprintSecret(withPin pinData: Data) -> String {
+    let firstSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
+    let version: MedStickerEncryption.Version = .charlie
+    let length = 32
+
+    let salt = Data(firstSalt.utf8)
+    let fingerprintSecretData = deriveBytes(length: length, passphrase: pinData, salt: salt, r: version.scryptR)
+
+    let fingerprintSecretHex = fingerprintSecretData.toHexString()
+
+    return [version.rawValue, fingerprintSecretHex].joined(separator: ":")
+  }
+
+  /// Generates key and fingerprint file
+  ///
+  /// - Parameters:
+  ///   - pin: Secret to be used for hasing
+  ///   - secret: Randomly generated secret by backend (backend_secret)
+  ///   - salt: Randomly generated salt by backend (second_salt)
+  /// - Returns: Key and fingerprint file pair
+  ///            Key = First half part of the hash
+  ///            Fingerprint file = Second half part of the hash
+  /// - Throws: Public encryption failure error
+  public static func generateKeyAndFingerprint(
+    withPin pinData: Data,
+    secret: Data,
+    salt: Data
+  ) -> KeyFingerprintPair {
+    let version: MedStickerEncryption.Version = .charlie
+    let length = 64
+
+    let combinedBytes = [pinData, secret]
+      .compactMap([UInt8].init)
+      .reduce([UInt8](), +)
+    let combinedSecret = Data(bytes: combinedBytes)
+
+    let hash = deriveBytes(length: length, passphrase: combinedSecret, salt: salt, r: version.scryptR)
+
+    let split = hash.splitIntoTwo()
+
+    let key = split.first
+    let fingerprintData = split.second
+    let fingerprintHex = fingerprintData.toHexString()
+
+    let pair = KeyFingerprintPair(
+      key: key,
+      fingerprint: [version.rawValue, fingerprintHex].joined(separator: ":")
+    )
+
+    return pair
+  }
+
+  /// Encrypts data for version charlie
+  ///
+  /// - Parameters:
+  ///   - data: Data to encrypt
+  ///   - key: Public key to be used for encryption
+  ///   - iv: IV
+  /// - Returns: Encrypted data
+  /// - Throws: Public encryption failure error
+  public static func encrypt(
+    data: Data,
+    key: Data,
+    iv: Data
+  ) throws -> Data {
+    do {
+      let version: MedStickerEncryption.Version = .charlie
+
+      let (encrypted, _, _) = try AES256.encrypt(
+        data: data,
+        key: key,
+        iv: iv,
+        blockMode: version.aesBlockMode
+      )
+      return encrypted
+    } catch {
+      throw PublicError.encryptionFailed
+    }
+  }
+
+  /// Decrypts data for version charlie
+  ///
+  /// - Parameters:
+  ///   - data: Data to decrypt
+  ///   - key: Private key to be used for decryption
+  ///   - iv: IV
+  /// - Returns: Decrypted data
+  /// - Throws: Public decryption failure error
+  public static func decrypt(
+    data: Data,
+    key: Data,
+    iv: Data
+  ) throws -> Data {
+    do {
+      let version: MedStickerEncryption.Version = .charlie
+
+      let decrypted = try AES256.decrypt(
+        data: data,
+        key: key,
+        iv: iv,
+        blockMode: version.aesBlockMode
+      )
+      return decrypted
+    } catch {
+      throw PublicError.decryptionFailed
+    }
+  }
+}
+
+private extension Data {
+  func splitIntoTwo() -> (first: Data, second: Data) {
+    let halfLength = count / 2
+
+    let firstHalf = self[0 ..< halfLength]
+    let secondHalf = self[halfLength ..< count]
+
+    return (first: firstHalf, second: secondHalf)
+  }
+}

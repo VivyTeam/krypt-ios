@@ -174,4 +174,29 @@ final class MedStickerEncryptionTests: XCTestCase {
     // then
     XCTAssertTrue(signature.hasPrefix("adam-sha256"))
   }
+
+  func testGenerateFingerprintSecret__shouldGenerate72StringsAndContainVersionCharlie() {
+    let expectedLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
+
+    let fakePinData = "fakePin".data(using: .utf8)!
+    let subject = MedStickerEncryption.generateFingerprintSecret(withPin: fakePinData)
+
+    XCTAssertEqual(subject.count, expectedLength)
+    XCTAssertTrue(subject.hasPrefix("charlie:"))
+  }
+
+  func testGenerateKeyAndFingerprintFile__shouldGenerate256BitsKeyAnd256BitsFingerprintFilePair() {
+    let expectedKeyLength = 32 // 32bytes = 256bits
+    let expectedFingerprintFileLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
+
+    let fakePinData = "fakePin".data(using: .utf8)!
+    let fakeBackendSecret = "fakeBackendSecret".data(using: .utf8)!
+    let fakeSecondSalt = "fakeSecondSalt".data(using: .utf8)!
+
+    let subject = MedStickerEncryption.generateKeyAndFingerprint(withPin: fakePinData, secret: fakeBackendSecret, salt: fakeSecondSalt)
+
+    XCTAssertEqual(subject.key.count, expectedKeyLength)
+    XCTAssertEqual(subject.fingerprint.count, expectedFingerprintFileLength)
+    XCTAssertTrue(subject.fingerprint.hasPrefix("charlie:"))
+  }
 }
