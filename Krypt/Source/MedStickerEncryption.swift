@@ -5,6 +5,7 @@
 //  Created by marko on 29.01.19.
 //
 
+import CryptoSwift
 import Foundation
 import Security
 
@@ -43,6 +44,9 @@ public struct MedStickerEncryption {
     /// AES encrypted data
     public let data: Data
 
+    // Fingerprint file only used for version charlie
+    public let fingerprintFile: Data?
+
     /// Cipher auth for AES encrypted data
     public let attr: CipherAttr
   }
@@ -59,7 +63,11 @@ public struct MedStickerEncryption {
         blockMode: version.aesBlockMode
       )
 
-      let encryptedMedSticker = EncryptedMedSticker(data: encrypted, attr: cipherAttr)
+      let encryptedMedSticker = EncryptedMedSticker(
+        data: encrypted,
+        fingerprintFile: nil,
+        attr: cipherAttr
+      )
 
       return encryptedMedSticker
     } catch {
@@ -159,22 +167,134 @@ extension MedStickerEncryption {
   /// - Parameter pin: Secret to be used for hashing, 24 bytes read from QR code
   /// - Returns: Hex encoded fingerprint secret with version in front
   /// - Throws: Public encryption failure error
-  public static func generateFingerprintSecret(withPin pinData: Data) -> String {
+  public static func generateFingerprintSecret(withPin pin: String) throws -> String {
     let charlieConstantSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
     let version: MedStickerEncryption.Version = .charlie
-    let length = 32
 
-    let salt = Data(charlieConstantSalt.utf8)
-    let fingerprintSecretData = deriveBytes(
-      length: length,
-      passphrase: pinData,
-      salt: salt,
-      r: version.scryptR
+    let fingerprintSecretData = try hash(
+      secret: pin,
+      salt: charlieConstantSalt
     )
 
-    let fingerprintSecretHex = fingerprintSecretData.toHexString()
+    let split = fingerprintSecretData.splitIntoTwo()
+    let fingerprintSecretHex = split.first.toHexString()
 
     return [version.rawValue, fingerprintSecretHex].joined(separator: ":")
+  }
+
+  /// Encrypts data for version charlie
+  ///
+  /// - Parameters:
+  ///   - pin: Pin from QR code
+  ///   - secret: Randomly generated secret from backend
+  ///   - salt: Randomly generated salt from backend
+  ///   - iv: Randomly generated IV
+  ///   - data: Data to encrypt
+  /// - Returns: Encrypted data with cipher attributes
+  /// - Throws: MedStickerEncryptionError.encrypt
+  public static func encrypt(
+    pin: String,
+    secret: String,
+    salt: String,
+    iv: Data,
+    data: Data
+  ) throws -> EncryptedMedSticker {
+    do {
+      let version: MedStickerEncryption.Version = .charlie
+      let keyAndFingerprintFile = try generateKeyAndFingerprintFile(
+        withPin: pin,
+        secret: secret,
+        salt: salt
+      )
+
+      let (encrypted, _, _) = try AES256.encrypt(
+        data: data,
+        key: keyAndFingerprintFile.key,
+        iv: iv,
+        blockMode: version.aesBlockMode
+      )
+
+      let cipherAttr = CipherAttr(
+        key: keyAndFingerprintFile.key,
+        iv: iv,
+        version: .charlie
+      )
+
+      let encryptedMedSticker = EncryptedMedSticker(
+        data: encrypted,
+        fingerprintFile: nil,
+        attr: cipherAttr
+      )
+
+      return encryptedMedSticker
+    } catch {
+      throw MedStickerEncryptionError.encryption
+    }
+  }
+
+  /// Decrypts data for version charlie
+  ///
+  /// - Parameters:
+  ///   - pin: Pin
+  ///   - secret: Randomly generated secret from backend
+  ///   - salt: Randomly generated salt from backend
+  ///   - iv: IV
+  ///   - data: Data to decrypt
+  /// - Returns: Decrypted data
+  /// - Throws: MedStickerEncryptionError.decryption
+  public static func decrypt(
+    pin: String,
+    secret: String,
+    salt: String,
+    iv: Data,
+    data: Data
+  ) throws -> Data {
+    do {
+      let version: MedStickerEncryption.Version = .charlie
+      let keyAndFingerprintFile = try generateKeyAndFingerprintFile(
+        withPin: pin,
+        secret: secret,
+        salt: salt
+      )
+
+      let decrypted = try AES256.decrypt(
+        data: data,
+        key: keyAndFingerprintFile.key,
+        iv: iv,
+        blockMode: version.aesBlockMode
+      )
+      return decrypted
+    } catch {
+      throw MedStickerEncryptionError.decryption
+    }
+  }
+}
+
+private extension MedStickerEncryption {
+  /// Hashes data for version charlie using Scrypt
+  ///
+  /// - Parameters:
+  ///   - secret: Password to be used for Scrypt hash
+  ///   - salt: Salt
+  /// - Returns: Hashed data
+  /// - Throws: Thrown by Scrypt
+  static func hash(
+    secret: String,
+    salt: String
+  ) throws -> Data {
+    let version: MedStickerEncryption.Version = .charlie
+
+    let secretData = Data(secret.utf8)
+    let saltData = Data(salt.utf8)
+    let result = try CryptoSwift.Scrypt(
+      password: [UInt8](secretData),
+      salt: [UInt8](saltData),
+      dkLen: 64,
+      N: 16384,
+      r: version.scryptR,
+      p: 1
+    ).calculate()
+    return Data(bytes: result)
   }
 
   /// Generates key and fingerprint file
@@ -187,22 +307,21 @@ extension MedStickerEncryption {
   ///            Key = First half part of the hash
   ///            Fingerprint file = Second half part of the hash
   /// - Throws: Public encryption failure error
-  public static func generateKeyAndFingerprintFile(
-    withPin pinData: Data,
-    secret: Data,
-    salt: Data
-  ) -> KeyFingerprintPair {
+  static func generateKeyAndFingerprintFile(
+    withPin pin: String,
+    secret: String,
+    salt: String
+  ) throws -> KeyFingerprintPair {
     let version: MedStickerEncryption.Version = .charlie
-    let length = 64
 
-    let combinedBytes = [pinData, secret]
-      .compactMap([UInt8].init)
-      .reduce([UInt8](), +)
-    let combinedSecret = Data(bytes: combinedBytes)
+    let combinedSecret = [pin, secret].joined()
 
-    let hash = deriveBytes(length: length, passphrase: combinedSecret, salt: salt, r: version.scryptR)
+    let keyAndFingerprintFile = try hash(
+      secret: combinedSecret,
+      salt: salt
+    )
 
-    let split = hash.splitIntoTwo()
+    let split = keyAndFingerprintFile.splitIntoTwo()
 
     let key = split.first
     let fingerprintFileData = split.second
@@ -215,62 +334,11 @@ extension MedStickerEncryption {
 
     return pair
   }
+}
 
-  /// Encrypts data for version charlie
-  ///
-  /// - Parameters:
-  ///   - data: Data to encrypt
-  ///   - key: Public key to be used for encryption
-  ///   - iv: IV
-  /// - Returns: Encrypted data
-  /// - Throws: Public encryption failure error
-  public static func encrypt(
-    data: Data,
-    key: Data,
-    iv: Data
-  ) throws -> Data {
-    do {
-      let version: MedStickerEncryption.Version = .charlie
-
-      let (encrypted, _, _) = try AES256.encrypt(
-        data: data,
-        key: key,
-        iv: iv,
-        blockMode: version.aesBlockMode
-      )
-      return encrypted
-    } catch {
-      throw PublicError.encryptionFailed
-    }
-  }
-
-  /// Decrypts data for version charlie
-  ///
-  /// - Parameters:
-  ///   - data: Data to decrypt
-  ///   - key: Private key to be used for decryption
-  ///   - iv: IV
-  /// - Returns: Decrypted data
-  /// - Throws: Public decryption failure error
-  public static func decrypt(
-    data: Data,
-    key: Data,
-    iv: Data
-  ) throws -> Data {
-    do {
-      let version: MedStickerEncryption.Version = .charlie
-
-      let decrypted = try AES256.decrypt(
-        data: data,
-        key: key,
-        iv: iv,
-        blockMode: version.aesBlockMode
-      )
-      return decrypted
-    } catch {
-      throw PublicError.decryptionFailed
-    }
-  }
+enum MedStickerEncryptionError: Error {
+  case encryption
+  case decryption
 }
 
 private extension Data {

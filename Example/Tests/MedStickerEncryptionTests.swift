@@ -175,28 +175,39 @@ final class MedStickerEncryptionTests: XCTestCase {
     XCTAssertTrue(signature.hasPrefix("adam-sha256"))
   }
 
-  func testGenerateFingerprintSecret__shouldGenerate72StringsAndContainVersionCharlie() {
+  func testGenerateFingerprintSecret_charlie__shouldGenerate72StringsAndContainVersionCharlie() {
     let expectedLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
 
-    let fakePinData = "fakePin".data(using: .utf8)!
-    let subject = MedStickerEncryption.generateFingerprintSecret(withPin: fakePinData)
+    let fakePin = "fakePin"
+    let subject = try! MedStickerEncryption.generateFingerprintSecret(withPin: fakePin)
 
     XCTAssertEqual(subject.count, expectedLength)
     XCTAssertTrue(subject.hasPrefix("charlie:"))
   }
 
-  func testGenerateKeyAndFingerprintFile__shouldGenerate256BitsKeyAnd256BitsFingerprintFilePair() {
-    let expectedKeyLength = 32 // 32bytes = 256bits
-    let expectedFingerprintFileLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
+  func testEncrypAndDecrypt_charlie__shouldReturnSameData() {
+    let expectedData = "fakeData".data(using: .utf8)!
 
-    let fakePinData = "fakePin".data(using: .utf8)!
-    let fakeBackendSecret = "fakeBackendSecret".data(using: .utf8)!
-    let fakeSecondSalt = "fakeSecondSalt".data(using: .utf8)!
+    let fakePin = "fakePin"
+    let fakeBackendSecret = "fakeBackendSecret"
+    let fakeSecondSalt = "fakeSecondSalt"
 
-    let subject = MedStickerEncryption.generateKeyAndFingerprintFile(withPin: fakePinData, secret: fakeBackendSecret, salt: fakeSecondSalt)
+    let iv = randomData(count: 32)
+    let encrypted = try! MedStickerEncryption.encrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: iv, data: expectedData)
 
-    XCTAssertEqual(subject.key.count, expectedKeyLength)
-    XCTAssertEqual(subject.fingerprintFile.count, expectedFingerprintFileLength)
-    XCTAssertTrue(subject.fingerprintFile.hasPrefix("charlie:"))
+    let decrypted = try! MedStickerEncryption.decrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: encrypted.attr.iv, data: encrypted.data)
+
+    XCTAssertEqual(decrypted, expectedData)
+  }
+
+  private func randomData(count: Int) -> Data {
+    var data = Data(count: count)
+    let status = data.withUnsafeMutableBytes {
+      SecRandomCopyBytes(kSecRandomDefault, count, $0)
+    }
+    guard status == errSecSuccess else {
+      fatalError(#function)
+    }
+    return data
   }
 }
