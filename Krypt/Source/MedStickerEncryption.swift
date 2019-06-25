@@ -169,17 +169,12 @@ extension MedStickerEncryption {
   /// - Throws: Public encryption failure error
   public static func generateFingerprintSecret(withPin pin: String) throws -> String {
     let charlieConstantSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
-    let version: MedStickerEncryption.Version = .charlie
 
     let fingerprintSecretData = try hash(
       secret: pin,
       salt: charlieConstantSalt
     )
-
-    let split = fingerprintSecretData.splitIntoTwo()
-    let fingerprintSecretHex = split.first.toHexString()
-
-    return [version.rawValue, fingerprintSecretHex].joined(separator: ":")
+    return fingerprintSecretData.toFingerprint()
   }
 
   /// Encrypts data for version charlie
@@ -312,8 +307,6 @@ private extension MedStickerEncryption {
     secret: String,
     salt: String
   ) throws -> KeyFingerprintPair {
-    let version: MedStickerEncryption.Version = .charlie
-
     let combinedSecret = [pin, secret].joined()
 
     let keyAndFingerprintFile = try hash(
@@ -325,11 +318,10 @@ private extension MedStickerEncryption {
 
     let key = split.first
     let fingerprintFileData = split.second
-    let fingerprintFileHex = fingerprintFileData.toHexString()
 
     let pair = KeyFingerprintPair(
       key: key,
-      fingerprintFile: [version.rawValue, fingerprintFileHex].joined(separator: ":")
+      fingerprintFile: fingerprintFileData.toFingerprint()
     )
 
     return pair
@@ -349,5 +341,12 @@ private extension Data {
     let secondHalf = self[halfLength ..< count]
 
     return (first: firstHalf, second: secondHalf)
+  }
+
+  func toFingerprint() -> String {
+    let version: MedStickerEncryption.Version = .charlie
+    let hexString = toHexString()
+
+    return [version.rawValue, hexString].joined(separator: ":")
   }
 }

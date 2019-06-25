@@ -175,8 +175,8 @@ final class MedStickerEncryptionTests: XCTestCase {
     XCTAssertTrue(signature.hasPrefix("adam-sha256"))
   }
 
-  func testGenerateFingerprintSecret_charlie__shouldGenerate72StringsAndContainVersionCharlie() {
-    let expectedLength = 32 * 2 + 8 // 32 bytes * 2(as hex string) + "charlie:" (8)
+  func testGenerateFingerprintSecret_charlie__shouldGenerate132StringsAndContainVersionCharlie() {
+    let expectedLength = 64 * 2 + 8 // 64 bytes * 2(as hex string) + "charlie:" (8)
 
     let fakePin = "fakePin"
     let subject = try! MedStickerEncryption.generateFingerprintSecret(withPin: fakePin)
