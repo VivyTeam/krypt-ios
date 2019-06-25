@@ -186,11 +186,11 @@ final class MedStickerEncryptionTests: XCTestCase {
   }
 
   func testEncrypAndDecrypt_charlie__shouldReturnSameData() {
-    let expectedData = "fakeData".data(using: .utf8)!
+    let expectedData = "MyVeryImportantData".data(using: .utf8)!
 
-    let fakePin = "fakePin"
-    let fakeBackendSecret = "fakeBackendSecret"
-    let fakeSecondSalt = "fakeSecondSalt"
+    let fakePin = "someRandomPin12345678"
+    let fakeBackendSecret = "someRandomBackendSecret"
+    let fakeSecondSalt = "someRandomSecondSalt"
 
     let iv = randomData(count: 32)
     let encrypted = try! MedStickerEncryption.encrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: iv, data: expectedData)

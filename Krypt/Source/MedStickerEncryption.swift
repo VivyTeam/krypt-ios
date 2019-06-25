@@ -45,7 +45,7 @@ public struct MedStickerEncryption {
     public let data: Data
 
     // Fingerprint file only used for version charlie
-    public let fingerprintFile: Data?
+    public let fingerprintFile: String?
 
     /// Cipher auth for AES encrypted data
     public let attr: CipherAttr
@@ -217,7 +217,7 @@ extension MedStickerEncryption {
 
       let encryptedMedSticker = EncryptedMedSticker(
         data: encrypted,
-        fingerprintFile: nil,
+        fingerprintFile: keyAndFingerprintFile.fingerprintFile,
         attr: cipherAttr
       )
 
