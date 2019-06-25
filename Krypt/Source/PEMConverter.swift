@@ -21,23 +21,43 @@ struct PEMConverter {
     return Data(base64Encoded: stripped)
   }
 
+    
+  /// Converts DER to `PKCS1`
+  ///
+  /// - Parameters:
+  ///   - der: in PKCS1 format
+  ///   - format: PEM format to return
+  /// - Returns: PEM representation of DER
   static func convertDER(_ der: Data, toPEMFormat format: PEMFormat) -> String {
-    let base64 = der.base64EncodedString()
-
-    // Insert newline `\n` every 64 characters
-    var index = 0
-    var splits = [String]()
-    while index < base64.count {
-      let startIndex = base64.index(base64.startIndex, offsetBy: index)
-      let endIndex = base64.index(startIndex, offsetBy: 64, limitedBy: base64.endIndex) ?? base64.endIndex
-      index = endIndex.utf16Offset(in: base64)
-
-      let chunk = String(base64[startIndex ..< endIndex])
-      splits.append(chunk)
+    switch format {
+    case .publicPKCS1, .privatePKCS1, .certificateX509:
+        let base64 = der.base64EncodedString()
+        
+        
+        // Insert newline `\n` every 64 characters
+        var index = 0
+        var splits = [String]()
+        while index < base64.count {
+            let startIndex = base64.index(base64.startIndex, offsetBy: index)
+            let endIndex = base64.index(startIndex, offsetBy: 64, limitedBy: base64.endIndex) ?? base64.endIndex
+            index = endIndex.utf16Offset(in: base64)
+            
+            let chunk = String(base64[startIndex ..< endIndex])
+            splits.append(chunk)
+        }
+        let base64WithNewlines = splits.joined(separator: "\n")
+        return [format.header, base64WithNewlines, format.footer].joined(separator: "\n").appending("\n")
+        
+    case .publicPKCS8:
+        return ""
     }
-    let base64WithNewlines = splits.joined(separator: "\n")
-    return [format.header, base64WithNewlines, format.footer].joined(separator: "\n").appending("\n")
+
+
   }
+    
+    
+    
+
 }
 
 enum PEMConverterError: Error {

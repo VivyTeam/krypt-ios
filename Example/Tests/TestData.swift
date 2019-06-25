@@ -15,6 +15,7 @@ enum TestData: String {
   case openSSLPrivateKey2048PEM = "openssl-private-key-pkcs1-2048-pem"
   case openSSLPublicKey2048PEM = "openssl-public-key-pkcs8-2048-pem"
   case openSSLPublicKeyPKCS1PEM = "openssl-public-key-pkcs1-pem"
+case openSSLPublicKeyPKCS1DER = "openssl-public-key-pkcs1-der"
   case openSSLPublicKeyPEM = "openssl-public-key-pkcs8-pem"
   case openSSLCertificateX509PEM = "openssl-certificate-x509-cer"
   case ehrContractGCMMessage = "ehr-gcm-contract-message-base64"
