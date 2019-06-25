@@ -160,12 +160,17 @@ extension MedStickerEncryption {
   /// - Returns: Hex encoded fingerprint secret with version in front
   /// - Throws: Public encryption failure error
   public static func generateFingerprintSecret(withPin pinData: Data) -> String {
-    let firstSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
+    let charlieConstantSalt: String = "5f1288159017d636c13c1c1b2835b8a871780bc2"
     let version: MedStickerEncryption.Version = .charlie
     let length = 32
 
-    let salt = Data(firstSalt.utf8)
-    let fingerprintSecretData = deriveBytes(length: length, passphrase: pinData, salt: salt, r: version.scryptR)
+    let salt = Data(charlieConstantSalt.utf8)
+    let fingerprintSecretData = deriveBytes(
+      length: length,
+      passphrase: pinData,
+      salt: salt,
+      r: version.scryptR
+    )
 
     let fingerprintSecretHex = fingerprintSecretData.toHexString()
 
