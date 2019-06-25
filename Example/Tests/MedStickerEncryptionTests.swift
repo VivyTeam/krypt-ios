@@ -192,7 +192,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     let fakeBackendSecret = "someRandomBackendSecret"
     let fakeSecondSalt = "someRandomSecondSalt"
 
-    let iv = randomData(count: 32)
+    let iv = randomData(count: 16)
     let encrypted = try! MedStickerEncryption.encrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: iv, data: expectedData)
 
     let decrypted = try! MedStickerEncryption.decrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: encrypted.attr.iv, data: encrypted.data)
