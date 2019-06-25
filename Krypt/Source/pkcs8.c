@@ -10,19 +10,25 @@
 #include <openssl/pem.h>
 #include "helper.h"
 
-
-char *pkcs8_get_public_key_pem(const char *der) {
-    // Load DER in BIO
-    BIO *key = BIO_from_str(der);
-    
-    // Load bio to to RSA
-    RSA *rsa;
-    rsa = d2i_RSAPublicKey_bio(key, NULL);
-    
-    BIO *out = NULL;
+char *pkcs8_convert_from_pkcs1_pem(const char *pem) {
+    // Load PEM into BIO
+    BIO *key = BIO_from_str(pem);
+  
+    // Create RSA from PEM
+    RSA *rsa = PEM_read_bio_RSAPublicKey(key, NULL, 0, NULL);
+  
+    BIO *out = BIO_new(BIO_s_mem());
     
     // Write out PEM to bio
-    PEM_write_bio_RSA_PUBKEY(out, rsa);
+    if(!PEM_write_bio_RSA_PUBKEY(out, rsa)) {
+      // Cannot write out public key, clean up and return
+      BIO_free(key);
+      RSA_free(rsa);
+      return NULL;
+    }
+  
+    BIO_free(key);
+    RSA_free(rsa);
     
     return str_from_BIO(out);
 }

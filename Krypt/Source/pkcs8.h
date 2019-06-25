@@ -10,6 +10,6 @@
 
 #include <stdio.h>
 
-char *pkcs8_get_public_key_pem(const char *der);
+char *pkcs8_convert_from_pkcs1_pem(const char *pem);
 
 #endif /* pkcs8_h */

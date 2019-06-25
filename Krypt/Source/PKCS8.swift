@@ -9,11 +9,14 @@ import Foundation
 import Krypt_internal
 
 public final class PKCS8 {
-    public static func convertPKCS1DERToPKCS8PEM(_ der: Data) -> String? {
-        guard let dataString = der.unsafeUtf8cString else { return nil }
-        let pemCString = pkcs8_get_public_key_pem(dataString)!
-        let returnVal = String(cString: pemCString)
-        print(returnVal)
-        return returnVal
+    public static func convertPKCS1PEMToPKCS8PEM(_ pem: Data) -> String? {
+      guard
+        let dataString = pem.unsafeUtf8cString,
+        let pemCString = pkcs8_convert_from_pkcs1_pem(dataString)
+      else  {
+        return nil
+      }
+      
+      return String(cString: pemCString)
     }
 }
