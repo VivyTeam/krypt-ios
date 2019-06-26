@@ -75,19 +75,32 @@ final class PEMConverterTests: XCTestCase {
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = PEMConverter.convertDER(der, toPEMFormat: .privatePKCS1)
+    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .privatePKCS1)
 
     // then
     XCTAssertEqual(pem, expectedPEM)
   }
 
-  func testConvertDERToPEM_publicKey__shouldGiveExpectedPEM() {
+  func testConvertDERToPEM_publicKey__shouldGiveExpectedPKCS1PEM() {
     // given
     let expectedPEM = TestData.openSSLPublicKeyPKCS1PEM.string
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = PEMConverter.convertDER(der, toPEMFormat: .publicPKCS1)
+    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .publicPKCS1)
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
+  }
+
+  func testConvertDERToPEM_publicKey__shouldGiveExpectedPKCS8PEM() {
+    // given
+    let expectedPEM = TestData.openSSLPublicKeyPEM.string
+    let pkcs1PEM = TestData.openSSLPublicKeyPKCS1PEM.string
+    let der = PEMConverter.convertPEMToDER(pkcs1PEM)!
+
+    // when
+    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .publicPKCS8)
 
     // then
     XCTAssertEqual(pem, expectedPEM)
@@ -99,7 +112,7 @@ final class PEMConverterTests: XCTestCase {
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = PEMConverter.convertDER(der, toPEMFormat: .certificateX509)
+    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .certificateX509)
 
     // then
     XCTAssertEqual(pem, expectedPEM)

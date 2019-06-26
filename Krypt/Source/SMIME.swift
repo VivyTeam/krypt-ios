@@ -66,12 +66,6 @@ public struct SMIME {
   }  
 }
 
-private extension Data {
-  var unsafeUtf8cString: [CChar]? {
-    return String(data: self, encoding: .utf8)?.unsafeUtf8cString
-  }
-}
-
 private extension UnsafeMutablePointer where Pointee == Int8 {
   var data: Data? {
     return String(cString: self).data(using: .utf8)

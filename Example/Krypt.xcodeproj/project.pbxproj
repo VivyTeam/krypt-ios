@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5021071822C1366B008EFF62 /* PKCS8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021071722C1366B008EFF62 /* PKCS8Tests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -71,6 +72,7 @@
 /* Begin PBXFileReference section */
 		22D20F0B320FF38B7169295A /* Pods-Krypt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		47AC99E24C799CBB6E81D238 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		5021071722C1366B008EFF62 /* PKCS8Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS8Tests.swift; sourceTree = "<group>"; };
 		5D871296DA4621FD775BC749 /* Pods-Krypt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Krypt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Krypt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
 				AD13AB55225F7AAB00E65BBD /* SMIMETests.swift */,
+				5021071722C1366B008EFF62 /* PKCS8Tests.swift */,
 				AD1568C521F9D2AD008572DA /* TestData.swift */,
 				EB007E2A22772BFD001BD473 /* Extensions */,
 				ADC231F62204478800A57D6A /* Files */,
@@ -560,6 +563,7 @@
 				AD1568C621F9D2AD008572DA /* TestData.swift in Sources */,
 				AD13AB56225F7AAB00E65BBD /* SMIMETests.swift in Sources */,
 				EB007E2C22772C0F001BD473 /* Data+String.swift in Sources */,
+				5021071822C1366B008EFF62 /* PKCS8Tests.swift in Sources */,
 				AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */,
 				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
 				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,

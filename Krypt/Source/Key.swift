@@ -97,7 +97,7 @@ public extension Key {
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
   func convertedToPEM() throws -> String {
     let der = try convertedToDER()
-    return PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
+    return try PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
   }
 }
 

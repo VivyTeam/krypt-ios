@@ -82,6 +82,10 @@
 		4DF081DD45DB30B20B79071AA4A18E53 /* md5.h in Headers */ = {isa = PBXBuildFile; fileRef = B3C2BF754F4DF6B0D0389A496AAEC850 /* md5.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4EEE666436674234F1812AA90C7CF544 /* smime.c in Sources */ = {isa = PBXBuildFile; fileRef = 54E10DB2FD51A1BB52C44725CEBA6081 /* smime.c */; };
 		501EEEE97D6F5AFD86A4D83B59B491AE /* storeerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 686905D2610A5743D491EB05EC250706 /* storeerr.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5021071122C12FE6008EFF62 /* pkcs8.h in Headers */ = {isa = PBXBuildFile; fileRef = 5021070F22C12FE6008EFF62 /* pkcs8.h */; };
+		5021071222C12FE6008EFF62 /* pkcs8.c in Sources */ = {isa = PBXBuildFile; fileRef = 5021071022C12FE6008EFF62 /* pkcs8.c */; };
+		5021071422C1301E008EFF62 /* PKCS8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021071322C1301E008EFF62 /* PKCS8.swift */; };
+		5021071622C133E1008EFF62 /* Data+CString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021071522C133E1008EFF62 /* Data+CString.swift */; };
 		50A4AAD8A35FA73F369FC7354A471787 /* rc2.h in Headers */ = {isa = PBXBuildFile; fileRef = 567E8FD66119AB50F16FE1C317B4E19E /* rc2.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5171DF8F9EEC82AF294F90A7FB159416 /* x509.h in Headers */ = {isa = PBXBuildFile; fileRef = F5723B02B3543E95AE6CA297491C6C3A /* x509.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5255439B13F3B20E1703E83F459E54A6 /* ossl_typ.h in Headers */ = {isa = PBXBuildFile; fileRef = 1AAD71F374104AC28771112AEF016272 /* ossl_typ.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -368,6 +372,10 @@
 		4DDD660B25D5A9D153FA403E5A7F26EB /* rc4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = rc4.h; path = OpenSSL/include/openssl/rc4.h; sourceTree = "<group>"; };
 		4F2E5791D9C22CA891E27AB84D697CD9 /* SHA3.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SHA3.swift; path = Sources/CryptoSwift/SHA3.swift; sourceTree = "<group>"; };
 		4F6A4144DD8C584A15005C8FC32BB64C /* CipherModeWorker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CipherModeWorker.swift; path = Sources/CryptoSwift/BlockMode/CipherModeWorker.swift; sourceTree = "<group>"; };
+		5021070F22C12FE6008EFF62 /* pkcs8.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = pkcs8.h; path = Krypt/Source/pkcs8.h; sourceTree = "<group>"; };
+		5021071022C12FE6008EFF62 /* pkcs8.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = pkcs8.c; path = Krypt/Source/pkcs8.c; sourceTree = "<group>"; };
+		5021071322C1301E008EFF62 /* PKCS8.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PKCS8.swift; path = Krypt/Source/PKCS8.swift; sourceTree = "<group>"; };
+		5021071522C133E1008EFF62 /* Data+CString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Data+CString.swift"; path = "Krypt/Source/Data+CString.swift"; sourceTree = "<group>"; };
 		5076643FC44CCDAA1843863C16422D38 /* tls1.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tls1.h; path = OpenSSL/include/openssl/tls1.h; sourceTree = "<group>"; };
 		50861B1C15BAE33041027B2CEBF7D050 /* fnmatch.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = fnmatch.c; path = Krypt/Source/fnmatch.c; sourceTree = "<group>"; };
 		508D755CA127D35F3A976DEEA75D09B2 /* camellia.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = camellia.h; path = OpenSSL/include/openssl/camellia.h; sourceTree = "<group>"; };
@@ -1016,6 +1024,10 @@
 				9C640B479E0A50B9E0501139DF0419EF /* MedStickerEncryption.swift */,
 				ECC3FED2B44F04069008EC31C6A6B8D0 /* PBKDF2.swift */,
 				963EA427ABEDD58B35D34462DF52ED37 /* PEMConverter.swift */,
+				5021071022C12FE6008EFF62 /* pkcs8.c */,
+				5021070F22C12FE6008EFF62 /* pkcs8.h */,
+				5021071322C1301E008EFF62 /* PKCS8.swift */,
+				BF261D3A5DE35717209E47C7D10D28FE /* Pod */,
 				0CF0C1294BF81EEE4DF5F586F3456095 /* PublicError.swift */,
 				3C38D4FD7E12C662D022D8125C102079 /* RSA.swift */,
 				B3B51E6286441099AEA69C6A1D81CF85 /* Scrypt.swift */,
@@ -1024,7 +1036,7 @@
 				0378C7444BA0AD48DD81F4F20AC7B6CF /* smime.h */,
 				EF39DE7CF81D6F7AF8A3FC9BFEF43628 /* SMIME.swift */,
 				FDBB4680C39255A48D2535F28EEEA6EE /* String+CString.swift */,
-				BF261D3A5DE35717209E47C7D10D28FE /* Pod */,
+				5021071522C133E1008EFF62 /* Data+CString.swift */,
 				A0C7E8BC05DFA4DE220C1C4369B1F962 /* Support Files */,
 			);
 			name = Krypt;
@@ -1078,6 +1090,7 @@
 				25D76230569C72989F7FF4B18919BA45 /* helper.h in Headers */,
 				5819ACAFA7717A15BD5A9135CD3D70BC /* Krypt-umbrella.h in Headers */,
 				7AF9FF2889D028DC19C268DE50440A62 /* smime.h in Headers */,
+				5021071122C12FE6008EFF62 /* pkcs8.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1536,11 +1549,13 @@
 				C2447E906544D4E2512CD1C708762C53 /* CACertificates.swift in Sources */,
 				EEAA27E05456542D87F64C413F6C8F08 /* CipherAttr.swift in Sources */,
 				92D6826CAB3B72FE90A9FDDD7D24253B /* csr.c in Sources */,
+				5021071222C12FE6008EFF62 /* pkcs8.c in Sources */,
 				55BA6D431FDCA72E68A0CE94089D43AB /* CSR.swift in Sources */,
 				CB02851CFC92FA1072169CCF7D2769A6 /* CSRAttributes.swift in Sources */,
 				C2C3DC112D23469DB30DCE1223F52596 /* EHREncryption.swift in Sources */,
 				2BA0EC32AECBBEF4D5DF73CE92981685 /* fnmatch.c in Sources */,
 				A8E648BAFAA0CAF9A11D3D1ACE7AF5C5 /* helper.c in Sources */,
+				5021071622C133E1008EFF62 /* Data+CString.swift in Sources */,
 				2D56D283736552AE02DB2E9010E865B3 /* Key.swift in Sources */,
 				3459597CC75EBC2D5D19FE68EC46080D /* Krypt-dummy.m in Sources */,
 				C2DC4782A9EF644AE7D4891F07631D2B /* KVConnectDecryption.swift in Sources */,
@@ -1552,6 +1567,7 @@
 				193E17F5BBD9C900A55076EE28C5FE59 /* RSA.swift in Sources */,
 				1B2F2229EA3219BECB54927CA1EE398A /* Scrypt.swift in Sources */,
 				E9AFA6185D6D96665136F418D8DA50AB /* SHA256.swift in Sources */,
+				5021071422C1301E008EFF62 /* PKCS8.swift in Sources */,
 				4EEE666436674234F1812AA90C7CF544 /* smime.c in Sources */,
 				74D46781AB271D6377CE23B8FD7F8943 /* SMIME.swift in Sources */,
 				3BF51D99289B47A89030299B46E82D23 /* String+CString.swift in Sources */,
