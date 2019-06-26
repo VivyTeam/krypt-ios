@@ -8,7 +8,7 @@
 import Foundation
 
 extension Data {
-    var unsafeUtf8cString: [CChar]? {
-        return String(data: self, encoding: .utf8)?.unsafeUtf8cString
-    }
+  var unsafeUtf8cString: [CChar]? {
+    return String(data: self, encoding: .utf8)?.unsafeUtf8cString
+  }
 }
