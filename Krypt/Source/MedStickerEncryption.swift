@@ -174,7 +174,7 @@ extension MedStickerEncryption {
       secret: pin,
       salt: charlieConstantSalt
     )
-    return fingerprintSecretData.toFingerprint()
+    return fingerprintSecretData.fingerprint
   }
 
   /// Encrypts data for version charlie
@@ -306,7 +306,7 @@ private extension MedStickerEncryption {
     withPin pin: String,
     secret: String,
     salt: String
-  ) throws -> KeyFingerprintPair {
+  ) throws -> MedStickerKeyFingerprintPair {
     let combinedSecret = [pin, secret].joined()
 
     let keyAndFingerprintFile = try hash(
@@ -319,9 +319,9 @@ private extension MedStickerEncryption {
     let key = split.first
     let fingerprintFileData = split.second
 
-    let pair = KeyFingerprintPair(
+    let pair = MedStickerKeyFingerprintPair(
       key: key,
-      fingerprintFile: fingerprintFileData.toFingerprint()
+      fingerprintFile: fingerprintFileData.fingerprint
     )
 
     return pair
@@ -343,7 +343,7 @@ private extension Data {
     return (first: firstHalf, second: secondHalf)
   }
 
-  func toFingerprint() -> String {
+  var fingerprint: String {
     let version: MedStickerEncryption.Version = .charlie
     let hexString = toHexString()
 
