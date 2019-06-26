@@ -10,7 +10,7 @@
 #include <openssl/pem.h>
 #include "helper.h"
 
-char *pkcs8_convert_from_pkcs1_pem(const char *pem) {
+char *convert_pkcs1_to_pkcs8(const char *pem) {
     // Load PEM into BIO
     BIO *key = BIO_from_str(pem);
   
