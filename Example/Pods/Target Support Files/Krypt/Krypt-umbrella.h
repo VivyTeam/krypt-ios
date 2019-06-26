@@ -12,6 +12,7 @@
 
 #import "csr.h"
 #import "helper.h"
+#import "pkcs8.h"
 #import "smime.h"
 
 FOUNDATION_EXPORT double KryptVersionNumber;
