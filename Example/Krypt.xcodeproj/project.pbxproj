@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5008400A22C20F1600D63F25 /* openssl-public-key-pkcs1-der in Resources */ = {isa = PBXBuildFile; fileRef = 5008400922C20B0100D63F25 /* openssl-public-key-pkcs1-der */; };
 		5021071822C1366B008EFF62 /* PKCS8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021071722C1366B008EFF62 /* PKCS8Tests.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -73,7 +72,6 @@
 /* Begin PBXFileReference section */
 		22D20F0B320FF38B7169295A /* Pods-Krypt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.release.xcconfig"; sourceTree = "<group>"; };
 		47AC99E24C799CBB6E81D238 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		5008400922C20B0100D63F25 /* openssl-public-key-pkcs1-der */ = {isa = PBXFileReference; lastKnownFileType = file; path = "openssl-public-key-pkcs1-der"; sourceTree = "<group>"; };
 		5021071722C1366B008EFF62 /* PKCS8Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS8Tests.swift; sourceTree = "<group>"; };
 		5D871296DA4621FD775BC749 /* Pods-Krypt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* Krypt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Krypt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,7 +264,6 @@
 			children = (
 				EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */,
 				ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */,
-				5008400922C20B0100D63F25 /* openssl-public-key-pkcs1-der */,
 				ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */,
 				EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */,
 				ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */,
@@ -463,7 +460,6 @@
 				EB007E1D2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers in Resources */,
 				AD13AB58225F9DB200E65BBD /* kvconnect-mail-dec in Resources */,
 				EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */,
-				5008400A22C20F1600D63F25 /* openssl-public-key-pkcs1-der in Resources */,
 				EB0A5E5F2268B0D6000FD79C /* kvroot-ca-pem in Resources */,
 				EBE7E18A22845D91003029C8 /* kvconnect-mail-verification-hacked4 in Resources */,
 				ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */,
