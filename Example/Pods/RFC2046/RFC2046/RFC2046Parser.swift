@@ -9,11 +9,11 @@ import Foundation
 
 public class RFC2046Parser {
   private let text: String
-  
-  public init (text: String) {
+
+  public init(text: String) {
     self.text = text
   }
-  
+
   public func getMessages() throws -> [RFC2046Message] {
     return try parse(fromText: text)
   }
@@ -35,7 +35,7 @@ public class RFC2046Parser {
   /// - Note: Backward compatible with RFC822
   private func parse(fromText text: String) throws -> [RFC2046Message] {
     let headerAndBody = try getHeaderAndBody(text: text)
-    
+
     let header = headerAndBody.header.trimmingCharacters(in: .whitespacesAndNewlines)
     let body = headerAndBody.body.trimmingCharacters(in: .whitespacesAndNewlines)
 
@@ -51,7 +51,7 @@ public class RFC2046Parser {
       var data: Data
       if let encoding = try? RFC2046Decoder().decode(ContentTransferEncodingHeaderField.self, from: header), encoding.value == .base64 {
         guard let encodedData = Data(base64Encoded: body.replacingOccurrences(of: "\r\n", with: "")) else { return [] }
-        data = Data(String(decoding: encodedData, as: UTF8.self).utf8)
+        data = encodedData
       } else {
         data = Data(body.utf8)
       }
@@ -59,7 +59,6 @@ public class RFC2046Parser {
       return [RFC2046Message(contentType: contentType.messageContentType, content: data, name: contentType.contentName)]
     }
   }
-
 
   /// Get header and body from text
   ///
@@ -71,7 +70,7 @@ public class RFC2046Parser {
     var body = trimmedText
     var failed = false
 
-    trimmedText.enumerateLines { (line, stop) in
+    trimmedText.enumerateLines { line, stop in
       if line.isEmpty {
         // As per RFC2046 the separation between header and body is an empty line.
         stop = true
@@ -95,7 +94,6 @@ public class RFC2046Parser {
     return (header: header, body: body)
   }
 
-
   /// Splits multipart body into parts using boundary attribute
   ///
   /// - Parameters:
@@ -106,7 +104,7 @@ public class RFC2046Parser {
   private func getPartsFromMultipart(withBoundary boundary: String, inBody body: String) throws -> [String] {
     var mutlipartParts = body.components(separatedBy: "--\(boundary)")
     // There should be at least two boundaries which results into three components (before boundary, between boundaries, after boundary)
-    guard mutlipartParts.count > 3 else { throw RFC2046ParserError.noPartsInMultipartBody }
+    guard mutlipartParts.count >= 3 else { throw RFC2046ParserError.noPartsInMultipartBody }
     mutlipartParts.removeFirst()
     mutlipartParts.removeLast()
 
@@ -127,7 +125,7 @@ private extension ContentTypeHeaderField {
       return .imageJPEG
     case .imageBMP:
       return .imageBMP
-    case .textHTML :
+    case .textHTML:
       return .textHTML
     case .imagePNG:
       return .imagePNG

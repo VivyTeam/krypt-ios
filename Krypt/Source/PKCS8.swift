@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Krypt_internal
 
 public final class PKCS8 {
   public static func convertPKCS1PEMToPKCS8PEM(_ pem: Data) -> String? {

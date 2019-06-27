@@ -11,13 +11,13 @@ struct ContentTransferEncodingHeaderField: HeaderField {
   enum Value: String {
     case base64
   }
-  
+
   static let fieldName = "content-transfer-encoding"
   let value: Value
-  
-  init(value: String, attributes: [String : String]?) throws {
+
+  init(value: String, attributes _: [String: String]?) throws {
     guard let value = Value(rawValue: value) else { throw HeaderFieldError.parsingValueFailed }
-    
+
     self.value = value
   }
 }

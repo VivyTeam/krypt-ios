@@ -9,7 +9,6 @@ import Foundation
 
 struct ContentTypeHeaderField: HeaderField {
   enum Value {
-
     // Descrete types as per RFC822
     case applicationXML
     case textPlain
@@ -27,10 +26,10 @@ struct ContentTypeHeaderField: HeaderField {
     init(rawValue: String, attributes: [String: String]?) throws {
       switch rawValue {
       case "multipart/mixed":
-        guard let boundary = attributes?["boundary"]?.trimmingCharacters(in: CharacterSet(charactersIn: "\"'")) else { throw HeaderFieldError.requiredAttributeMissing}
+        guard let boundary = attributes?["boundary"]?.trimmingCharacters(in: CharacterSet(charactersIn: "\"'")) else { throw HeaderFieldError.requiredAttributeMissing }
         self = .multipartMixed(boundary: boundary)
       case "multipart/alternative":
-        guard let boundary = attributes?["boundary"]?.trimmingCharacters(in: CharacterSet(charactersIn: "\"'")) else { throw HeaderFieldError.requiredAttributeMissing}
+        guard let boundary = attributes?["boundary"]?.trimmingCharacters(in: CharacterSet(charactersIn: "\"'")) else { throw HeaderFieldError.requiredAttributeMissing }
         self = .multipartAlternative(boundary: boundary)
       case "application/xml":
         self = .applicationXML
@@ -53,13 +52,13 @@ struct ContentTypeHeaderField: HeaderField {
       }
     }
   }
-  
+
   static let fieldName = "content-type"
   let value: Value
   let contentName: String?
 
-  init(value: String, attributes: [String : String]?) throws {
+  init(value: String, attributes: [String: String]?) throws {
     self.value = try Value(rawValue: value, attributes: attributes)
     contentName = attributes?["name"]?.trimmingCharacters(in: CharacterSet(charactersIn: "\"'"))
-  }  
+  }
 }

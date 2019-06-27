@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Krypt_internal
 
 public struct SMIME {
   /// Decrypts encrypted SMIME content using private key
@@ -21,11 +20,11 @@ public struct SMIME {
       let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
       throw SMIMEError.error
     }
-    
+
     guard let dataString = data.unsafeUtf8cString else {
-        throw SMIMEError.error
+      throw SMIMEError.error
     }
-    
+
     guard let decryptedString = smime_decrypt(dataString, keyPEM),
       let decryptedData = decryptedString.data else {
       throw SMIMEError.error
@@ -33,7 +32,7 @@ public struct SMIME {
 
     return decryptedData
   }
-  
+
   /// Verifies the decrypted SMIME content signature against trusted CA certificates. The certificate chain needs to be complete for verification to succeed.
   ///
   /// - Parameters:
@@ -44,26 +43,26 @@ public struct SMIME {
   public static func verify(data: Data, senderEmail: String, caCertificates: CACertificates) throws -> Data {
     guard let dataString = data.unsafeUtf8cString,
       let senderEmailCString = senderEmail.cString(using: .utf8) else {
-        throw SMIMEError.error
+      throw SMIMEError.error
     }
-    
+
     var certificateCStrings = caCertificates.certificateCStrings
-    
+
     var contentWithoutSignature: UnsafeMutablePointer<Int8>?
 
     guard smime_verify(dataString, senderEmailCString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
       throw SMIMEError.error
     }
-    
+
     guard let content = contentWithoutSignature?.data else {
       throw SMIMEError.error
     }
-    
+
     certificateCStrings.freePointers()
     contentWithoutSignature?.deallocate()
 
     return content
-  }  
+  }
 }
 
 private extension UnsafeMutablePointer where Pointee == Int8 {

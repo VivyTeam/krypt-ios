@@ -174,4 +174,42 @@ final class MedStickerEncryptionTests: XCTestCase {
     // then
     XCTAssertTrue(signature.hasPrefix("adam-sha256"))
   }
+
+  func testGenerateFingerprintSecret_charlie__shouldGenerate132StringsAndContainVersionCharlie() {
+    // given
+    let expectedLength = 64 * 2 + 8 // 64 bytes * 2(as hex string) + "charlie:" (8)
+    let fakePin = UUID().uuidString
+
+    // when
+    let subject = try! MedStickerEncryption.generateFingerprintSecret(withPin: fakePin)
+
+    // then
+    XCTAssertEqual(subject.count, expectedLength)
+    XCTAssertTrue(subject.hasPrefix("charlie:"))
+  }
+
+  func testEncrypAndDecrypt_charlie__shouldReturnSameData() {
+    // given
+    let expectedData = Data(UUID().uuidString.utf8)
+    let fakePin = UUID().uuidString
+    let fakeBackendSecret = UUID().uuidString
+    let fakeSecondSalt = UUID().uuidString
+    let iv = randomData(count: 16)
+
+    // when
+    let encrypted = try! MedStickerEncryption.encrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: iv, data: expectedData)
+
+    let decrypted = try! MedStickerEncryption.decrypt(pin: fakePin, secret: fakeBackendSecret, salt: fakeSecondSalt, iv: encrypted.attr.iv, data: encrypted.data)
+
+    // then
+    XCTAssertEqual(decrypted, expectedData)
+  }
+
+  private func randomData(count: Int) -> Data {
+    var data = Data(count: count)
+    data.withUnsafeMutableBytes {
+      SecRandomCopyBytes(kSecRandomDefault, count, $0)
+    }
+    return data
+  }
 }
