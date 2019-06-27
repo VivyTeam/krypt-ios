@@ -190,7 +190,7 @@ final class MedStickerEncryptionTests: XCTestCase {
 
   func testEncrypAndDecrypt_charlie__shouldReturnSameData() {
     // given
-    let expectedData = UUID().uuidString.data(using: .utf8)!
+    let expectedData = Data(UUID().uuidString.utf8)
     let fakePin = UUID().uuidString
     let fakeBackendSecret = UUID().uuidString
     let fakeSecondSalt = UUID().uuidString
