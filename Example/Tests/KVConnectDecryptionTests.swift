@@ -106,7 +106,7 @@ final class KVConnectDecryptionTests: XCTestCase {
   /// Testing the positive smime verification case.
   func testGetMime_whileEncryptionAndVerificationValid__doesntThrowError() {
     // given
-    let email = TestData.kvConnectEmailVerificationNotHacked.data
+    let email = TestData.kvConnectEmailVerificationValid.data
     let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
@@ -117,9 +117,9 @@ final class KVConnectDecryptionTests: XCTestCase {
   }
 
   /// Testing the case where the digest of the message doesn't match the calculated digest.
-  func testGetMime_whileInvalidSignature__throwsDigestVerificationError() {
+  func testGetMime_whileInvalidSignatureDigest__throwsDigestVerificationError() {
     // given
-    let email = TestData.kvConnectEmailVerificationHacked1.data
+    let email = TestData.kvConnectEmailVerificationInvalidSignatureDigest.data
     let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
@@ -132,9 +132,9 @@ final class KVConnectDecryptionTests: XCTestCase {
   }
 
   /// Testing the case where the signature certificate was issued by untrusted CA.
-  func testGetMime_whileCertificateIssuerIsNotTrusted__throwsCertificateVerificationError() {
+  func testGetMime_whileCertificateIssuerNotTrusted__throwsCertificateVerificationError() {
     // given
-    let email = TestData.kvConnectEmailVerificationHacked2.data
+    let email = TestData.kvConnectEmailVerificationCertificateIssuerNotTrusted.data
     let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
@@ -149,7 +149,7 @@ final class KVConnectDecryptionTests: XCTestCase {
   /// Testing the case where the signature doesn't belong to the sender of the message.
   func testGetMime_whileSignatureDoesntBelongToSender__throwsSignatureDoesNotBelongToSenderError() {
     // given
-    let email = TestData.kvConnectEmailVerificationHacked3.data
+    let email = TestData.kvConnectEmailVerificationSignatureDoesntBelongToSender.data
     let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
@@ -164,7 +164,7 @@ final class KVConnectDecryptionTests: XCTestCase {
   /// Testing the case where the message contains unencrypted part.
   func testGetMime_whileSmimeContainsUnencryptedPart__throwsInvalidMimeTypeError() {
     // given
-    let email = TestData.kvConnectEmailVerificationHacked4.data
+    let email = TestData.kvConnectEmailVerificationSmimeContainsUnencryptedPart.data
     let privateKeyPEM = TestData.openSSLPrivateKeyPEM.data
     let key = try! Key(pem: privateKeyPEM, access: .private)
     let caTrustedCerts = CACertificates(certificates: [TestData.kvConnectRootCAPEM.data, TestData.kvConnectUserCAPEM.data])
