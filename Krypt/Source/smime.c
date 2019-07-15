@@ -179,11 +179,13 @@ int pkcs7_signature_contains_email(PKCS7 *pkcs7, const char *email) {
  @param content Returns content of verified MIME content (without signature)
  @return Verification status: 1 = success, 0 = failure
  */
-int smime_verify(const char *decrypted, const char *sender_email, const char** certs, int certCount, char **content) {
+int smime_verify(const char *decrypted, const char *sender_email, const char** certs, int certCount, char **content, enum Smime_error *err) {
   BIO *bcont = NULL;
   
   PKCS7 *pkcs7 = get_pkcs7(decrypted, &bcont);
   if (!pkcs7) {
+    unsigned long error = ERR_get_error();
+    *err = (enum Smime_error) error;
     return 0;
   }
   
@@ -207,14 +209,14 @@ int smime_verify(const char *decrypted, const char *sender_email, const char** c
   flags |= PKCS7_NOCHAIN;
 
   if (!pkcs7_signature_contains_email(pkcs7, sender_email)) {
+    *err = Smime_error_signature_doesnt_belong_to_sender;
     return 0;
   }
 
   int ret = PKCS7_verify(pkcs7, NULL, store, bcont, out, flags);
   if (ret == 0) {
-    unsigned long err = ERR_get_error();
-    char *err_descr = ERR_error_string(err, NULL);
-    printf("%s", err_descr);
+    unsigned long error = ERR_get_error();
+    *err = (enum Smime_error) error;
   }
   PKCS7_free(pkcs7);
   X509_STORE_free(store);
