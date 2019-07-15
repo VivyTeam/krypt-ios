@@ -99,6 +99,20 @@ public extension Key {
     let der = try convertedToDER()
     return try PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
   }
+
+  /// Derives the public key from the private key
+  ///
+  /// - Returns: Public key for the private key
+  /// - Throws: errors if wrong key is used or if the public key cannot be derived
+  func publicKeyRepresentation() throws -> Key {
+    guard access == .private else { throw KeyError.invalidAccess }
+
+    guard let publicKey = SecKeyCopyPublicKey(secRef), let der = SecKeyCopyExternalRepresentation(publicKey, nil) as Data? else {
+      throw KeyError.failedToDerivePublicKey
+    }
+
+    return try Key(der: der, access: .public)
+  }
 }
 
 private extension Key.Access {
@@ -126,6 +140,8 @@ private extension Key.Access {
 ///
 /// - invalidPEMData: data was not in PKCS#1 (for private) or PKCS#8 (for public) format when initializing `Key` from PEM data
 /// - creatingSecKey: converting data to SecKey failed
+/// - invalidAccess: wrong access for function
+/// - failedToDerivePublicKey: unable to get public key from the private key
 public enum KeyError: LocalizedError {
-  case invalidPEMData, creatingSecKey
+  case invalidPEMData, creatingSecKey, invalidAccess, failedToDerivePublicKey
 }

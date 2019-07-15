@@ -99,4 +99,28 @@ final class KeyTests: XCTestCase {
     // then
     XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
   }
+
+  func testDerivePublicKeyFromPrivateKey_usingPrivateKey_shouldReturnCorrectPublicKey() {
+    // given
+    let pem = TestData.openSSLPrivateKeyPEM.data
+    let privateKey = try! Key(pem: pem, access: .private)
+
+    // when
+    let publicKey = try? privateKey.publicKeyRepresentation()
+    let publicKeyPEM = try? publicKey?.convertedToPEM()
+
+    // then
+    XCTAssertEqual(publicKeyPEM, TestData.openSSLPublicKeyPKCS1PEM.string)
+  }
+
+  func testDerivePublicKeyFromPrivateKey_usingPublicKey_shouldReturnErrorInvalidAccess() {
+    // given
+    let pem = TestData.openSSLPublicKeyPEM.data
+    let publicKey = try! Key(pem: pem, access: .public)
+
+    // then
+    XCTAssertThrowsError(try publicKey.publicKeyRepresentation(), "Should throw KeyError.invalidAccess error") { error in
+      XCTAssertEqual(error as? KeyError, KeyError.invalidAccess)
+    }
+  }
 }
