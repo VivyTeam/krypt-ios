@@ -107,8 +107,7 @@ public extension Key {
   func publicKeyRepresentation() throws -> Key {
     guard access == .private else { throw KeyError.invalidAccess }
 
-    var error: Unmanaged<CFError>?
-    guard let publicKey = SecKeyCopyPublicKey(secRef), let der = SecKeyCopyExternalRepresentation(publicKey, &error) as Data? else {
+    guard let publicKey = SecKeyCopyPublicKey(secRef), let der = SecKeyCopyExternalRepresentation(publicKey, nil) as Data? else {
       throw KeyError.failedToDerivePublicKey
     }
 

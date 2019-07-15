@@ -113,20 +113,14 @@ final class KeyTests: XCTestCase {
     XCTAssertEqual(publicKeyPEM, TestData.openSSLPublicKeyPKCS1PEM.string)
   }
 
-  func testDerivePublicKeyFromPrivateKey_usingPublicKey_shouldReturnErrorInvalidKeyType() {
+  func testDerivePublicKeyFromPrivateKey_usingPublicKey_shouldReturnErrorInvalidAccess() {
     // given
     let pem = TestData.openSSLPublicKeyPEM.data
     let publicKey = try! Key(pem: pem, access: .public)
 
-    // when
-    var err: Error?
-    do {
-      _ = try publicKey.publicKeyRepresentation()
-    } catch {
-      err = error
-    }
-
     // then
-    XCTAssertEqual(err as? KeyError, KeyError.invalidAccess)
+    XCTAssertThrowsError(try publicKey.publicKeyRepresentation(), "Should throw KeyError.invalidAccess error") { error in
+      XCTAssertEqual(error as? KeyError, KeyError.invalidAccess)
+    }
   }
 }
