@@ -68,8 +68,6 @@ char *decrypt_pkcs7(PKCS7 *pkcs7, EVP_PKEY *pkey) {
   BIO *out = BIO_new(BIO_s_mem());
   
   if (PKCS7_decrypt(pkcs7, pkey, NULL, out, 0) != 1) {
-    unsigned long err = ERR_get_error();
-    char *err_descr = ERR_error_string(err, NULL);
     EVP_PKEY_free(pkey);
     PKCS7_free(pkcs7);
     return NULL;

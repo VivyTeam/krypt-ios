@@ -40,8 +40,8 @@ final class KVConnectDecryptionTests: XCTestCase {
     let kvConnectSMIME = KVConnectDecryption(smime: email)
 
     // then
-    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts), "should throw SMIMEError.keyNotPrivate") { error in
-      XCTAssertEqual(error as? SMIMEError, SMIMEError.keyNotPrivate)
+    XCTAssertThrowsError(try kvConnectSMIME.getMime(identifyingWith: key, trustedCACertificates: caTrustedCerts), "should throw SMIMEError.privateKeyRequired") { error in
+      XCTAssertEqual(error as? SMIMEError, SMIMEError.privateKeyRequired)
     }
   }
 

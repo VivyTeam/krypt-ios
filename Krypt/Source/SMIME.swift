@@ -17,7 +17,7 @@ public struct SMIME {
   /// - Throws: SMIMEError
   public static func decrypt(data: Data, key: Key) throws -> Data {
     guard key.access == .private else {
-      throw SMIMEError.keyNotPrivate
+      throw SMIMEError.privateKeyRequired
     }
 
     guard let dataString = data.unsafeUtf8cString else {
@@ -72,7 +72,7 @@ public struct SMIME {
     }
 
     guard let content = contentWithoutSignature?.data else {
-      throw SMIMEError.postverificationContentCorrupted
+      throw SMIMEError.postVerificationContentCorrupted
     }
 
     certificateCStrings.freePointers()
@@ -96,12 +96,12 @@ private extension Collection where Element == UnsafePointer<Int8>? {
 
 public enum SMIMEError: Error {
   case
-    keyNotPrivate,
+    privateKeyRequired,
     dataCorrupted,
     decryptionFailed,
     senderEmailCorrupted,
     signatureDoesNotBelongToSender,
-    postverificationContentCorrupted,
+    postVerificationContentCorrupted,
     certificateVerificationFailed,
     digestVerificationFailed,
     verificationFailed,
