@@ -10,6 +10,16 @@
 
 #include <stdio.h>
 
+enum Smime_error {
+  // PKCS7_verify errors
+  Smime_error_certificate_verify_error = 554127477,
+  Smime_error_digest_fail = 554111077,
+  Smime_error_invalid_mime_type = 218972365,
+
+  // Other errors
+  Smime_error_signature_doesnt_belong_to_sender
+};
+
 /**
  Decrypts SMIME content
  
@@ -29,6 +39,6 @@ char *smime_decrypt(const char *encrypted, const char *privateKey);
  @param content Returns content of verified MIME content (without signature)
  @return Verification status: 1 = success, 0 = failure
  */
-int smime_verify(const char *decrypted, const char *sender_email, const char **certs, int certCount, char **content);
+int smime_verify(const char *decrypted, const char *sender_email, const char **certs, int certCount, char **content, enum Smime_error *err);
 
 #endif /* smime_h */

@@ -14,20 +14,21 @@ public struct SMIME {
   ///   - data: encrypted SMIME content
   ///   - key: private key
   /// - Returns: Decrypted SMIME content
-  /// - Throws: In case of any error
+  /// - Throws: SMIMEError
   public static func decrypt(data: Data, key: Key) throws -> Data {
-    guard key.access == .private,
-      let keyPEM = try? key.convertedToPEM().unsafeUtf8cString else {
-      throw SMIMEError.error
+    guard key.access == .private else {
+      throw SMIMEError.privateKeyRequired
     }
 
     guard let dataString = data.unsafeUtf8cString else {
-      throw SMIMEError.error
+      throw SMIMEError.dataCorrupted
     }
+
+    let keyPEM = try key.convertedToPEM().unsafeUtf8cString
 
     guard let decryptedString = smime_decrypt(dataString, keyPEM),
       let decryptedData = decryptedString.data else {
-      throw SMIMEError.error
+      throw SMIMEError.decryptionFailed
     }
 
     return decryptedData
@@ -39,23 +40,39 @@ public struct SMIME {
   ///   - data: SMIME content
   ///   - certificates: collection of CA certificates to trust
   /// - Returns: Decrypted SMIME content without signature
-  /// - Throws: In case of any error.
+  /// - Throws: SMIMEError.
   public static func verify(data: Data, senderEmail: String, caCertificates: CACertificates) throws -> Data {
-    guard let dataString = data.unsafeUtf8cString,
-      let senderEmailCString = senderEmail.cString(using: .utf8) else {
-      throw SMIMEError.error
+    guard let dataString = data.unsafeUtf8cString else {
+      throw SMIMEError.dataCorrupted
+    }
+
+    guard let senderEmailCString = senderEmail.cString(using: .utf8) else {
+      throw SMIMEError.senderEmailCorrupted
     }
 
     var certificateCStrings = caCertificates.certificateCStrings
 
     var contentWithoutSignature: UnsafeMutablePointer<Int8>?
+    var error = Smime_error(0)
 
-    guard smime_verify(dataString, senderEmailCString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature) == 1 else {
-      throw SMIMEError.error
+    let result = smime_verify(dataString, senderEmailCString, &certificateCStrings, Int32(certificateCStrings.count), &contentWithoutSignature, &error)
+    guard result == 1 else {
+      switch error {
+      case Smime_error_certificate_verify_error:
+        throw SMIMEError.certificateVerificationFailed
+      case Smime_error_digest_fail:
+        throw SMIMEError.digestVerificationFailed
+      case Smime_error_signature_doesnt_belong_to_sender:
+        throw SMIMEError.signatureDoesNotBelongToSender
+      case Smime_error_invalid_mime_type:
+        throw SMIMEError.invalidMimeType
+      default:
+        throw SMIMEError.verificationFailed
+      }
     }
 
     guard let content = contentWithoutSignature?.data else {
-      throw SMIMEError.error
+      throw SMIMEError.postVerificationContentCorrupted
     }
 
     certificateCStrings.freePointers()
@@ -77,6 +94,16 @@ private extension Collection where Element == UnsafePointer<Int8>? {
   }
 }
 
-enum SMIMEError: Error {
-  case error
+public enum SMIMEError: Error {
+  case
+    privateKeyRequired,
+    dataCorrupted,
+    decryptionFailed,
+    senderEmailCorrupted,
+    signatureDoesNotBelongToSender,
+    postVerificationContentCorrupted,
+    certificateVerificationFailed,
+    digestVerificationFailed,
+    verificationFailed,
+    invalidMimeType
 }

@@ -10,11 +10,11 @@ import RFC2046
 
 public struct KVConnectDecryption {
   private let smime: Data
-  
+
   public init(smime: Data) {
     self.smime = smime
   }
-  
+
   public func getMime(identifyingWith privateKey: Key, trustedCACertificates: CACertificates) throws -> Data {
     let emailAddressFirstLayer = try RFC2046Parser(text: String(decoding: smime, as: UTF8.self)).getSenderEmailAddress()
     let decryptedFirstLayer = try SMIME.decrypt(data: smime, key: privateKey)
@@ -26,10 +26,10 @@ public struct KVConnectDecryption {
 
     return decryptedSecondLayerNoSignature
   }
-  
+
   private func trimRedundantHeader(from smime: Data) throws -> Data {
     guard let smimeString = String(data: smime, encoding: .utf8) else {
-      throw KVConnectError.error
+      throw KVConnectDecryptionError.dataToStringConversionFailed
     }
 
     var smimeArray = smimeString.split(separator: "\r\n", omittingEmptySubsequences: false)
@@ -39,6 +39,6 @@ public struct KVConnectDecryption {
   }
 }
 
-enum KVConnectError: Error {
-  case error
+public enum KVConnectDecryptionError: Error {
+  case dataToStringConversionFailed
 }
