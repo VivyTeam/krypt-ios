@@ -55,7 +55,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(state) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "ST", MBSTRING_ASC, (const unsigned char*)state, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "ST", V_ASN1_UTF8STRING, (const unsigned char*)state, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -63,7 +63,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(location) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "L", MBSTRING_ASC, (const unsigned char*)location, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "L", V_ASN1_UTF8STRING, (const unsigned char*)location, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -71,7 +71,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(organization) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "O", MBSTRING_ASC, (const unsigned char*)organization, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "O", V_ASN1_UTF8STRING, (const unsigned char*)organization, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -79,7 +79,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(organizationUnit) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "OU", MBSTRING_ASC, (const unsigned char*)organizationUnit, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "OU", V_ASN1_UTF8STRING, (const unsigned char*)organizationUnit, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -95,7 +95,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(uniqueIdentifier) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "UID", MBSTRING_ASC, (const unsigned char*)uniqueIdentifier, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "UID", V_ASN1_UTF8STRING, (const unsigned char*)uniqueIdentifier, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -103,7 +103,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(givenName) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "GN", MBSTRING_ASC, (const unsigned char*)givenName, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "GN", V_ASN1_UTF8STRING, (const unsigned char*)givenName, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
@@ -111,7 +111,7 @@ char *createCSR(const char *key,
   }
   
   if (strlen(surname) != 0) {
-    ret = X509_NAME_add_entry_by_txt(x509_name, "SN", MBSTRING_ASC, (const unsigned char*)surname, -1, -1, 0);
+    ret = X509_NAME_add_entry_by_txt(x509_name, "SN", V_ASN1_UTF8STRING, (const unsigned char*)surname, -1, -1, 0);
     if (ret != 1) {
       freeAll(x509_req, out, privateKey);
       return NULL;
