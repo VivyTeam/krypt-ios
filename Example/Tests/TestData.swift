@@ -22,6 +22,7 @@ enum TestData: String {
   case ehrContractCBCMessage = "ehr-cbc-contract-message-base64"
   case ehrContractCBCCipherKey = "ehr-cbc-contract-cipher-key-base64"
   case opensslCSR = "openssl-csr"
+  case opensslCSRWithUmlauts = "openssl-csr-with-umlauts"
   case kvConnectEmail = "kvconnect-mail"
   case kvConnectEmailCorrupted = "kvconnect-mail-corrupted"
   case kvConnectEmailDec = "kvconnect-mail-dec"

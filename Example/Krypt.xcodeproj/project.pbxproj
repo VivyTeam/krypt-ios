@@ -36,6 +36,7 @@
 		ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */; };
 		ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */; };
 		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
+		DAD2CF322302BAA4002F0BD0 /* openssl-csr-with-umlauts in Resources */ = {isa = PBXBuildFile; fileRef = DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */; };
 		EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */ = {isa = PBXBuildFile; fileRef = EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */; };
 		EB007E162276EA8F001BD473 /* KVConnectDecryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */; };
 		EB007E1B2276F61C001BD473 /* kvconnect-mail-dec-verified in Resources */ = {isa = PBXBuildFile; fileRef = EB007E182276F61C001BD473 /* kvconnect-mail-dec-verified */; };
@@ -111,6 +112,7 @@
 		B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4F37220164E1147DCE29591 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr-with-umlauts"; sourceTree = "<group>"; };
 		E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		EB007DE7227094F4001BD473 /* kvconnect-mail-corrupted */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail-corrupted"; sourceTree = "<group>"; };
 		EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVConnectDecryptionTests.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 		AD13AB4D225F77C500E65BBD /* CSR */ = {
 			isa = PBXGroup;
 			children = (
+				DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */,
 				AD6B2D462231108C00C03EC1 /* openssl-csr */,
 			);
 			path = CSR;
@@ -453,6 +456,7 @@
 				EB0A5E5722676CF9000FD79C /* wrong-ca-pem in Resources */,
 				AD9EBA8622832B9300DB8E73 /* openssl-certificate-x509-cer in Resources */,
 				EB007DE82270955E001BD473 /* kvconnect-mail-corrupted in Resources */,
+				DAD2CF322302BAA4002F0BD0 /* openssl-csr-with-umlauts in Resources */,
 				EBE7E19122848ACE003029C8 /* kvconnect-user-ca-pem in Resources */,
 				EBE7E18622845D91003029C8 /* kvconnect-mail-verification-valid in Resources */,
 				ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */,
