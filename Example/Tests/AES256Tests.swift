@@ -35,7 +35,7 @@ final class AES256Tests: XCTestCase {
     // when
     let cryptoSwiftAES = try AES(key: key.bytes, blockMode: CBC(iv: iv.bytes), padding: .pkcs7)
     let encrypted = try cryptoSwiftAES.encrypt(secretData.bytes)
-    let decrypted = try AES256.decrypt(data: Data(bytes: encrypted), key: key, iv: iv, blockMode: .cbc)
+    let decrypted = try AES256.decrypt(data: Data(encrypted), key: key, iv: iv, blockMode: .cbc)
     let decryptedString = String(data: decrypted, encoding: .utf8)
 
     //then
@@ -51,7 +51,7 @@ final class AES256Tests: XCTestCase {
     let (encrypted, key, iv) = try AES256.encrypt(data: secretData, blockMode: .cbc)
     let cryptoSwiftAES = try AES(key: key.bytes, blockMode: CBC(iv: iv.bytes), padding: .pkcs7)
     let decrypted = try cryptoSwiftAES.decrypt(encrypted.bytes)
-    let decryptedString = String(data: Data(bytes: decrypted), encoding: .utf8)
+    let decryptedString = String(data: Data(decrypted), encoding: .utf8)
 
     // then
     XCTAssertEqual(decryptedString, secret)

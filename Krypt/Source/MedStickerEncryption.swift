@@ -112,7 +112,7 @@ public struct MedStickerEncryption {
     let combinedBytes = [attr.key, attr.iv, salt]
       .compactMap([UInt8].init)
       .reduce([UInt8](), +)
-    let combinedData = Data(bytes: combinedBytes)
+    let combinedData = Data( combinedBytes)
     let digest = SHA256.digest(combinedData)
     let algorithm = [attr.version.rawValue, "sha256"].joined(separator: "-")
     return [algorithm, digest.base64EncodedString()].joined(separator: ":")
@@ -136,7 +136,7 @@ private extension MedStickerEncryption {
       p: 1,
       dkLen: length
     )
-    return Data(bytes: derivedBytes)
+    return Data(derivedBytes)
   }
 }
 
@@ -289,7 +289,7 @@ private extension MedStickerEncryption {
       r: version.scryptR,
       p: 1
     ).calculate()
-    return Data(bytes: result)
+    return Data(result)
   }
 
   /// Generates key and fingerprint file

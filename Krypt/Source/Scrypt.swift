@@ -57,7 +57,7 @@ final class Scrypt {
   }
 
   final func scryptBlockMix(_ B: [UInt32], r: Int) -> [UInt32] {
-    var B = B
+    let B = B
     var B_: [UInt32] = Array<UInt32>(repeating: 0, count: B.count)
 
     let ptrB = UnsafeRawPointer(B).advanced(by: (2 * r - 1) * 64)
@@ -111,7 +111,7 @@ final class Scrypt {
   }
 
   func scrypt(passphrase: [UInt8], salt: [UInt8], n: Int, r: Int, p: Int, dkLen: Int) -> [UInt8] {
-    var B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: p * 128 * r)
+    let B = PBKDF2.deriveKey(password: passphrase, salt: salt, rounds: 1, keyLength: p * 128 * r)
 
     var result: [UInt8] = []
     for i in 0 ... p - 1 {
