@@ -18,6 +18,6 @@ public struct SHA256 {
       _ = CC_SHA256(pointer, CC_LONG(data.count), &hash)
       return errSecSuccess
     }
-    return status == errSecSuccess ? nil : Data(hash)
+    return status == errSecSuccess ? Data(hash) : nil
   }
 }
