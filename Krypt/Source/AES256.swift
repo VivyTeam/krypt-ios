@@ -72,8 +72,8 @@ private extension AES256 {
   /// - Returns: random data
   static func randomData(count: Int) -> Data {
     var data = Data(count: count)
-    let status = data.withUnsafeMutableBytes {
-      SecRandomCopyBytes(kSecRandomDefault, count, $0)
+    let status = data.withUnsafeMutableBytes { ptr in
+        SecRandomCopyBytes(kSecRandomDefault, count, (ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self))!)
     }
     guard status == errSecSuccess else {
       fatalError(#function)
@@ -93,7 +93,7 @@ private extension AES256 {
 
     let aes = try AES(key: key.bytes, blockMode: GCM(iv: iv.bytes, mode: .combined), padding: .noPadding)
     let digest = try aes.encrypt(data.bytes)
-    let encrypted = Data(bytes: digest)
+    let encrypted = Data(digest)
 
     return (encrypted, key, iv)
   }
@@ -109,7 +109,7 @@ private extension AES256 {
   static func decryptGCM(data: Data, key: Data, iv: Data) throws -> Data {
     let aes = try AES(key: key.bytes, blockMode: GCM(iv: iv.bytes, mode: .combined), padding: .noPadding)
     let digest = try aes.decrypt(data.bytes)
-    let decrypted = Data(bytes: digest)
+    let decrypted = Data(digest)
 
     return decrypted
   }
@@ -138,9 +138,12 @@ private extension AES256 {
     var dataOutMoved = 0
     var status: CCCryptorStatus!
 
-    key.withUnsafeBytes { (keyBytes: UnsafePointer<UInt8>) in
-      iv.withUnsafeBytes { (ivBytes: UnsafePointer<UInt8>) in
-        data.withUnsafeBytes { (dataInBytes: UnsafePointer<UInt8>) in
+    key.withUnsafeBytes { ptr in
+        guard let keyBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
+      iv.withUnsafeBytes { ptr in
+        guard let ivBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
+        data.withUnsafeBytes { ptr in
+        guard let dataInBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
           status = CCCrypt(
             operation,
             algorithm,

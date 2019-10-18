@@ -107,7 +107,7 @@ final class KeyTests: XCTestCase {
 
     // when
     let publicKey = try? privateKey.publicKeyRepresentation()
-    let publicKeyPEM = try? publicKey?.convertedToPEM()
+    let publicKeyPEM = ((try? publicKey?.convertedToPEM()) as String??)
 
     // then
     XCTAssertEqual(publicKeyPEM, TestData.openSSLPublicKeyPKCS1PEM.string)
