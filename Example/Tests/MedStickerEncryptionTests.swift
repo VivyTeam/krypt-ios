@@ -154,7 +154,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     )
 
     // when
-    let signature = try! XCTUnwrap(MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt))
+    let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)!
 
     // then
     XCTAssertTrue(signature.hasPrefix("britney-sha256"))
