@@ -9,12 +9,15 @@ import CommonCrypto
 import Foundation
 
 public struct SHA256 {
-  public static func digest(_ data: Data) -> Data {
+  public static func digest(_ data: Data) -> Data? {
     var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
-    data.withUnsafeBytes { ptr in
-        guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self ) else { return }
+    let status = data.withUnsafeBytes { ptr -> OSStatus in
+        guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self ) else {
+            return errSecConversionError
+        }
       _ = CC_SHA256(pointer, CC_LONG(data.count), &hash)
+      return errSecSuccess
     }
-    return Data(hash)
+    return status == errSecSuccess ? nil : Data(hash)
   }
 }

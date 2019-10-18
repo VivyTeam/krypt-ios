@@ -72,8 +72,11 @@ private extension AES256 {
   /// - Returns: random data
   static func randomData(count: Int) -> Data {
     var data = Data(count: count)
-    let status = data.withUnsafeMutableBytes { ptr in
-        SecRandomCopyBytes(kSecRandomDefault, count, (ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self))!)
+    let status = data.withUnsafeMutableBytes { ptr -> Int32 in
+        guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
+            return  errSecConversionError
+        }
+        return SecRandomCopyBytes(kSecRandomDefault, count, pointer)
     }
     guard status == errSecSuccess else {
       fatalError(#function)

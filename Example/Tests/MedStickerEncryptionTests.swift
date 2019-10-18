@@ -208,8 +208,10 @@ final class MedStickerEncryptionTests: XCTestCase {
   private func randomData(count: Int) -> Data {
     var data = Data(count: count)
     data.withUnsafeMutableBytes { ptr in
-      guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else { return }
-      SecRandomCopyBytes(kSecRandomDefault, count, pointer)
+      guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
+        fatalError()
+        }
+      _ = SecRandomCopyBytes(kSecRandomDefault, count, pointer)
     }
     return data
   }
