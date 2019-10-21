@@ -73,10 +73,10 @@ private extension AES256 {
   static func randomData(count: Int) -> Data {
     var data = Data(count: count)
     let status = data.withUnsafeMutableBytes { ptr -> Int32 in
-        guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
-            return  errSecConversionError
-        }
-        return SecRandomCopyBytes(kSecRandomDefault, count, pointer)
+      guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
+        return errSecConversionError
+      }
+      return SecRandomCopyBytes(kSecRandomDefault, count, pointer)
     }
     guard status == errSecSuccess else {
       fatalError(#function)
@@ -142,11 +142,11 @@ private extension AES256 {
     var status: CCCryptorStatus!
 
     key.withUnsafeBytes { ptr in
-        guard let keyBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
+      guard let keyBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
       iv.withUnsafeBytes { ptr in
         guard let ivBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
         data.withUnsafeBytes { ptr in
-        guard let dataInBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
+          guard let dataInBytes = ptr.baseAddress?.assumingMemoryBound(to: UInt8.self) else { return }
           status = CCCrypt(
             operation,
             algorithm,

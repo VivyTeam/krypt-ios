@@ -154,10 +154,10 @@ final class MedStickerEncryptionTests: XCTestCase {
     )
 
     // when
-    let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)!
+    let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
 
     // then
-    XCTAssertTrue(signature.hasPrefix("britney-sha256"))
+    XCTAssertTrue(signature!.hasPrefix("britney-sha256"))
   }
 
   func testSignature_adam__shouldHaveRightAlgorithmPrefix() {
@@ -210,7 +210,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     data.withUnsafeMutableBytes { ptr in
       guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
         fatalError()
-        }
+      }
       _ = SecRandomCopyBytes(kSecRandomDefault, count, pointer)
     }
     return data
