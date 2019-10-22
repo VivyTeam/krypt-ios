@@ -14,7 +14,8 @@ struct PBKDF2 {
   public static func deriveKey(password: [UInt8], salt: [UInt8], rounds: UInt32, keyLength: Int) -> [UInt8] {
     var result: [UInt8] = [UInt8](repeating: 0, count: keyLength)
     let data = Data(password)
-    data.withUnsafeBytes { (passwordPtr: UnsafePointer<Int8>) in
+    data.withUnsafeBytes { ptr -> Void in
+        guard let passwordPtr = ptr.baseAddress?.assumingMemoryBound(to: Int8.self) else { return }
       _ = CCKeyDerivationPBKDF(
         CCPBKDFAlgorithm(kCCPBKDF2),
         passwordPtr,

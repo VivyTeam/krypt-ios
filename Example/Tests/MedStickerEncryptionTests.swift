@@ -157,7 +157,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
 
     // then
-    XCTAssertTrue(signature.hasPrefix("britney-sha256"))
+    XCTAssertTrue(signature!.hasPrefix("britney-sha256"))
   }
 
   func testSignature_adam__shouldHaveRightAlgorithmPrefix() {
@@ -172,7 +172,7 @@ final class MedStickerEncryptionTests: XCTestCase {
     let signature = MedStickerEncryption.accessSignature(attr: cipherAttr, salt: salt)
 
     // then
-    XCTAssertTrue(signature.hasPrefix("adam-sha256"))
+    XCTAssertTrue(signature!.hasPrefix("adam-sha256"))
   }
 
   func testGenerateFingerprintSecret_charlie__shouldGenerate132StringsAndContainVersionCharlie() {
@@ -207,8 +207,11 @@ final class MedStickerEncryptionTests: XCTestCase {
 
   private func randomData(count: Int) -> Data {
     var data = Data(count: count)
-    data.withUnsafeMutableBytes {
-      SecRandomCopyBytes(kSecRandomDefault, count, $0)
+    data.withUnsafeMutableBytes { ptr in
+      guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
+        fatalError()
+      }
+      _ = SecRandomCopyBytes(kSecRandomDefault, count, pointer)
     }
     return data
   }

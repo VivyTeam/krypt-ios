@@ -108,12 +108,12 @@ public struct MedStickerEncryption {
   ///   - attr: `CipherAttr`
   ///   - salt: `Data`
   /// - Returns: created signature as `String`
-  public static func accessSignature(attr: CipherAttr, salt: Data) -> String {
+  public static func accessSignature(attr: CipherAttr, salt: Data) -> String? {
     let combinedBytes = [attr.key, attr.iv, salt]
       .compactMap([UInt8].init)
       .reduce([UInt8](), +)
-    let combinedData = Data(bytes: combinedBytes)
-    let digest = SHA256.digest(combinedData)
+    let combinedData = Data(combinedBytes)
+    guard let digest = SHA256.digest(combinedData) else { return nil }
     let algorithm = [attr.version.rawValue, "sha256"].joined(separator: "-")
     return [algorithm, digest.base64EncodedString()].joined(separator: ":")
   }
@@ -136,7 +136,7 @@ private extension MedStickerEncryption {
       p: 1,
       dkLen: length
     )
-    return Data(bytes: derivedBytes)
+    return Data(derivedBytes)
   }
 }
 
@@ -289,7 +289,7 @@ private extension MedStickerEncryption {
       r: version.scryptR,
       p: 1
     ).calculate()
-    return Data(bytes: result)
+    return Data(result)
   }
 
   /// Generates key and fingerprint file
