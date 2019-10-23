@@ -29,16 +29,6 @@ X509 *get_cert(const char *certificate) {
   return x509;
 }
 
-/*
- Converts private key string to EVP_PKEY
- */
-EVP_PKEY *get_key(const char *privateKey) {
-  BIO *key_membuf = BIO_from_str(privateKey);
-  EVP_PKEY *key = PEM_read_bio_PrivateKey(key_membuf, NULL, 0, NULL);
-  BIO_free(key_membuf);
-  return key;
-}
-
 /**
  Converts SMIME string to PKCS7 object
 

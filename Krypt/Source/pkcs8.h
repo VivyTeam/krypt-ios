@@ -12,4 +12,6 @@
 
 char *convert_pkcs1_to_pkcs8(const char *pem);
 
+char *pkcs8_encrypt(const char *pkcs1, const char *password);
+
 #endif /* pkcs8_h */

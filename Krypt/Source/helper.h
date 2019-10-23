@@ -23,4 +23,6 @@ BIO *BIO_from_str(const char *str);
  */
 int str_equal(const char *str1, const char *str2);
 
+EVP_PKEY *get_key(const char *privateKey);
+
 #endif /* helper_h */
