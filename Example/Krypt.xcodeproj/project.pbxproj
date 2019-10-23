@@ -12,7 +12,6 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		AD126BEA235F0195005A300E /* openssl-private-encrypted-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD126BE8235F00B1005A300E /* openssl-private-encrypted-pkcs8-pem */; };
 		AD13AB4F225F781100E65BBD /* kvconnect-mail in Resources */ = {isa = PBXBuildFile; fileRef = AD13AB4E225F781100E65BBD /* kvconnect-mail */; };
 		AD13AB52225F789400E65BBD /* kvprivatekey-open-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD13AB51225F789400E65BBD /* kvprivatekey-open-pem */; };
 		AD13AB54225F78DA00E65BBD /* kvroot-kvvivy-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD13AB53225F78DA00E65BBD /* kvroot-kvvivy-ca-pem */; };
@@ -85,7 +84,6 @@
 		607FACE51AFB9204008FA782 /* Krypt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Krypt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		AD126BE8235F00B1005A300E /* openssl-private-encrypted-pkcs8-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-private-encrypted-pkcs8-pem"; sourceTree = "<group>"; };
 		AD13AB4E225F781100E65BBD /* kvconnect-mail */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-mail"; sourceTree = "<group>"; };
 		AD13AB51225F789400E65BBD /* kvprivatekey-open-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvprivatekey-open-pem"; sourceTree = "<group>"; };
 		AD13AB53225F78DA00E65BBD /* kvroot-kvvivy-ca-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvroot-kvvivy-ca-pem"; sourceTree = "<group>"; };
@@ -272,7 +270,6 @@
 				EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */,
 				ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */,
 				AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */,
-				AD126BE8235F00B1005A300E /* openssl-private-encrypted-pkcs8-pem */,
 			);
 			path = OpenSSL;
 			sourceTree = "<group>";
@@ -464,7 +461,6 @@
 				EBE7E18622845D91003029C8 /* kvconnect-mail-verification-valid in Resources */,
 				ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */,
 				ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */,
-				AD126BEA235F0195005A300E /* openssl-private-encrypted-pkcs8-pem in Resources */,
 				EB007E1D2276F61C001BD473 /* kvconnect-mail-dec-verified-both-layers in Resources */,
 				AD13AB58225F9DB200E65BBD /* kvconnect-mail-dec in Resources */,
 				EB0A5E5E2268B0D6000FD79C /* kvvivy-ca-pem in Resources */,

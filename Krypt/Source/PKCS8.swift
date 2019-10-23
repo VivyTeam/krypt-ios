@@ -20,6 +20,7 @@ public final class PKCS8 {
   }
 
   public static func encrypt(_ pem: Data, password: String) -> String? {
+    guard !password.isEmpty else { return nil }
     guard
       let pemCString = pem.unsafeUtf8cString,
       let passwordCString = Data(password.utf8).unsafeUtf8cString,
