@@ -50,6 +50,9 @@ char *pkcs8_encrypt(const char *pkcs1, const char *password) {
   int pbe_nid = NID_hmacWithSHA256;
 
   unsigned long int passlenuint = strlen(password);
+  if (passlenuint > INT_MAX) {
+    return NULL;
+  }
   int passlen = passlenuint & INT_MAX;
 
   pkey = get_key(pkcs1);
