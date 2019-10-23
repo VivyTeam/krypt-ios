@@ -32,4 +32,18 @@ final class PKCS8Tests: XCTestCase {
     // then
     XCTAssertNil(convertedPKCS8PEM)
   }
+
+  func testEncryptPKCS1_simplePassword__shouldEncrypt() {
+    // given
+    let pkcs1PEMData = TestData.openSSLPrivateKeyPEM.data
+    let password = "password"
+    let expectedPEMString = TestData.openSSLPrivateEncryptedPKCS8PEM.string
+
+    // when
+    let encrypted = PKCS8.encrypt(pkcs1PEMData, password: password)
+
+    // then
+    XCTAssertNotNil(encrypted)
+    XCTAssertEqual(encrypted, expectedPEMString)
+  }
 }
