@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.4.2'
+  s.version          = '1.5'
   s.summary          = 'Crypto used in Vivy iOS app'
   s.description      = <<-DESC
   Crypto used in Vivy iOS app.
