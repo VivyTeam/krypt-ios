@@ -9,7 +9,7 @@ import Foundation
 
 public struct RFC2046Message {
   public enum ContentType {
-    case textPlain, applicationXML, applicationPDF, imageJPEG, imageBMP, imagePNG, videoMP4, textHTML, unknown
+    case applicationPDF, imageJPEG, imageBMP, imagePNG, videoMP4, textHTML, unknown
   }
 
   public let contentType: ContentType

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.4.2'
+  s.version          = '1.5'
   s.summary          = 'Crypto used in Vivy iOS app'
   s.description      = <<-DESC
   Crypto used in Vivy iOS app.
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
   
-  s.dependency 'OpenSSL', '~> 1.1.1b'
+  s.dependency 'OpenSSL', '~> 1.1.1d'
   s.dependency 'CryptoSwift', '~> 0.15.0'
   s.dependency 'RFC2046'
 end
