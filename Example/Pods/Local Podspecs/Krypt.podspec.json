@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "OpenSSL": [
-      "~> 1.1.1b"
+      "~> 1.1.1d"
     ],
     "CryptoSwift": [
       "~> 0.15.0"

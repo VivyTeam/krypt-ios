@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
     'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
   
-  s.dependency 'OpenSSL', '~> 1.1.1b'
+  s.dependency 'OpenSSL', '~> 1.1.1d'
   s.dependency 'CryptoSwift', '~> 0.15.0'
   s.dependency 'RFC2046'
 end

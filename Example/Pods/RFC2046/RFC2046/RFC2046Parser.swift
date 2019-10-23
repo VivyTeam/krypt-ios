@@ -47,7 +47,7 @@ public class RFC2046Parser {
     case let .multipartAlternative(boundary):
       let mutlipartParts = try getPartsFromMultipart(withBoundary: boundary, inBody: body)
       return mutlipartParts.flatMap { (try? parse(fromText: $0)) ?? [] }
-    case .applicationXML, .textPlain, .applicationPDF, .imageJPEG, .imageBMP, .textHTML, .imagePNG, .videoMP4:
+    case .applicationPDF, .imageJPEG, .imageBMP, .textHTML, .imagePNG, .videoMP4:
       var data: Data
       if let encoding = try? RFC2046Decoder().decode(ContentTransferEncodingHeaderField.self, from: header), encoding.value == .base64 {
         guard let encodedData = Data(base64Encoded: body.replacingOccurrences(of: "\r\n", with: "")) else { return [] }
@@ -115,10 +115,6 @@ public class RFC2046Parser {
 private extension ContentTypeHeaderField {
   var messageContentType: RFC2046Message.ContentType {
     switch value {
-    case .textPlain:
-      return .textPlain
-    case .applicationXML:
-      return .applicationXML
     case .applicationPDF:
       return .applicationPDF
     case .imageJPEG:
