@@ -94,6 +94,18 @@ final class PKCS8Tests: XCTestCase {
     XCTAssertNotNil(encrypted)
   }
 
+  func testEncryptPKCS1_stringTerminatorPassword__shouldEncrypt() {
+    // given
+    let pkcs1PEMData = TestData.openSSLPrivateKeyPEM.data
+    let password = "pass\0word"
+
+    // when
+    let encrypted = PKCS8.encrypt(pkcs1PEMData, password: password)
+
+    // then
+    XCTAssertNotNil(encrypted)
+  }
+
   /// parameters were extracted using this online tool: https://lapo.it/asn1js/
   func testEncryptPKCS1_simplePassword__shouldContainRightEncryptionParameters() {
     // given
