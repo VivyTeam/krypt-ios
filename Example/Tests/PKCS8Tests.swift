@@ -131,12 +131,77 @@ final class PKCS8Tests: XCTestCase {
     XCTAssertEqual(der.hashingAlgorithmBytes, expectedHashingAlgorithmBytes)
     XCTAssertEqual(der.symmetricEncryptionAlgorithmBytes, expectedSymmetricEncryptionAlgorithmBytes)
   }
+
+  func testDecrypt_encryptedExample_whenPasswordIsCorrect__shouldDecryptExpectedPKCS8Key() {
+    // given
+    let encryptedPEMData = TestData.openSSLPrivateKeyEncryptedPKCS8PEM.data
+    let password = "password"
+    let expectedDecryptedPEM = TestData.openSSLPrivateKeyPEM.string
+
+    // when
+    let decryptedPEM = PKCS8.decrypt(encryptedPEMData, password: password)
+
+    // then
+    XCTAssertEqual(decryptedPEM, expectedDecryptedPEM)
+  }
+
+  func testDecrypt_encryptedExample_whenPasswordIsEmpty__shouldNotDecrypt() {
+    // given
+    let encryptedPEMData = TestData.openSSLPrivateKeyEncryptedPKCS8PEM.data
+    let password = ""
+
+    // when
+    let decryptedPEM = PKCS8.decrypt(encryptedPEMData, password: password)
+
+    // then
+    XCTAssertNil(decryptedPEM)
+  }
+
+  func testDecrypt_encryptedExample_whenPasswordIsRandom__shouldNotDecrypt() {
+    // given
+    let encryptedPEMData = TestData.openSSLPrivateKeyEncryptedPKCS8PEM.data
+    let password = UUID().uuidString
+
+    // when
+    let decryptedPEM = PKCS8.decrypt(encryptedPEMData, password: password)
+
+    // then
+    XCTAssertNil(decryptedPEM)
+  }
+
+  func testDecrypt_encryptedExample_whenPasswordIsCorrect__shouldDecryptValidSecKey() {
+    // given
+    let encryptedPEMData = TestData.openSSLPrivateKeyEncryptedPKCS8PEM.data
+    let password = "password"
+
+    // when
+    let decryptedPEM = PKCS8.decrypt(encryptedPEMData, password: password)
+
+    // then
+    XCTAssertNotNil(decryptedPEM?.secKey)
+  }
+
+  func testEncryptDecryptE2E_simplePassword__shouldEncryptAndDecryptExpectedPKCS8Key() {
+    // given
+    let pkcs1PEMData = TestData.openSSLPrivateKeyPEM.data
+    let password = "password"
+    let expectedDecryptedPEM = TestData.openSSLPrivateKeyPEM.string
+
+    // when
+    let encrypted = PKCS8.encrypt(pkcs1PEMData, password: password)
+    let decrypted = PKCS8.decrypt(Data(encrypted!.utf8), password: password)
+
+    // then
+    XCTAssertEqual(decrypted, expectedDecryptedPEM)
+  }
 }
 
 private extension String {
   var der: Data {
     let stripped = self.replacingOccurrences(of: "-----BEGIN ENCRYPTED PRIVATE KEY-----", with: "")
+      .replacingOccurrences(of: "-----BEGIN RSA PRIVATE KEY-----", with: "")
       .replacingOccurrences(of: "-----END ENCRYPTED PRIVATE KEY-----", with: "")
+      .replacingOccurrences(of: "-----END RSA PRIVATE KEY-----", with: "")
       .replacingOccurrences(of: "\n", with: "")
     return Data(base64Encoded: stripped)!
   }
@@ -161,5 +226,17 @@ private extension Data {
 
   var symmetricEncryptionAlgorithmBytes: [UInt8] {
     return [UInt8](self[65...75])
+  }
+}
+
+private extension String {
+  var secKey: SecKey? {
+    let attr = [
+      kSecAttrKeyType: kSecAttrKeyTypeRSA,
+      kSecAttrKeyClass: kSecAttrKeyClassPrivate,
+      kSecAttrKeySizeInBits: 4096
+    ] as CFDictionary
+    let data = der as CFData
+    return SecKeyCreateWithData(data, attr, nil)
   }
 }
