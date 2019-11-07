@@ -31,4 +31,16 @@ public final class PKCS8 {
 
     return String(cString: encryptedPEMCString)
   }
+
+  public static func decrypt(_ pem: Data, password: String) -> String? {
+    guard
+      let pemCString = pem.unsafeUtf8cString,
+      let passwordCString = Data(password.utf8).unsafeUtf8cString,
+      let decryptedPEMCString = pkcs8_decrypt(pemCString, passwordCString)
+      else {
+        return nil
+    }
+
+    return String(cString: decryptedPEMCString)
+  }
 }
