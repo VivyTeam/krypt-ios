@@ -100,6 +100,14 @@ final class KeyTests: XCTestCase {
     XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
   }
 
+  func testInit_pemString_publicKeyECSECPrime256R1PKCS8__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPublicKeyECPRIME256R1PKCS8PEM.stringTrimmingWhitespacesAndNewlines
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, type: .ecSECPrimeRandom, access: .public, size: .bit_256))
+  }
+
   func testDerivePublicKeyFromPrivateKey_usingPrivateKey_shouldReturnCorrectPublicKey() {
     // given
     let pem = TestData.openSSLPrivateKeyPEM.data
