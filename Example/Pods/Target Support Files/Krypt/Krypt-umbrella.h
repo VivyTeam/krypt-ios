@@ -14,6 +14,7 @@
 #import "helper.h"
 #import "pkcs8.h"
 #import "smime.h"
+#import "x509.h"
 
 FOUNDATION_EXPORT double KryptVersionNumber;
 FOUNDATION_EXPORT const unsigned char KryptVersionString[];
