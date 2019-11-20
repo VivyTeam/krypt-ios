@@ -117,4 +117,18 @@ final class PEMConverterTests: XCTestCase {
     // then
     XCTAssertEqual(pem, expectedPEM)
   }
+
+  func testConvertDERToPEM_whenDERIsECFromSecKey__shouldCreatedExpectedPEM() {
+    // given
+    let secKeyDER = "BHB8S099Mg9Gp/NNJJn+8PEQ4smH5Tah09coYaxD5Te6Hi1gZAWxCmX998DkCqrolA8xpiJ8YXSW63uKG2ZlW7g="
+    let derData = Data(base64Encoded: secKeyDER)!
+    let format = PEMFormat(contentType: .ec, standard: .pkcs8, keyAccess: .public)
+    let expectedPEM = TestData.openSSLPublicKeyECPRIME256R1PKCS8PEM.string
+
+    // when
+    let pem = try? PEMConverter.convertDER(derData, toPEMFormat: format)
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
+  }
 }

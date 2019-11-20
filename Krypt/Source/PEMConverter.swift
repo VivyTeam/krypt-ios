@@ -28,32 +28,37 @@ struct PEMConverter {
   static func convertDER(_ der: Data, toPEMFormat format: PEMFormat) throws -> String {
     switch format.standard {
     case .pkcs1, .pkcs12:
-      guard let header = format.header, let footer = format.footer else {
-        throw PEMConverterError.invalidFormat
-      }
-      let derBase64 = der.base64EncodedString(options: [.lineLength64Characters, .endLineWithLineFeed])
-      let elements = [
-        header,
-        derBase64,
-        footer
-      ]
-      return elements.joined(separator: "\n").appending("\n")
+      return try wrapDER(der, inPEMFormat: format)
     case .pkcs8:
       switch format.contentType {
       case .rsa:
         let rsaPublicKeyPKCS1Format = PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .public)
-        let pkcs1PEM = try convertDER(der, toPEMFormat: rsaPublicKeyPKCS1Format)
+        let pkcs1PEM = try wrapDER(der, inPEMFormat: rsaPublicKeyPKCS1Format)
         guard let pkcs8PEM = PKCS8.convertPKCS1PEMToPKCS8PEM(pkcs1PEM) else {
           throw PEMConverterError.invalidDERData
         }
         return pkcs8PEM
       case .ec:
-        // TODO
-        throw PEMConverterError.invalidFormat
+        return try wrapDER(der.ecPublicKeyDERWithHeaderInfo, inPEMFormat: format)
       case .x509:
         throw PEMConverterError.invalidFormat
       }
     }
+  }
+}
+
+private extension PEMConverter {
+  static func wrapDER(_ der: Data, inPEMFormat format: PEMFormat) throws -> String {
+    guard let header = format.header, let footer = format.footer else {
+      throw PEMConverterError.invalidFormat
+    }
+    let derBase64 = der.base64EncodedString(options: [.lineLength64Characters, .endLineWithLineFeed])
+    let elements = [
+      header,
+      derBase64,
+      footer
+    ]
+    return elements.joined(separator: "\n").appending("\n")
   }
 }
 
@@ -135,5 +140,14 @@ private extension PEMFormat {
     let headers = formats.compactMap { $0.header }
     let footers = formats.compactMap { $0.footer }
     return headers + footers
+  }
+}
+
+private extension Data {
+  var ecPublicKeyDERWithHeaderInfo: Data {
+    let header: [UInt8] = [0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07, 0x03, 0x42, 0x00]
+    let headerLength = 26
+    let headerData = Data(bytes: header, count: headerLength)
+    return headerData + self
   }
 }
