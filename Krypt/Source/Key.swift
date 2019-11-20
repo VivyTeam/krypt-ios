@@ -32,14 +32,30 @@ public final class Key {
   }
 
   public let secRef: SecKey
+  public let type: `Type`
   public let access: Access
-  public init(key: SecKey, access: Access) {
-    secRef = key
-    self.access = access
+  public let size: Size
+  public init(key: SecKey) throws {
+    guard
+      let attributes = SecKeyCopyAttributes(key),
+      let keyType = attributes.keyType,
+      let keyClass = attributes.keyClass,
+      let keySize = attributes.keySize
+    else {
+      throw KeyError.invalidSecKey
+    }
+    self.secRef = key
+    self.type = keyType
+    self.access = keyClass
+    self.size = keySize
   }
 }
 
 public extension Key {
+  convenience init(key: SecKey, access: Access) {
+    try! self.init(key: key)
+  }
+
   /// Initializes `Key` from DER data
   ///
   /// - Parameters:
@@ -113,7 +129,7 @@ public extension Key {
   /// - Throws: errors occuring during `SecKeyCopyExternalRepresentation`
   func convertedToPEM() throws -> String {
     let der = try convertedToDER()
-    return try PEMConverter.convertDER(der, toPEMFormat: access.pemFormat)
+    return try PEMConverter.convertDER(der, toPEMFormat: pemFormat)
   }
 
   /// Derives the public key from the private key
@@ -131,6 +147,17 @@ public extension Key {
   }
 }
 
+private extension Key {
+  var pemFormat: PEMFormat {
+    switch access {
+    case .private:
+      return PEMFormat(contentType: type.pemContentType, standard: .pkcs1, keyAccess: access.pemKeyAccess)
+    case .public:
+      return PEMFormat(contentType: type.pemContentType, standard: .pkcs8, keyAccess: access.pemKeyAccess)
+    }
+  }
+}
+
 private extension Key.Access {
   /// Security attribute for the key class depending on the access
   var secAttr: CFString {
@@ -142,12 +169,12 @@ private extension Key.Access {
     }
   }
 
-  var pemFormat: PEMFormat {
+  var pemKeyAccess: PEMKeyAccess {
     switch self {
     case .private:
-      return .privatePKCS1
+      return .private
     case .public:
-      return .publicPKCS1
+      return .public
     }
   }
 }
@@ -159,6 +186,55 @@ private extension Key.`Type` {
       return kSecAttrKeyTypeRSA
     case .ecSECPrimeRandom:
       return kSecAttrKeyTypeECSECPrimeRandom
+    }
+  }
+
+  var pemContentType: PEMContentType {
+    switch self {
+    case .rsa:
+      return .rsa
+    case .ecSECPrimeRandom:
+      return .ec
+    }
+  }
+}
+
+private extension CFDictionary {
+  var keyType: Krypt.Key.`Type`? {
+    guard let attrs = self as? [CFString: CFString] else { return nil }
+    switch attrs[kSecAttrKeyType] {
+    case kSecAttrKeyTypeRSA:
+      return .rsa
+    case kSecAttrKeyTypeECSECPrimeRandom:
+      return .ecSECPrimeRandom
+    default:
+      return nil
+    }
+  }
+
+  var keyClass: Key.Access? {
+    guard let attrs = self as? [CFString: CFString] else { return nil }
+    switch attrs[kSecAttrKeyClass] {
+    case kSecAttrKeyClassPrivate:
+      return .private
+    case kSecAttrKeyClassPublic:
+      return .public
+    default:
+      return nil
+    }
+  }
+
+  var keySize: Key.Size? {
+    guard let attrs = self as? [CFString: Any] else { return nil }
+    switch attrs[kSecAttrKeySizeInBits] as! Int {
+    case 256:
+      return .bit_256
+    case 2048:
+      return .bit_2048
+    case 4096:
+      return .bit_4096
+    default:
+      return nil
     }
   }
 }
@@ -189,5 +265,9 @@ private extension String {
 /// - invalidAccess: wrong access for function
 /// - failedToDerivePublicKey: unable to get public key from the private key
 public enum KeyError: LocalizedError {
-  case invalidPEMData, creatingSecKey, invalidAccess, failedToDerivePublicKey
+  case invalidSecKey
+  case invalidPEMData
+  case creatingSecKey
+  case invalidAccess
+  case failedToDerivePublicKey
 }
