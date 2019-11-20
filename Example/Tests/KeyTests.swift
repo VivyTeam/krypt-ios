@@ -44,11 +44,10 @@ final class KeyTests: XCTestCase {
 
   func testConvertedToPEM_privatePEMFromOpenSSL__shouldMatchTestPEM() throws {
     // given
-    let testPEMData = TestData.openSSLPrivateKeyPEM.data
-    let testPEM = String(data: testPEMData, encoding: .utf8)
+    let testPEM = TestData.openSSLPrivateKeyPEM.string
 
     // when
-    let key = try Key(pem: testPEMData, access: .private)
+    let key = try Key(pem: testPEM, access: .private)
 
     // then
     let pem = try key.convertedToPEM()
@@ -57,7 +56,7 @@ final class KeyTests: XCTestCase {
 
   func testConvertedToPEM_publicPEMFromOpenSSL__shouldMatchTestPEM() throws {
     // given
-    let testPEMData = TestData.openSSLPublicKeyPKCS1PEM.data
+    let testPEMData = TestData.openSSLPublicKeyPEM.data
     let testPEM = String(data: testPEMData, encoding: .utf8)!
 
     // when
@@ -100,6 +99,14 @@ final class KeyTests: XCTestCase {
     XCTAssertNoThrow(try Key(pem: pem, access: .public, size: .bit_2048))
   }
 
+  func testInit_pemString_publicKeyECSECPrime256R1PKCS8__shouldInitialize() throws {
+    // given
+    let pem = TestData.openSSLPublicKeyECPRIME256R1PKCS8PEM.stringTrimmingWhitespacesAndNewlines
+
+    // then
+    XCTAssertNoThrow(try Key(pem: pem, type: .ecSECPrimeRandom, access: .public, size: .bit_256))
+  }
+
   func testDerivePublicKeyFromPrivateKey_usingPrivateKey_shouldReturnCorrectPublicKey() {
     // given
     let pem = TestData.openSSLPrivateKeyPEM.data
@@ -110,7 +117,7 @@ final class KeyTests: XCTestCase {
     let publicKeyPEM = try? publicKey?.convertedToPEM()
 
     // then
-    XCTAssertEqual(publicKeyPEM, TestData.openSSLPublicKeyPKCS1PEM.string)
+    XCTAssertEqual(publicKeyPEM, TestData.openSSLPublicKeyPEM.string)
   }
 
   func testDerivePublicKeyFromPrivateKey_usingPublicKey_shouldReturnErrorInvalidAccess() {

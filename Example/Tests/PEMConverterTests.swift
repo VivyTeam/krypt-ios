@@ -71,14 +71,14 @@ final class PEMConverterTests: XCTestCase {
 
   func testConvertDERToPEM_privateKey__shouldGiveExpectedPEM() {
     // given
-    let expectedPEM = TestData.openSSLPrivateKeyPEM.string
+    let expectedPEM = TestData.openSSLPrivateKeyPEM.stringTrimmingWhitespacesAndNewlines
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .privatePKCS1)
+    let pem = try? PEMConverter.convertDER(der, toPEMFormat: PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .private))
 
     // then
-    XCTAssertEqual(pem, expectedPEM)
+    XCTAssertEqual(pem?.trimmingCharacters(in: .whitespacesAndNewlines), expectedPEM)
   }
 
   func testConvertDERToPEM_publicKey__shouldGiveExpectedPKCS1PEM() {
@@ -87,7 +87,7 @@ final class PEMConverterTests: XCTestCase {
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .publicPKCS1)
+    let pem = try? PEMConverter.convertDER(der, toPEMFormat: PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .public))
 
     // then
     XCTAssertEqual(pem, expectedPEM)
@@ -100,7 +100,7 @@ final class PEMConverterTests: XCTestCase {
     let der = PEMConverter.convertPEMToDER(pkcs1PEM)!
 
     // when
-    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .publicPKCS8)
+    let pem = try? PEMConverter.convertDER(der, toPEMFormat: PEMFormat(contentType: .rsa, standard: .pkcs8, keyAccess: .public))
 
     // then
     XCTAssertEqual(pem, expectedPEM)
@@ -112,7 +112,21 @@ final class PEMConverterTests: XCTestCase {
     let der = PEMConverter.convertPEMToDER(expectedPEM)!
 
     // when
-    let pem = try! PEMConverter.convertDER(der, toPEMFormat: .certificateX509)
+    let pem = try? PEMConverter.convertDER(der, toPEMFormat: PEMFormat(contentType: .x509, standard: .pkcs12, keyAccess: nil))
+
+    // then
+    XCTAssertEqual(pem, expectedPEM)
+  }
+
+  func testConvertDERToPEM_whenDERIsECFromSecKey__shouldCreatedExpectedPEM() {
+    // given
+    let secKeyDER = "BHB8S099Mg9Gp/NNJJn+8PEQ4smH5Tah09coYaxD5Te6Hi1gZAWxCmX998DkCqrolA8xpiJ8YXSW63uKG2ZlW7g="
+    let derData = Data(base64Encoded: secKeyDER)!
+    let format = PEMFormat(contentType: .ec, standard: .pkcs8, keyAccess: .public)
+    let expectedPEM = TestData.openSSLPublicKeyECPRIME256R1PKCS8PEM.string
+
+    // when
+    let pem = try? PEMConverter.convertDER(derData, toPEMFormat: format)
 
     // then
     XCTAssertEqual(pem, expectedPEM)

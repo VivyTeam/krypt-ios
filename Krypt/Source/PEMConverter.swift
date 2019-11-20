@@ -9,13 +9,11 @@ import Foundation
 
 struct PEMConverter {
   static func convertPEMToDER(_ pem: String) -> Data? {
-    let possibleHeaders = PEMFormat.allCases.map { $0.header }
-    let possibleFooters = PEMFormat.allCases.map { $0.footer }
-    let possibleHeadersAndFooters = possibleHeaders + possibleFooters
+    let supportedHeadersAndFooters = PEMFormat.supportedHeadersAndFooters
 
     var stripped = ""
     pem.enumerateLines { line, _ in
-      guard !possibleHeadersAndFooters.contains(line) else { return }
+      guard !supportedHeadersAndFooters.contains(line) else { return }
       stripped += line
     }
     return Data(base64Encoded: stripped)
@@ -24,36 +22,43 @@ struct PEMConverter {
   /// Converts DER to `PKCS1`
   ///
   /// - Parameters:
-  ///   - der: in PKCS1 format
-  ///   - format: PEM format to return
+  ///   - der: DER data
+  ///   - format: PEM format to encode to
   /// - Returns: PEM representation of DER
   static func convertDER(_ der: Data, toPEMFormat format: PEMFormat) throws -> String {
-    switch format {
-    case .publicPKCS1, .privatePKCS1, .certificateX509:
-      let base64 = der.base64EncodedString()
-
-      // Insert newline `\n` every 64 characters
-      var index = 0
-      var splits = [String]()
-      while index < base64.count {
-        let startIndex = base64.index(base64.startIndex, offsetBy: index)
-        let endIndex = base64.index(startIndex, offsetBy: 64, limitedBy: base64.endIndex) ?? base64.endIndex
-        index = endIndex.utf16Offset(in: base64)
-
-        let chunk = String(base64[startIndex ..< endIndex])
-        splits.append(chunk)
+    switch format.standard {
+    case .pkcs1, .pkcs12:
+      return try wrapDER(der, inPEMFormat: format)
+    case .pkcs8:
+      switch format.contentType {
+      case .rsa:
+        let rsaPublicKeyPKCS1Format = PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .public)
+        let pkcs1PEM = try wrapDER(der, inPEMFormat: rsaPublicKeyPKCS1Format)
+        guard let pkcs8PEM = PKCS8.convertPKCS1PEMToPKCS8PEM(pkcs1PEM) else {
+          throw PEMConverterError.invalidDERData
+        }
+        return pkcs8PEM
+      case .ec:
+        return try wrapDER(der.ecPublicKeyDERWithHeaderInfo, inPEMFormat: format)
+      case .x509:
+        throw PEMConverterError.invalidFormat
       }
-      let base64WithNewlines = splits.joined(separator: "\n")
-      return [format.header, base64WithNewlines, format.footer].joined(separator: "\n").appending("\n")
-
-    case .publicPKCS8:
-      let pkcs1PEM = try convertDER(der, toPEMFormat: .publicPKCS1)
-      let data = Data(pkcs1PEM.utf8)
-      guard let pkcs8PEM = PKCS8.convertPKCS1PEMToPKCS8PEM(data) else {
-        throw PEMConverterError.invalidDERData
-      }
-      return pkcs8PEM
     }
+  }
+}
+
+private extension PEMConverter {
+  static func wrapDER(_ der: Data, inPEMFormat format: PEMFormat) throws -> String {
+    guard let header = format.header, let footer = format.footer else {
+      throw PEMConverterError.invalidFormat
+    }
+    let derBase64 = der.base64EncodedString(options: [.lineLength64Characters, .endLineWithLineFeed])
+    let elements = [
+      header,
+      derBase64,
+      footer
+    ]
+    return elements.joined(separator: "\n").appending("\n")
   }
 }
 
@@ -63,35 +68,86 @@ enum PEMConverterError: Error {
   case invalidDERData
 }
 
-enum PEMFormat: CaseIterable {
-  case privatePKCS1
-  case publicPKCS1
-  case publicPKCS8
-  case certificateX509
+enum PEMContentType: String {
+  case rsa = "RSA"
+  case ec = "EC"
+  case x509 = "CERTIFICATE"
+}
 
-  var header: String {
-    switch self {
-    case .privatePKCS1:
-      return "-----BEGIN RSA PRIVATE KEY-----"
-    case .publicPKCS1:
-      return "-----BEGIN RSA PUBLIC KEY-----"
-    case .publicPKCS8:
-      return "-----BEGIN PUBLIC KEY-----"
-    case .certificateX509:
-      return "-----BEGIN CERTIFICATE-----"
+enum PEMStandard {
+  case pkcs1
+  case pkcs8
+  case pkcs12
+}
+
+enum PEMKeyAccess: String {
+  case `private` = "PRIVATE KEY"
+  case `public` = "PUBLIC KEY"
+}
+
+struct PEMFormat {
+  let contentType: PEMContentType
+  let standard: PEMStandard
+  let keyAccess: PEMKeyAccess?
+
+  var header: String? {
+    switch standard {
+    case .pkcs1:
+      switch contentType {
+      case .rsa, .ec:
+        let access = keyAccess ?? .private
+        return "-----BEGIN \(contentType.rawValue) \(access.rawValue)-----"
+      case .x509:
+        return nil
+      }
+    case .pkcs8:
+      let access = keyAccess ?? .public
+      return "-----BEGIN \(access.rawValue)-----"
+    case .pkcs12:
+      return "-----BEGIN \(contentType.rawValue)-----"
     }
   }
 
-  var footer: String {
-    switch self {
-    case .privatePKCS1:
-      return "-----END RSA PRIVATE KEY-----"
-    case .publicPKCS1:
-      return "-----END RSA PUBLIC KEY-----"
-    case .publicPKCS8:
-      return "-----END PUBLIC KEY-----"
-    case .certificateX509:
-      return "-----END CERTIFICATE-----"
+  var footer: String? {
+    switch standard {
+    case .pkcs1:
+      switch contentType {
+      case .rsa, .ec:
+        let access = keyAccess ?? .private
+        return "-----END \(contentType.rawValue) \(access.rawValue)-----"
+      case .x509:
+        return nil
+      }
+    case .pkcs8:
+      let access = keyAccess ?? .public
+      return "-----END \(access.rawValue)-----"
+    case .pkcs12:
+      return "-----END \(contentType.rawValue)-----"
     }
+  }
+}
+
+private extension PEMFormat {
+  static var supportedHeadersAndFooters: [String] {
+    let formats = [
+      PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .private),
+      PEMFormat(contentType: .rsa, standard: .pkcs1, keyAccess: .public),
+      PEMFormat(contentType: .rsa, standard: .pkcs8, keyAccess: .public),
+      PEMFormat(contentType: .ec, standard: .pkcs1, keyAccess: .private),
+      PEMFormat(contentType: .ec, standard: .pkcs8, keyAccess: .public),
+      PEMFormat(contentType: .x509, standard: .pkcs12, keyAccess: nil)
+    ]
+    let headers = formats.compactMap { $0.header }
+    let footers = formats.compactMap { $0.footer }
+    return headers + footers
+  }
+}
+
+private extension Data {
+  var ecPublicKeyDERWithHeaderInfo: Data {
+    let header: [UInt8] = [0x30, 0x59, 0x30, 0x13, 0x06, 0x07, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x02, 0x01, 0x06, 0x08, 0x2A, 0x86, 0x48, 0xCE, 0x3D, 0x03, 0x01, 0x07, 0x03, 0x42, 0x00]
+    let headerLength = 26
+    let headerData = Data(bytes: header, count: headerLength)
+    return headerData + self
   }
 }

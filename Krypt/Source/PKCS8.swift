@@ -19,6 +19,10 @@ public final class PKCS8 {
     return String(cString: pemCString)
   }
 
+  public static func convertPKCS1PEMToPKCS8PEM(_ pem: String) -> String? {
+    return convertPKCS1PEMToPKCS8PEM(Data(pem.utf8))
+  }
+
   public static func encrypt(_ pem: Data, password: String) -> String? {
     guard !password.isEmpty else { return nil }
     guard
