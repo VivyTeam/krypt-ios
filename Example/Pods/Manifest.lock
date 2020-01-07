@@ -1,6 +1,6 @@
 PODS:
   - CryptoSwift (1.3.0)
-  - Krypt (1.6.0):
+  - Krypt (1.7.0):
     - CryptoSwift (~> 1.0)
     - OpenSSL (~> 1.1.2)
     - RFC2046
@@ -23,7 +23,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CryptoSwift: 1283821600233bdbeb96d7b389c3288c3bf77211
-  Krypt: 570f18b6b1fa4b6890c44a63c54ed48294c5742d
+  Krypt: 0842d5e11dd6e446e6d81d8cdebd4689802db89a
   OpenSSL: ffc53f80df9f360087b619eb3d0e2f406abd00ad
   RFC2046: aa7ba96cc0e8781a6903e1fb366c32c2243b3e0d
 
