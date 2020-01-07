@@ -25,10 +25,10 @@ struct UInt128: Equatable, ExpressibleByIntegerLiteral {
   }
 
   init(_ raw: Array<UInt8>) {
-    self = raw.prefix(MemoryLayout<UInt128>.stride).withUnsafeBytes { (rawBufferPointer) -> UInt128 in
+    self = raw.prefix(MemoryLayout<UInt128>.stride).withUnsafeBytes({ (rawBufferPointer) -> UInt128 in
       let arr = rawBufferPointer.bindMemory(to: UInt64.self)
       return UInt128((arr[0].bigEndian, arr[1].bigEndian))
-    }
+    })
   }
 
   init(_ raw: ArraySlice<UInt8>) {
@@ -49,8 +49,8 @@ struct UInt128: Equatable, ExpressibleByIntegerLiteral {
 
   // Bytes
   var bytes: Array<UInt8> {
-    var at = i.a.bigEndian
-    var bt = i.b.bigEndian
+    var at = self.i.a.bigEndian
+    var bt = self.i.b.bigEndian
 
     let ar = Data(bytes: &at, count: MemoryLayout.size(ofValue: at))
     let br = Data(bytes: &bt, count: MemoryLayout.size(ofValue: bt))
@@ -62,16 +62,16 @@ struct UInt128: Equatable, ExpressibleByIntegerLiteral {
   }
 
   static func ^ (n1: UInt128, n2: UInt128) -> UInt128 {
-    return UInt128((n1.i.a ^ n2.i.a, n1.i.b ^ n2.i.b))
+    UInt128((n1.i.a ^ n2.i.a, n1.i.b ^ n2.i.b))
   }
 
   static func & (n1: UInt128, n2: UInt128) -> UInt128 {
-    return UInt128((n1.i.a & n2.i.a, n1.i.b & n2.i.b))
+    UInt128((n1.i.a & n2.i.a, n1.i.b & n2.i.b))
   }
 
   static func >> (value: UInt128, by: Int) -> UInt128 {
     var result = value
-    for _ in 0 ..< by {
+    for _ in 0..<by {
       let a = result.i.a >> 1
       let b = result.i.b >> 1 + ((result.i.a & 1) << 63)
       result = UInt128((a, b))
@@ -81,10 +81,10 @@ struct UInt128: Equatable, ExpressibleByIntegerLiteral {
 
   // Equatable.
   static func == (lhs: UInt128, rhs: UInt128) -> Bool {
-    return lhs.i == rhs.i
+    lhs.i == rhs.i
   }
 
   static func != (lhs: UInt128, rhs: UInt128) -> Bool {
-    return !(lhs == rhs)
+    !(lhs == rhs)
   }
 }

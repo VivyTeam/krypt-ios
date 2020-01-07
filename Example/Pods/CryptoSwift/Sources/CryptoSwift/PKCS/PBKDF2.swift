@@ -54,7 +54,7 @@ public extension PKCS5 {
         throw Error.invalidInput
       }
 
-      dkLen = keyLength ?? variant.digestLength
+      self.dkLen = keyLength ?? variant.digestLength
       let keyLengthFinal = Double(dkLen)
       let hLen = Double(prf.variant.digestLength)
       if keyLengthFinal > (pow(2, 32) - 1) * hLen {
@@ -65,30 +65,30 @@ public extension PKCS5 {
       self.iterations = iterations
       self.prf = prf
 
-      numBlocks = Int(ceil(Double(keyLengthFinal) / hLen)) // l = ceil(keyLength / hLen)
+      self.numBlocks = Int(ceil(Double(keyLengthFinal) / hLen)) // l = ceil(keyLength / hLen)
     }
 
     public func calculate() throws -> Array<UInt8> {
       var ret = Array<UInt8>()
-      ret.reserveCapacity(numBlocks * prf.variant.digestLength)
-      for i in 1 ... numBlocks {
+      ret.reserveCapacity(self.numBlocks * self.prf.variant.digestLength)
+      for i in 1...self.numBlocks {
         // for each block T_i = U_1 ^ U_2 ^ ... ^ U_iter
         if let value = try calculateBlock(self.salt, blockNum: i) {
           ret.append(contentsOf: value)
         }
       }
-      return Array(ret.prefix(dkLen))
+      return Array(ret.prefix(self.dkLen))
     }
   }
 }
 
-fileprivate extension PKCS5.PBKDF2 {
+private extension PKCS5.PBKDF2 {
   func ARR(_ i: Int) -> Array<UInt8> {
     var inti = Array<UInt8>(repeating: 0, count: 4)
-    inti[0] = UInt8((i >> 24) & 0xFF)
-    inti[1] = UInt8((i >> 16) & 0xFF)
-    inti[2] = UInt8((i >> 8) & 0xFF)
-    inti[3] = UInt8(i & 0xFF)
+    inti[0] = UInt8((i >> 24) & 0xff)
+    inti[1] = UInt8((i >> 16) & 0xff)
+    inti[2] = UInt8((i >> 8) & 0xff)
+    inti[3] = UInt8(i & 0xff)
     return inti
   }
 
@@ -104,9 +104,9 @@ fileprivate extension PKCS5.PBKDF2 {
     if iterations > 1 {
       // U_2 = PRF (P, U_1) ,
       // U_c = PRF (P, U_{c-1}) .
-      for _ in 2 ... iterations {
+      for _ in 2...iterations {
         u = try prf.authenticate(u)
-        for x in 0 ..< ret.count {
+        for x in 0..<ret.count {
           ret[x] = ret[x] ^ u[x]
         }
       }

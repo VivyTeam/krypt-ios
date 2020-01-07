@@ -1,7 +1,7 @@
 //
 //  CryptoSwift
 //
-//  Copyright (C) 2014-2017 Marcin Krzyżanowski <marcin@krzyzanowskim.com>
+//  Copyright (C) Marcin Krzyżanowski <marcin@krzyzanowskim.com>
 //  This software is provided 'as-is', without any express or implied warranty.
 //
 //  In no event will the authors be held liable for any damages arising from the use of this software.
@@ -13,38 +13,30 @@
 //  - This notice may not be removed or altered from any source or binary distribution.
 //
 
-#if canImport(Darwin)
-  import Darwin
-#else
-  import Glibc
-#endif
+import Foundation
 
-struct RandomBytesSequence: Sequence {
-  let size: Int
+// First byte is 0x80, rest is zero padding
+// http://www.crypto-it.net/eng/theory/padding.html
+// http://www.embedx.com/pdfs/ISO_STD_7816/info_isoiec7816-4%7Bed21.0%7Den.pdf
+struct ISO78164Padding: PaddingProtocol {
+  init() {
+  }
 
-  func makeIterator() -> AnyIterator<UInt8> {
-    var count = 0
-    return AnyIterator<UInt8>.init { () -> UInt8? in
-      guard count < self.size else {
-        return nil
-      }
-      count = count + 1
+  func add(to bytes: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
+    var padded = Array(bytes)
+    padded.append(0x80)
 
-      #if os(Linux) || os(Android) || os(FreeBSD)
-        let fd = open("/dev/urandom", O_RDONLY)
-        if fd <= 0 {
-          return nil
-        }
+    while (padded.count % blockSize) != 0 {
+      padded.append(0x00)
+    }
+    return padded
+  }
 
-        var value: UInt8 = 0
-        let result = read(fd, &value, MemoryLayout<UInt8>.size)
-        precondition(result == 1)
-
-        close(fd)
-        return value
-      #else
-        return UInt8(arc4random_uniform(UInt32(UInt8.max) + 1))
-      #endif
+  func remove(from bytes: Array<UInt8>, blockSize _: Int?) -> Array<UInt8> {
+    if let idx = bytes.lastIndex(of: 0x80) {
+      return Array(bytes[..<idx])
+    } else {
+      return bytes
     }
   }
 }

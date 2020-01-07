@@ -19,11 +19,11 @@ struct BatchedCollectionIndex<Base: Collection> {
 
 extension BatchedCollectionIndex: Comparable {
   static func == <Base>(lhs: BatchedCollectionIndex<Base>, rhs: BatchedCollectionIndex<Base>) -> Bool {
-    return lhs.range.lowerBound == rhs.range.lowerBound
+    lhs.range.lowerBound == rhs.range.lowerBound
   }
 
   static func < <Base>(lhs: BatchedCollectionIndex<Base>, rhs: BatchedCollectionIndex<Base>) -> Bool {
-    return lhs.range.lowerBound < rhs.range.lowerBound
+    lhs.range.lowerBound < rhs.range.lowerBound
   }
 }
 
@@ -36,28 +36,28 @@ struct BatchedCollection<Base: Collection>: Collection {
   let size: Int
   typealias Index = BatchedCollectionIndex<Base>
   private func nextBreak(after idx: Base.Index) -> Base.Index {
-    return base.index(idx, offsetBy: size, limitedBy: base.endIndex) ?? base.endIndex
+    self.base.index(idx, offsetBy: self.size, limitedBy: self.base.endIndex) ?? self.base.endIndex
   }
 
   var startIndex: Index {
-    return Index(range: base.startIndex ..< nextBreak(after: base.startIndex))
+    Index(range: self.base.startIndex..<self.nextBreak(after: self.base.startIndex))
   }
 
   var endIndex: Index {
-    return Index(range: base.endIndex ..< base.endIndex)
+    Index(range: self.base.endIndex..<self.base.endIndex)
   }
 
   func index(after idx: Index) -> Index {
-    return Index(range: idx.range.upperBound ..< nextBreak(after: idx.range.upperBound))
+    Index(range: idx.range.upperBound..<self.nextBreak(after: idx.range.upperBound))
   }
 
   subscript(idx: Index) -> Base.SubSequence {
-    return base[idx.range]
+    self.base[idx.range]
   }
 }
 
 extension Collection {
   func batched(by size: Int) -> BatchedCollection<Self> {
-    return BatchedCollection(base: self, size: size)
+    BatchedCollection(base: self, size: size)
   }
 }

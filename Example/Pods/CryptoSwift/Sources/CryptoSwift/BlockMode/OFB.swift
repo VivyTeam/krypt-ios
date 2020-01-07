@@ -30,11 +30,11 @@ public struct OFB: BlockMode {
   }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.count != blockSize {
+    if self.iv.count != blockSize {
       throw Error.invalidInitializationVector
     }
 
-    return OFBModeWorker(blockSize: blockSize, iv: iv.slice, cipherOperation: cipherOperation)
+    return OFBModeWorker(blockSize: blockSize, iv: self.iv.slice, cipherOperation: cipherOperation)
   }
 }
 
@@ -55,7 +55,7 @@ struct OFBModeWorker: BlockModeWorker {
     guard let ciphertext = cipherOperation(prev ?? iv) else {
       return Array(plaintext)
     }
-    prev = ciphertext.slice
+    self.prev = ciphertext.slice
     return xor(plaintext, ciphertext)
   }
 

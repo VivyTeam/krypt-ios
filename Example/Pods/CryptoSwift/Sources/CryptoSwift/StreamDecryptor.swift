@@ -29,19 +29,19 @@ final class StreamDecryptor: Cryptor, Updatable {
   // MARK: Updatable
 
   public func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool) throws -> Array<UInt8> {
-    accumulated += bytes
+    self.accumulated += bytes
 
-    let toProcess = accumulated.prefix(max(accumulated.count - worker.additionalBufferSize, 0))
+    let toProcess = self.accumulated.prefix(max(self.accumulated.count - self.worker.additionalBufferSize, 0))
 
     if var finalizingWorker = worker as? FinalizingDecryptModeWorker, isLast == true {
       // will truncate suffix if needed
-      try finalizingWorker.willDecryptLast(bytes: accumulated.slice)
+      try finalizingWorker.willDecryptLast(bytes: self.accumulated.slice)
     }
 
     var processedBytesCount = 0
-    var plaintext = Array<UInt8>(reserveCapacity: bytes.count + worker.additionalBufferSize)
-    for chunk in toProcess.batched(by: blockSize) {
-      plaintext += worker.decrypt(block: chunk)
+    var plaintext = Array<UInt8>(reserveCapacity: bytes.count + self.worker.additionalBufferSize)
+    for chunk in toProcess.batched(by: self.blockSize) {
+      plaintext += self.worker.decrypt(block: chunk)
       processedBytesCount += chunk.count
     }
 
@@ -50,16 +50,16 @@ final class StreamDecryptor: Cryptor, Updatable {
     }
 
     // omit unecessary calculation if not needed
-    if padding != .noPadding {
-      lastBlockRemainder = plaintext.count.quotientAndRemainder(dividingBy: blockSize).remainder
+    if self.padding != .noPadding {
+      self.lastBlockRemainder = plaintext.count.quotientAndRemainder(dividingBy: self.blockSize).remainder
     }
 
     if isLast {
       // CTR doesn't need padding. Really. Add padding to the last block if really want. but... don't.
-      plaintext = padding.remove(from: plaintext, blockSize: blockSize - lastBlockRemainder)
+      plaintext = self.padding.remove(from: plaintext, blockSize: self.blockSize - self.lastBlockRemainder)
     }
 
-    accumulated.removeFirst(processedBytesCount) // super-slow
+    self.accumulated.removeFirst(processedBytesCount) // super-slow
 
     if var finalizingWorker = worker as? FinalizingDecryptModeWorker, isLast == true {
       plaintext = Array(try finalizingWorker.finalize(decrypt: plaintext.slice))

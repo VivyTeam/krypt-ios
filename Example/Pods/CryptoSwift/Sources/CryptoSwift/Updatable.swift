@@ -42,26 +42,26 @@ extension Updatable {
   }
 
   public mutating func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool = false) throws -> Array<UInt8> {
-    return try update(withBytes: bytes, isLast: isLast)
+    try self.update(withBytes: bytes, isLast: isLast)
   }
 
   public mutating func update(withBytes bytes: Array<UInt8>, isLast: Bool = false) throws -> Array<UInt8> {
-    return try update(withBytes: bytes.slice, isLast: isLast)
+    try self.update(withBytes: bytes.slice, isLast: isLast)
   }
 
   public mutating func update(withBytes bytes: Array<UInt8>, isLast: Bool = false, output: (_ bytes: Array<UInt8>) -> Void) throws {
-    return try update(withBytes: bytes.slice, isLast: isLast, output: output)
+    try self.update(withBytes: bytes.slice, isLast: isLast, output: output)
   }
 
   /// Finish updates. This may apply padding.
   /// - parameter bytes: Bytes to process
   /// - returns: Processed data.
   public mutating func finish(withBytes bytes: ArraySlice<UInt8>) throws -> Array<UInt8> {
-    return try update(withBytes: bytes, isLast: true)
+    try self.update(withBytes: bytes, isLast: true)
   }
 
   public mutating func finish(withBytes bytes: Array<UInt8>) throws -> Array<UInt8> {
-    return try finish(withBytes: bytes.slice)
+    try self.finish(withBytes: bytes.slice)
   }
 
   /// Finish updates. May add padding.
@@ -69,7 +69,7 @@ extension Updatable {
   /// - Returns: Processed data
   /// - Throws: Error
   public mutating func finish() throws -> Array<UInt8> {
-    return try update(withBytes: [], isLast: true)
+    try self.update(withBytes: [], isLast: true)
   }
 
   /// Finish updates. This may apply padding.
@@ -84,7 +84,7 @@ extension Updatable {
   }
 
   public mutating func finish(withBytes bytes: Array<UInt8>, output: (_ bytes: Array<UInt8>) -> Void) throws {
-    return try finish(withBytes: bytes.slice, output: output)
+    try self.finish(withBytes: bytes.slice, output: output)
   }
 
   /// Finish updates. May add padding.
@@ -92,6 +92,6 @@ extension Updatable {
   /// - Parameter output: Processed data
   /// - Throws: Error
   public mutating func finish(output: (Array<UInt8>) -> Void) throws {
-    try finish(withBytes: [], output: output)
+    try self.finish(withBytes: [], output: output)
   }
 }

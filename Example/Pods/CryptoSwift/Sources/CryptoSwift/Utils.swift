@@ -15,56 +15,56 @@
 
 @_transparent
 func rotateLeft(_ value: UInt8, by: UInt8) -> UInt8 {
-  return ((value << by) & 0xFF) | (value >> (8 - by))
+  ((value << by) & 0xff) | (value >> (8 - by))
 }
 
 @_transparent
 func rotateLeft(_ value: UInt16, by: UInt16) -> UInt16 {
-  return ((value << by) & 0xFFFF) | (value >> (16 - by))
+  ((value << by) & 0xffff) | (value >> (16 - by))
 }
 
 @_transparent
 func rotateLeft(_ value: UInt32, by: UInt32) -> UInt32 {
-  return ((value << by) & 0xFFFF_FFFF) | (value >> (32 - by))
+  ((value << by) & 0xffffffff) | (value >> (32 - by))
 }
 
 @_transparent
 func rotateLeft(_ value: UInt64, by: UInt64) -> UInt64 {
-  return (value << by) | (value >> (64 - by))
+  (value << by) | (value >> (64 - by))
 }
 
 @_transparent
 func rotateRight(_ value: UInt16, by: UInt16) -> UInt16 {
-  return (value >> by) | (value << (16 - by))
+  (value >> by) | (value << (16 - by))
 }
 
 @_transparent
 func rotateRight(_ value: UInt32, by: UInt32) -> UInt32 {
-  return (value >> by) | (value << (32 - by))
+  (value >> by) | (value << (32 - by))
 }
 
 @_transparent
 func rotateRight(_ value: UInt64, by: UInt64) -> UInt64 {
-  return ((value >> by) | (value << (64 - by)))
+  ((value >> by) | (value << (64 - by)))
 }
 
 @_transparent
 func reversed(_ uint8: UInt8) -> UInt8 {
   var v = uint8
-  v = (v & 0xF0) >> 4 | (v & 0x0F) << 4
-  v = (v & 0xCC) >> 2 | (v & 0x33) << 2
-  v = (v & 0xAA) >> 1 | (v & 0x55) << 1
+  v = (v & 0xf0) >> 4 | (v & 0x0f) << 4
+  v = (v & 0xcc) >> 2 | (v & 0x33) << 2
+  v = (v & 0xaa) >> 1 | (v & 0x55) << 1
   return v
 }
 
 @_transparent
 func reversed(_ uint32: UInt32) -> UInt32 {
   var v = uint32
-  v = ((v >> 1) & 0x5555_5555) | ((v & 0x5555_5555) << 1)
-  v = ((v >> 2) & 0x3333_3333) | ((v & 0x3333_3333) << 2)
-  v = ((v >> 4) & 0x0F0F_0F0F) | ((v & 0x0F0F_0F0F) << 4)
-  v = ((v >> 8) & 0x00FF_00FF) | ((v & 0x00FF_00FF) << 8)
-  v = ((v >> 16) & 0xFFFF) | ((v & 0xFFFF) << 16)
+  v = ((v >> 1) & 0x55555555) | ((v & 0x55555555) << 1)
+  v = ((v >> 2) & 0x33333333) | ((v & 0x33333333) << 2)
+  v = ((v >> 4) & 0x0f0f0f0f) | ((v & 0x0f0f0f0f) << 4)
+  v = ((v >> 8) & 0x00ff00ff) | ((v & 0x00ff00ff) << 8)
+  v = ((v >> 16) & 0xffff) | ((v & 0xffff) << 16)
   return v
 }
 
@@ -83,7 +83,7 @@ func xor<T, V>(_ left: T, _ right: V) -> Array<UInt8> where T: RandomAccessColle
   }
 
   // xor
-  for i in 0 ..< length {
+  for i in 0..<length {
     buf[i] = left[left.startIndex.advanced(by: i)] ^ right[right.startIndex.advanced(by: i)]
   }
 

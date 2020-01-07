@@ -36,15 +36,15 @@ public final class ChaCha20: BlockCipher {
     }
 
     self.key = Key(bytes: key)
-    keySize = self.key.count
+    self.keySize = self.key.count
 
     if nonce.count == 8 {
-      counter = [0, 0, 0, 0, 0, 0, 0, 0] + nonce
+      self.counter = [0, 0, 0, 0, 0, 0, 0, 0] + nonce
     } else {
-      counter = [0, 0, 0, 0] + nonce
+      self.counter = [0, 0, 0, 0] + nonce
     }
 
-    assert(counter.count == 16)
+    assert(self.counter.count == 16)
   }
 
   /// https://tools.ietf.org/html/rfc7539#section-2.3.
@@ -53,27 +53,27 @@ public final class ChaCha20: BlockCipher {
     precondition(counter.count == 16)
     precondition(key.count == 32)
 
-    let j0: UInt32 = 0x6170_7865
-    let j1: UInt32 = 0x3320_646E // 0x3620646e sigma/tau
-    let j2: UInt32 = 0x7962_2D32
-    let j3: UInt32 = 0x6B20_6574
-    let j4: UInt32 = UInt32(bytes: key[0 ..< 4]).bigEndian
-    let j5: UInt32 = UInt32(bytes: key[4 ..< 8]).bigEndian
-    let j6: UInt32 = UInt32(bytes: key[8 ..< 12]).bigEndian
-    let j7: UInt32 = UInt32(bytes: key[12 ..< 16]).bigEndian
-    let j8: UInt32 = UInt32(bytes: key[16 ..< 20]).bigEndian
-    let j9: UInt32 = UInt32(bytes: key[20 ..< 24]).bigEndian
-    let j10: UInt32 = UInt32(bytes: key[24 ..< 28]).bigEndian
-    let j11: UInt32 = UInt32(bytes: key[28 ..< 32]).bigEndian
-    let j12: UInt32 = UInt32(bytes: counter[0 ..< 4]).bigEndian
-    let j13: UInt32 = UInt32(bytes: counter[4 ..< 8]).bigEndian
-    let j14: UInt32 = UInt32(bytes: counter[8 ..< 12]).bigEndian
-    let j15: UInt32 = UInt32(bytes: counter[12 ..< 16]).bigEndian
+    let j0: UInt32 = 0x61707865
+    let j1: UInt32 = 0x3320646e // 0x3620646e sigma/tau
+    let j2: UInt32 = 0x79622d32
+    let j3: UInt32 = 0x6b206574
+    let j4: UInt32 = UInt32(bytes: key[0..<4]).bigEndian
+    let j5: UInt32 = UInt32(bytes: key[4..<8]).bigEndian
+    let j6: UInt32 = UInt32(bytes: key[8..<12]).bigEndian
+    let j7: UInt32 = UInt32(bytes: key[12..<16]).bigEndian
+    let j8: UInt32 = UInt32(bytes: key[16..<20]).bigEndian
+    let j9: UInt32 = UInt32(bytes: key[20..<24]).bigEndian
+    let j10: UInt32 = UInt32(bytes: key[24..<28]).bigEndian
+    let j11: UInt32 = UInt32(bytes: key[28..<32]).bigEndian
+    let j12: UInt32 = UInt32(bytes: counter[0..<4]).bigEndian
+    let j13: UInt32 = UInt32(bytes: counter[4..<8]).bigEndian
+    let j14: UInt32 = UInt32(bytes: counter[8..<12]).bigEndian
+    let j15: UInt32 = UInt32(bytes: counter[12..<16]).bigEndian
 
     var (x0, x1, x2, x3, x4, x5, x6, x7) = (j0, j1, j2, j3, j4, j5, j6, j7)
     var (x8, x9, x10, x11, x12, x13, x14, x15) = (j8, j9, j10, j11, j12, j13, j14, j15)
 
-    for _ in 0 ..< 10 { // 20 rounds
+    for _ in 0..<10 { // 20 rounds
       x0 = x0 &+ x4
       x12 ^= x0
       x12 = (x12 << 16) | (x12 >> 16)
@@ -189,22 +189,22 @@ public final class ChaCha20: BlockCipher {
     x14 = x14 &+ j14
     x15 = x15 &+ j15
 
-    block.replaceSubrange(0 ..< 4, with: x0.bigEndian.bytes())
-    block.replaceSubrange(4 ..< 8, with: x1.bigEndian.bytes())
-    block.replaceSubrange(8 ..< 12, with: x2.bigEndian.bytes())
-    block.replaceSubrange(12 ..< 16, with: x3.bigEndian.bytes())
-    block.replaceSubrange(16 ..< 20, with: x4.bigEndian.bytes())
-    block.replaceSubrange(20 ..< 24, with: x5.bigEndian.bytes())
-    block.replaceSubrange(24 ..< 28, with: x6.bigEndian.bytes())
-    block.replaceSubrange(28 ..< 32, with: x7.bigEndian.bytes())
-    block.replaceSubrange(32 ..< 36, with: x8.bigEndian.bytes())
-    block.replaceSubrange(36 ..< 40, with: x9.bigEndian.bytes())
-    block.replaceSubrange(40 ..< 44, with: x10.bigEndian.bytes())
-    block.replaceSubrange(44 ..< 48, with: x11.bigEndian.bytes())
-    block.replaceSubrange(48 ..< 52, with: x12.bigEndian.bytes())
-    block.replaceSubrange(52 ..< 56, with: x13.bigEndian.bytes())
-    block.replaceSubrange(56 ..< 60, with: x14.bigEndian.bytes())
-    block.replaceSubrange(60 ..< 64, with: x15.bigEndian.bytes())
+    block.replaceSubrange(0..<4, with: x0.bigEndian.bytes())
+    block.replaceSubrange(4..<8, with: x1.bigEndian.bytes())
+    block.replaceSubrange(8..<12, with: x2.bigEndian.bytes())
+    block.replaceSubrange(12..<16, with: x3.bigEndian.bytes())
+    block.replaceSubrange(16..<20, with: x4.bigEndian.bytes())
+    block.replaceSubrange(20..<24, with: x5.bigEndian.bytes())
+    block.replaceSubrange(24..<28, with: x6.bigEndian.bytes())
+    block.replaceSubrange(28..<32, with: x7.bigEndian.bytes())
+    block.replaceSubrange(32..<36, with: x8.bigEndian.bytes())
+    block.replaceSubrange(36..<40, with: x9.bigEndian.bytes())
+    block.replaceSubrange(40..<44, with: x10.bigEndian.bytes())
+    block.replaceSubrange(44..<48, with: x11.bigEndian.bytes())
+    block.replaceSubrange(48..<52, with: x12.bigEndian.bytes())
+    block.replaceSubrange(52..<56, with: x13.bigEndian.bytes())
+    block.replaceSubrange(56..<60, with: x14.bigEndian.bytes())
+    block.replaceSubrange(60..<64, with: x15.bigEndian.bytes())
   }
 
   // XORKeyStream
@@ -217,21 +217,21 @@ public final class ChaCha20: BlockCipher {
     var out = Array<UInt8>(reserveCapacity: bytesSlice.count)
 
     while bytesSlice.count >= ChaCha20.blockSize {
-      core(block: &block, counter: counter, key: key)
+      self.core(block: &block, counter: counter, key: key)
       for (i, x) in block.enumerated() {
         out.append(bytesSlice[bytesSlice.startIndex + i] ^ x)
       }
       var u: UInt32 = 1
-      for i in 0 ..< 4 {
+      for i in 0..<4 {
         u += UInt32(counter[i])
-        counter[i] = UInt8(u & 0xFF)
+        counter[i] = UInt8(u & 0xff)
         u >>= 8
       }
-      bytesSlice = bytesSlice[bytesSlice.startIndex + ChaCha20.blockSize ..< bytesSlice.endIndex]
+      bytesSlice = bytesSlice[bytesSlice.startIndex + ChaCha20.blockSize..<bytesSlice.endIndex]
     }
 
-    if bytesSlice.count > 0 {
-      core(block: &block, counter: counter, key: key)
+    if !bytesSlice.isEmpty {
+      self.core(block: &block, counter: counter, key: key)
       for (i, v) in bytesSlice.enumerated() {
         out.append(v ^ block[i])
       }
@@ -244,11 +244,11 @@ public final class ChaCha20: BlockCipher {
 
 extension ChaCha20: Cipher {
   public func encrypt(_ bytes: ArraySlice<UInt8>) throws -> Array<UInt8> {
-    return process(bytes: bytes, counter: &counter, key: Array(key))
+    self.process(bytes: bytes, counter: &self.counter, key: Array(self.key))
   }
 
   public func decrypt(_ bytes: ArraySlice<UInt8>) throws -> Array<UInt8> {
-    return try encrypt(bytes)
+    try self.encrypt(bytes)
   }
 }
 
@@ -264,20 +264,20 @@ extension ChaCha20 {
     }
 
     public mutating func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool = false) throws -> Array<UInt8> {
-      accumulated += bytes
+      self.accumulated += bytes
 
       var encrypted = Array<UInt8>()
-      encrypted.reserveCapacity(accumulated.count)
-      for chunk in accumulated.batched(by: ChaCha20.blockSize) {
-        if isLast || accumulated.count >= ChaCha20.blockSize {
-          encrypted += try chacha.encrypt(chunk)
-          accumulated.removeFirst(chunk.count) // TODO: improve performance
+      encrypted.reserveCapacity(self.accumulated.count)
+      for chunk in self.accumulated.batched(by: ChaCha20.blockSize) {
+        if isLast || self.accumulated.count >= ChaCha20.blockSize {
+          encrypted += try self.chacha.encrypt(chunk)
+          self.accumulated.removeFirst(chunk.count) // TODO: improve performance
         }
       }
       return encrypted
     }
 
-    public func seek(to _: Int) throws {
+    public func seek(to: Int) throws {
       throw Error.notSupported
     }
   }
@@ -299,34 +299,34 @@ extension ChaCha20 {
 
     public mutating func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool = true) throws -> Array<UInt8> {
       // prepend "offset" number of bytes at the beginning
-      if offset > 0 {
-        accumulated += Array<UInt8>(repeating: 0, count: offset) + bytes
-        offsetToRemove = offset
-        offset = 0
+      if self.offset > 0 {
+        self.accumulated += Array<UInt8>(repeating: 0, count: self.offset) + bytes
+        self.offsetToRemove = self.offset
+        self.offset = 0
       } else {
-        accumulated += bytes
+        self.accumulated += bytes
       }
 
       var plaintext = Array<UInt8>()
-      plaintext.reserveCapacity(accumulated.count)
-      for chunk in accumulated.batched(by: ChaCha20.blockSize) {
-        if isLast || accumulated.count >= ChaCha20.blockSize {
-          plaintext += try chacha.decrypt(chunk)
+      plaintext.reserveCapacity(self.accumulated.count)
+      for chunk in self.accumulated.batched(by: ChaCha20.blockSize) {
+        if isLast || self.accumulated.count >= ChaCha20.blockSize {
+          plaintext += try self.chacha.decrypt(chunk)
 
           // remove "offset" from the beginning of first chunk
-          if offsetToRemove > 0 {
-            plaintext.removeFirst(offsetToRemove) // TODO: improve performance
-            offsetToRemove = 0
+          if self.offsetToRemove > 0 {
+            plaintext.removeFirst(self.offsetToRemove) // TODO: improve performance
+            self.offsetToRemove = 0
           }
 
-          accumulated.removeFirst(chunk.count)
+          self.accumulated.removeFirst(chunk.count)
         }
       }
 
       return plaintext
     }
 
-    public func seek(to _: Int) throws {
+    public func seek(to: Int) throws {
       throw Error.notSupported
     }
   }
@@ -335,13 +335,13 @@ extension ChaCha20 {
 // MARK: Cryptors
 
 extension ChaCha20: Cryptors {
-  // TODO: Use BlockEncryptor/BlockDecryptor
+  //TODO: Use BlockEncryptor/BlockDecryptor
 
   public func makeEncryptor() -> Cryptor & Updatable {
-    return ChaCha20.ChaChaEncryptor(chacha: self)
+    ChaCha20.ChaChaEncryptor(chacha: self)
   }
 
   public func makeDecryptor() -> Cryptor & Updatable {
-    return ChaCha20.ChaChaDecryptor(chacha: self)
+    ChaCha20.ChaChaDecryptor(chacha: self)
   }
 }

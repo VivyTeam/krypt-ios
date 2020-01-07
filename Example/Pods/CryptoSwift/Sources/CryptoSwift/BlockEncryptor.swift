@@ -29,21 +29,21 @@ final class BlockEncryptor: Cryptor, Updatable {
   // MARK: Updatable
 
   public func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool) throws -> Array<UInt8> {
-    accumulated += bytes
+    self.accumulated += bytes
 
     if isLast {
-      accumulated = padding.add(to: accumulated, blockSize: blockSize)
+      self.accumulated = self.padding.add(to: self.accumulated, blockSize: self.blockSize)
     }
 
     var encrypted = Array<UInt8>(reserveCapacity: accumulated.count)
-    for chunk in accumulated.batched(by: blockSize) {
-      if isLast || chunk.count == blockSize {
-        encrypted += worker.encrypt(block: chunk)
+    for chunk in self.accumulated.batched(by: self.blockSize) {
+      if isLast || chunk.count == self.blockSize {
+        encrypted += self.worker.encrypt(block: chunk)
       }
     }
 
     // Stream encrypts all, so it removes all elements
-    accumulated.removeFirst(encrypted.count)
+    self.accumulated.removeFirst(encrypted.count)
 
     if var finalizingWorker = worker as? FinalizingEncryptModeWorker, isLast == true {
       encrypted = Array(try finalizingWorker.finalize(encrypt: encrypted.slice))
@@ -52,7 +52,7 @@ final class BlockEncryptor: Cryptor, Updatable {
     return encrypted
   }
 
-  func seek(to _: Int) throws {
+  func seek(to: Int) throws {
     fatalError("Not supported")
   }
 }

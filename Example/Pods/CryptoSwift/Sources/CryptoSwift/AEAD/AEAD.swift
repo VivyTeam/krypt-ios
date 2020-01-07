@@ -25,8 +25,8 @@ public protocol AEAD {
 
 extension AEAD {
   static func calculateAuthenticationTag(authenticator: Authenticator, cipherText: Array<UInt8>, authenticationHeader: Array<UInt8>) throws -> Array<UInt8> {
-    let headerPadding = ((16 - (authenticationHeader.count & 0xF)) & 0xF)
-    let cipherPadding = ((16 - (cipherText.count & 0xF)) & 0xF)
+    let headerPadding = ((16 - (authenticationHeader.count & 0xf)) & 0xf)
+    let cipherPadding = ((16 - (cipherText.count & 0xf)) & 0xf)
 
     var mac = authenticationHeader
     mac += Array<UInt8>(repeating: 0, count: headerPadding)

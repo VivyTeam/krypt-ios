@@ -167,7 +167,7 @@ public extension Checksum {
   ///
   /// - returns: Calculated code
   static func crc32(_ message: Array<UInt8>, seed: UInt32? = nil, reflect: Bool = true) -> UInt32 {
-    return Checksum().crc32(message, seed: seed, reflect: reflect)
+    Checksum().crc32(message, seed: seed, reflect: reflect)
   }
 
   /// Calculate CRC32C
@@ -178,7 +178,7 @@ public extension Checksum {
   ///
   /// - returns: Calculated code
   static func crc32c(_ message: Array<UInt8>, seed: UInt32? = nil, reflect: Bool = true) -> UInt32 {
-    return Checksum().crc32c(message, seed: seed, reflect: reflect)
+    Checksum().crc32c(message, seed: seed, reflect: reflect)
   }
 
   /// Calculate CRC16
@@ -188,6 +188,6 @@ public extension Checksum {
   ///
   /// - returns: Calculated code
   static func crc16(_ message: Array<UInt8>, seed: UInt16? = nil) -> UInt16 {
-    return Checksum().crc16(message, seed: seed)
+    Checksum().crc16(message, seed: seed)
   }
 }

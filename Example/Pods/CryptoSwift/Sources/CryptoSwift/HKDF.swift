@@ -34,8 +34,8 @@ public struct HKDF {
   private let numBlocks: Int // l
   private let dkLen: Int
   private let info: Array<UInt8>
-  fileprivate let prk: Array<UInt8>
-  fileprivate let variant: HMAC.Variant
+  private let prk: Array<UInt8>
+  private let variant: HMAC.Variant
 
   /// - parameters:
   ///   - variant: hash variant
@@ -57,7 +57,7 @@ public struct HKDF {
 
     /// HKDF-Extract(salt, password) -> PRK
     ///  - PRK - a pseudo-random key; it is used by calculate()
-    prk = try HMAC(key: salt ?? [], variant: variant).authenticate(password)
+    self.prk = try HMAC(key: salt ?? [], variant: variant).authenticate(password)
     self.info = info ?? []
     self.variant = variant
     self.dkLen = dkLen
@@ -67,10 +67,10 @@ public struct HKDF {
   public func calculate() throws -> Array<UInt8> {
     let hmac = HMAC(key: prk, variant: variant)
     var ret = Array<UInt8>()
-    ret.reserveCapacity(numBlocks * variant.digestLength)
+    ret.reserveCapacity(self.numBlocks * self.variant.digestLength)
     var value = Array<UInt8>()
-    for i in 1 ... numBlocks {
-      value.append(contentsOf: info)
+    for i in 1...self.numBlocks {
+      value.append(contentsOf: self.info)
       value.append(UInt8(i))
 
       let bytes = try hmac.authenticate(value)
@@ -79,6 +79,6 @@ public struct HKDF {
       /// update value to use it as input for next iteration
       value = bytes
     }
-    return Array(ret.prefix(dkLen))
+    return Array(ret.prefix(self.dkLen))
   }
 }

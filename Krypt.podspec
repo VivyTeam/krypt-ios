@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
   }
   
   s.dependency 'OpenSSL', '~> 1.1.2'
-  s.dependency 'CryptoSwift', '~> 0.15.0'
+  s.dependency 'CryptoSwift', '~> 1.0'
   s.dependency 'RFC2046'
 end

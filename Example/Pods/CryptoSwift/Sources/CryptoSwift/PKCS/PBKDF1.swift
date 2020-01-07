@@ -30,19 +30,19 @@ public extension PKCS5 {
 
       var size: Int {
         switch self {
-        case .md5:
-          return MD5.digestLength
-        case .sha1:
-          return SHA1.digestLength
+          case .md5:
+            return MD5.digestLength
+          case .sha1:
+            return SHA1.digestLength
         }
       }
 
       fileprivate func calculateHash(_ bytes: Array<UInt8>) -> Array<UInt8> {
         switch self {
-        case .sha1:
-          return Digest.sha1(bytes)
-        case .md5:
-          return Digest.md5(bytes)
+          case .sha1:
+            return Digest.sha1(bytes)
+          case .md5:
+            return Digest.md5(bytes)
         }
       }
     }
@@ -77,11 +77,11 @@ public extension PKCS5 {
 
     /// Apply the underlying hash function Hash for c iterations
     public func calculate() -> Array<UInt8> {
-      var t = t1
-      for _ in 2 ... iterations {
-        t = variant.calculateHash(t)
+      var t = self.t1
+      for _ in 2...self.iterations {
+        t = self.variant.calculateHash(t)
       }
-      return Array(t[0 ..< self.keyLength])
+      return Array(t[0..<self.keyLength])
     }
   }
 }

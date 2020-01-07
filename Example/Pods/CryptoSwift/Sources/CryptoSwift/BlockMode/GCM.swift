@@ -41,7 +41,7 @@ public final class GCM: BlockMode {
 
   /// Length of authentication tag, in bytes.
   /// For encryption, the value is given as init parameter.
-  /// For decryption, the lenght of given authentication tag is used.
+  /// For decryption, the length of given authentication tag is used.
   private let tagLength: Int
 
   // `authenticationTag` nil for encryption, known tag for decryption
@@ -64,12 +64,12 @@ public final class GCM: BlockMode {
     self.authenticationTag = authenticationTag
   }
 
-  public func worker(blockSize _: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.isEmpty {
+  public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
+    if self.iv.isEmpty {
       throw Error.invalidInitializationVector
     }
 
-    let worker = GCMModeWorker(iv: iv.slice, aad: additionalAuthenticatedData?.slice, expectedTag: authenticationTag, tagLength: tagLength, mode: mode, cipherOperation: cipherOperation)
+    let worker = GCMModeWorker(iv: iv.slice, aad: self.additionalAuthenticatedData?.slice, expectedTag: self.authenticationTag, tagLength: self.tagLength, mode: self.mode, cipherOperation: cipherOperation)
     worker.didCalculateTag = { [weak self] tag in
       self?.authenticationTag = tag
     }
@@ -119,28 +119,28 @@ final class GCMModeWorker: BlockModeWorker, FinalizingEncryptModeWorker, Finaliz
     self.aad = aad
     self.expectedTag = expectedTag
     self.tagLength = tagLength
-    h = UInt128(cipherOperation(Array<UInt8>(repeating: 0, count: blockSize).slice)!) // empty block
+    self.h = UInt128(cipherOperation(Array<UInt8>(repeating: 0, count: self.blockSize).slice)!) // empty block
 
     if mode == .combined {
-      additionalBufferSize = tagLength
+      self.additionalBufferSize = tagLength
     } else {
-      additionalBufferSize = 0
+      self.additionalBufferSize = 0
     }
 
     // Assume nonce is 12 bytes long, otherwise initial counter would be calulated from GHASH
     // counter = GF.ghash(aad: [UInt8](), ciphertext: nonce)
     if iv.count == GCMModeWorker.nonceSize {
-      counter = makeCounter(nonce: Array(self.iv))
+      self.counter = makeCounter(nonce: Array(self.iv))
     } else {
-      counter = GF.ghash(h: h, aad: [UInt8](), ciphertext: Array(iv), blockSize: blockSize)
+      self.counter = GF.ghash(h: self.h, aad: [UInt8](), ciphertext: Array(iv), blockSize: self.blockSize)
     }
 
     // Set constants
-    eky0 = UInt128(cipherOperation(counter.bytes.slice)!)
+    self.eky0 = UInt128(cipherOperation(self.counter.bytes.slice)!)
   }
 
   func encrypt(block plaintext: ArraySlice<UInt8>) -> Array<UInt8> {
-    counter = incrementCounter(counter)
+    self.counter = incrementCounter(self.counter)
 
     guard let ekyN = cipherOperation(counter.bytes.slice) else {
       return Array(plaintext)
@@ -157,25 +157,25 @@ final class GCMModeWorker: BlockModeWorker, FinalizingEncryptModeWorker, Finaliz
 
   func finalize(encrypt ciphertext: ArraySlice<UInt8>) throws -> ArraySlice<UInt8> {
     // Calculate MAC tag.
-    let ghash = gf.ghashFinish()
-    let tag = Array((ghash ^ eky0).bytes.prefix(tagLength))
+    let ghash = self.gf.ghashFinish()
+    let tag = Array((ghash ^ self.eky0).bytes.prefix(self.tagLength))
 
     // Notify handler
-    didCalculateTag?(tag)
+    self.didCalculateTag?(tag)
 
-    switch mode {
-    case .combined:
-      return (ciphertext + tag).slice
-    case .detached:
-      return ciphertext
+    switch self.mode {
+      case .combined:
+        return (ciphertext + tag).slice
+      case .detached:
+        return ciphertext
     }
   }
 
   func decrypt(block ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {
-    counter = incrementCounter(counter)
+    self.counter = incrementCounter(self.counter)
 
     // update ghash incrementally
-    gf.ghashUpdate(block: Array(ciphertext))
+    self.gf.ghashUpdate(block: Array(ciphertext))
 
     guard let ekN = cipherOperation(counter.bytes.slice) else {
       return Array(ciphertext)
@@ -192,20 +192,20 @@ final class GCMModeWorker: BlockModeWorker, FinalizingEncryptModeWorker, Finaliz
   @discardableResult
   func willDecryptLast(bytes ciphertext: ArraySlice<UInt8>) throws -> ArraySlice<UInt8> {
     // Validate tag
-    switch mode {
-    case .combined:
-      // overwrite expectedTag property used later for verification
-      expectedTag = Array(ciphertext.suffix(tagLength))
-      return ciphertext[ciphertext.startIndex ..< ciphertext.endIndex.advanced(by: -Swift.min(tagLength, ciphertext.count))]
-    case .detached:
-      return ciphertext
+    switch self.mode {
+      case .combined:
+        // overwrite expectedTag property used later for verification
+        self.expectedTag = Array(ciphertext.suffix(self.tagLength))
+        return ciphertext[ciphertext.startIndex..<ciphertext.endIndex.advanced(by: -Swift.min(tagLength, ciphertext.count))]
+      case .detached:
+        return ciphertext
     }
   }
 
   func didDecryptLast(bytes plaintext: ArraySlice<UInt8>) throws -> ArraySlice<UInt8> {
     // Calculate MAC tag.
-    let ghash = gf.ghashFinish()
-    let computedTag = Array((ghash ^ eky0).bytes.prefix(tagLength))
+    let ghash = self.gf.ghashFinish()
+    let computedTag = Array((ghash ^ self.eky0).bytes.prefix(self.tagLength))
 
     // Validate tag
     guard let expectedTag = self.expectedTag, computedTag == expectedTag else {
@@ -217,14 +217,14 @@ final class GCMModeWorker: BlockModeWorker, FinalizingEncryptModeWorker, Finaliz
 
   func finalize(decrypt plaintext: ArraySlice<UInt8>) throws -> ArraySlice<UInt8> {
     // do nothing
-    return plaintext
+    plaintext
   }
 }
 
 // MARK: - Local utils
 
 private func makeCounter(nonce: Array<UInt8>) -> UInt128 {
-  return UInt128(nonce + [0, 0, 0, 1])
+  UInt128(nonce + [0, 0, 0, 1])
 }
 
 // Successive counter values are generated using the function incr(), which treats the rightmost 32
@@ -258,7 +258,7 @@ private func addPadding(_ bytes: Array<UInt8>, blockSize: Int) -> Array<UInt8> {
 
 /// The Field GF(2^128)
 private final class GF {
-  static let r = UInt128(a: 0xE100_0000_0000_0000, b: 0)
+  static let r = UInt128(a: 0xE100000000000000, b: 0)
 
   let blockSize: Int
   let h: UInt128
@@ -274,37 +274,37 @@ private final class GF {
 
   init(aad: [UInt8], h: UInt128, blockSize: Int) {
     self.blockSize = blockSize
-    aadLength = aad.count
-    ciphertextLength = 0
+    self.aadLength = aad.count
+    self.ciphertextLength = 0
     self.h = h
-    x = 0
+    self.x = 0
 
     // Calculate for AAD at the begining
-    x = GF.calculateX(aad: aad, x: x, h: h, blockSize: blockSize)
+    self.x = GF.calculateX(aad: aad, x: self.x, h: h, blockSize: blockSize)
   }
 
   @discardableResult
   func ghashUpdate(block ciphertextBlock: Array<UInt8>) -> UInt128 {
-    ciphertextLength += ciphertextBlock.count
-    x = GF.calculateX(block: addPadding(ciphertextBlock, blockSize: blockSize), x: x, h: h, blockSize: blockSize)
-    return x
+    self.ciphertextLength += ciphertextBlock.count
+    self.x = GF.calculateX(block: addPadding(ciphertextBlock, blockSize: self.blockSize), x: self.x, h: self.h, blockSize: self.blockSize)
+    return self.x
   }
 
   func ghashFinish() -> UInt128 {
     // len(A) || len(C)
     let len = UInt128(a: UInt64(aadLength * 8), b: UInt64(ciphertextLength * 8))
-    x = GF.multiply((x ^ len), h)
-    return x
+    x = GF.multiply(self.x ^ len, self.h)
+    return self.x
   }
 
   // GHASH. One-time calculation
   static func ghash(x startx: UInt128 = 0, h: UInt128, aad: Array<UInt8>, ciphertext: Array<UInt8>, blockSize: Int) -> UInt128 {
-    var x = calculateX(aad: aad, x: startx, h: h, blockSize: blockSize)
-    x = calculateX(ciphertext: ciphertext, x: x, h: h, blockSize: blockSize)
+    var x = self.calculateX(aad: aad, x: startx, h: h, blockSize: blockSize)
+    x = self.calculateX(ciphertext: ciphertext, x: x, h: h, blockSize: blockSize)
 
     // len(aad) || len(ciphertext)
     let len = UInt128(a: UInt64(aad.count * 8), b: UInt64(ciphertext.count * 8))
-    x = multiply((x ^ len), h)
+    x = self.multiply(x ^ len, h)
 
     return x
   }
@@ -316,18 +316,18 @@ private final class GF {
     let blocksCount = pciphertext.count / blockSize
 
     var x = startx
-    for i in 0 ..< blocksCount {
+    for i in 0..<blocksCount {
       let cpos = i * blockSize
-      let block = pciphertext[pciphertext.startIndex.advanced(by: cpos) ..< pciphertext.startIndex.advanced(by: cpos + blockSize)]
-      x = calculateX(block: Array(block), x: x, h: h, blockSize: blockSize)
+      let block = pciphertext[pciphertext.startIndex.advanced(by: cpos)..<pciphertext.startIndex.advanced(by: cpos + blockSize)]
+      x = self.calculateX(block: Array(block), x: x, h: h, blockSize: blockSize)
     }
     return x
   }
 
   // block is expected to be padded with addPadding
-  private static func calculateX(block ciphertextBlock: Array<UInt8>, x: UInt128, h: UInt128, blockSize _: Int) -> UInt128 {
+  private static func calculateX(block ciphertextBlock: Array<UInt8>, x: UInt128, h: UInt128, blockSize: Int) -> UInt128 {
     let k = x ^ UInt128(ciphertextBlock)
-    return multiply(k, h)
+    return self.multiply(k, h)
   }
 
   // Calculate AAD part, for all blocks
@@ -336,10 +336,10 @@ private final class GF {
     let blocksCount = paad.count / blockSize
 
     var x = startx
-    for i in 0 ..< blocksCount {
+    for i in 0..<blocksCount {
       let apos = i * blockSize
-      let k = x ^ UInt128(paad[paad.startIndex.advanced(by: apos) ..< paad.startIndex.advanced(by: apos + blockSize)])
-      x = multiply(k, h)
+      let k = x ^ UInt128(paad[paad.startIndex.advanced(by: apos)..<paad.startIndex.advanced(by: apos + blockSize)])
+      x = self.multiply(k, h)
     }
 
     return x
@@ -351,7 +351,7 @@ private final class GF {
     var v = x
     var k = UInt128(a: 1 << 63, b: 0)
 
-    for _ in 0 ..< 128 {
+    for _ in 0..<128 {
       if y & k == k {
         z = z ^ v
       }
@@ -359,7 +359,7 @@ private final class GF {
       if v & 1 != 1 {
         v = v >> 1
       } else {
-        v = (v >> 1) ^ r
+        v = (v >> 1) ^ self.r
       }
 
       k = k >> 1
