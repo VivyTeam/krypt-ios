@@ -36,7 +36,7 @@ public final class Poly1305: Authenticator {
   private func squeeze(h: inout Array<UInt32>) {
     assert(h.count == 17)
     var u: UInt32 = 0
-    for j in 0 ..< 16 {
+    for j in 0..<16 {
       u = u &+ h[j]
       h[j] = u & 255
       u = u >> 8
@@ -46,7 +46,7 @@ public final class Poly1305: Authenticator {
     h[16] = u & 3
     u = 5 * (u >> 2)
 
-    for j in 0 ..< 16 {
+    for j in 0..<16 {
       u = u &+ h[j]
       h[j] = u & 255
       u = u >> 8
@@ -60,7 +60,7 @@ public final class Poly1305: Authenticator {
     assert(h.count == 17 && c.count == 17)
 
     var u: UInt32 = 0
-    for j in 0 ..< 17 {
+    for j in 0..<17 {
       u = u &+ (h[j] &+ c[j])
       h[j] = u & 255
       u = u >> 8
@@ -70,25 +70,25 @@ public final class Poly1305: Authenticator {
   private func mulmod(h: inout Array<UInt32>, r: Array<UInt32>) {
     var hr = Array<UInt32>(repeating: 0, count: 17)
     var u: UInt32 = 0
-    for i in 0 ..< 17 {
+    for i in 0..<17 {
       u = 0
-      for j in 0 ... i {
+      for j in 0...i {
         u = u &+ (h[j] * r[i &- j])
       }
-      for j in (i + 1) ..< 17 {
+      for j in (i + 1)..<17 {
         u = u &+ (320 * h[j] * r[i &+ 17 &- j])
       }
       hr[i] = u
     }
     h = hr
-    squeeze(h: &h)
+    self.squeeze(h: &h)
   }
 
   private func freeze(h: inout Array<UInt32>) {
     let horig = h
-    add(h: &h, c: [5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 252])
+    self.add(h: &h, c: [5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 252])
     let negative = UInt32(bitPattern: -Int32(h[16] >> 7))
-    for j in 0 ..< 17 {
+    for j in 0..<17 {
       h[j] ^= negative & (horig[j] ^ h[j])
     }
   }
@@ -121,31 +121,31 @@ public final class Poly1305: Authenticator {
     var inlen = input.count
     var inpos = 0
     while inlen > 0 {
-      for j in 0 ..< c.count {
+      for j in 0..<c.count {
         c[j] = 0
       }
 
       let maxj = min(inlen, 16)
-      for j in 0 ..< maxj {
+      for j in 0..<maxj {
         c[j] = UInt32(input[inpos + j])
       }
       c[maxj] = 1
       inpos = inpos + maxj
       inlen = inlen - maxj
-      add(h: &h, c: c)
-      mulmod(h: &h, r: r)
+      self.add(h: &h, c: c)
+      self.mulmod(h: &h, r: r)
     }
 
-    freeze(h: &h)
+    self.freeze(h: &h)
 
-    for j in 0 ..< 16 {
+    for j in 0..<16 {
       c[j] = UInt32(k[j + 16])
     }
     c[16] = 0
-    add(h: &h, c: c)
+    self.add(h: &h, c: c)
 
-    return h[0 ..< 16].map {
-      UInt8($0 & 0xFF)
+    return h[0..<16].map {
+      UInt8($0 & 0xff)
     }
   }
 
@@ -160,6 +160,6 @@ public final class Poly1305: Authenticator {
    - returns: 16-byte tag that authenticates the message
    */
   public func authenticate(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
-    return onetimeauth(message: bytes, key: Array(key))
+    self.onetimeauth(message: bytes, key: Array(self.key))
   }
 }

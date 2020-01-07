@@ -30,11 +30,11 @@ public struct PCBC: BlockMode {
   }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.count != blockSize {
+    if self.iv.count != blockSize {
       throw Error.invalidInitializationVector
     }
 
-    return PCBCModeWorker(blockSize: blockSize, iv: iv.slice, cipherOperation: cipherOperation)
+    return PCBCModeWorker(blockSize: blockSize, iv: self.iv.slice, cipherOperation: cipherOperation)
   }
 }
 
@@ -55,7 +55,7 @@ struct PCBCModeWorker: BlockModeWorker {
     guard let ciphertext = cipherOperation(xor(prev ?? iv, plaintext)) else {
       return Array(plaintext)
     }
-    prev = xor(plaintext, ciphertext.slice)
+    self.prev = xor(plaintext, ciphertext.slice)
     return ciphertext
   }
 
@@ -63,8 +63,8 @@ struct PCBCModeWorker: BlockModeWorker {
     guard let plaintext = cipherOperation(ciphertext) else {
       return Array(ciphertext)
     }
-    let result: Array<UInt8> = xor(prev ?? iv, plaintext)
-    prev = xor(plaintext.slice, ciphertext)
+    let result: Array<UInt8> = xor(prev ?? self.iv, plaintext)
+    self.prev = xor(plaintext.slice, ciphertext)
     return result
   }
 }

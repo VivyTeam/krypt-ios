@@ -30,11 +30,11 @@ public struct CFB: BlockMode {
   }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.count != blockSize {
+    if self.iv.count != blockSize {
       throw Error.invalidInitializationVector
     }
 
-    return CFBModeWorker(blockSize: blockSize, iv: iv.slice, cipherOperation: cipherOperation)
+    return CFBModeWorker(blockSize: blockSize, iv: self.iv.slice, cipherOperation: cipherOperation)
   }
 }
 
@@ -55,8 +55,8 @@ struct CFBModeWorker: BlockModeWorker {
     guard let ciphertext = cipherOperation(prev ?? iv) else {
       return Array(plaintext)
     }
-    prev = xor(plaintext, ciphertext.slice)
-    return Array(prev ?? [])
+    self.prev = xor(plaintext, ciphertext.slice)
+    return Array(self.prev ?? [])
   }
 
   mutating func decrypt(block ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {

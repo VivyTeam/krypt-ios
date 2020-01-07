@@ -39,7 +39,8 @@ public protocol SeekableModeWorker: CipherModeWorker {
 }
 
 /// Stream workers use `StreamEncryptor`
-public protocol StreamModeWorker: CipherModeWorker {}
+public protocol StreamModeWorker: CipherModeWorker {
+}
 
 public protocol FinalizingEncryptModeWorker: CipherModeWorker {
   // Any final calculations, eg. calculate tag

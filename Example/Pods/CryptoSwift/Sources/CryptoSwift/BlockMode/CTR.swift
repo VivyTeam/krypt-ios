@@ -31,11 +31,11 @@ public struct CTR: StreamMode {
   }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.count != blockSize {
+    if self.iv.count != blockSize {
       throw Error.invalidInitializationVector
     }
 
-    return CTRModeWorker(blockSize: blockSize, iv: iv.slice, counter: counter, cipherOperation: cipherOperation)
+    return CTRModeWorker(blockSize: blockSize, iv: self.iv.slice, counter: self.counter, cipherOperation: cipherOperation)
   }
 }
 
@@ -47,14 +47,14 @@ struct CTRModeWorker: StreamModeWorker, SeekableModeWorker, CounterModeWorker {
   final class CTRCounter {
     private let constPrefix: Array<UInt8>
     private var value: UInt64
-    // TODO: make it an updatable value, computing is too slow
+    //TODO: make it an updatable value, computing is too slow
     var bytes: Array<UInt8> {
-      return constPrefix + value.bytes()
+      self.constPrefix + self.value.bytes()
     }
 
     init(_ initialValue: Array<UInt8>) {
       let halfIndex = initialValue.startIndex.advanced(by: initialValue.count / 2)
-      constPrefix = Array(initialValue[initialValue.startIndex ..< halfIndex])
+      self.constPrefix = Array(initialValue[initialValue.startIndex..<halfIndex])
 
       let suffixBytes = Array(initialValue[halfIndex...])
       value = UInt64(bytes: suffixBytes)
@@ -88,14 +88,14 @@ struct CTRModeWorker: StreamModeWorker, SeekableModeWorker, CounterModeWorker {
 
     // the first keystream is calculated from the nonce = initial value of counter
     self.counter = CTRCounter(nonce: Array(iv), startAt: counter)
-    keystream = Array(cipherOperation(self.counter.bytes.slice)!)
+    self.keystream = Array(cipherOperation(self.counter.bytes.slice)!)
   }
 
   mutating func seek(to position: Int) throws {
-    let offset = position % blockSize
-    counter = CTRCounter(nonce: iv, startAt: position / blockSize)
-    keystream = Array(cipherOperation(counter.bytes.slice)!)
-    keystreamPosIdx = offset
+    let offset = position % self.blockSize
+    self.counter = CTRCounter(nonce: self.iv, startAt: position / self.blockSize)
+    self.keystream = Array(self.cipherOperation(self.counter.bytes.slice)!)
+    self.keystreamPosIdx = offset
   }
 
   // plaintext is at most blockSize long
@@ -105,10 +105,10 @@ struct CTRModeWorker: StreamModeWorker, SeekableModeWorker, CounterModeWorker {
     var processed = 0
     while processed < plaintext.count {
       // Update keystream
-      if keystreamPosIdx == blockSize {
-        counter += 1
-        keystream = Array(cipherOperation(counter.bytes.slice)!)
-        keystreamPosIdx = 0
+      if self.keystreamPosIdx == self.blockSize {
+        self.counter += 1
+        self.keystream = Array(self.cipherOperation(self.counter.bytes.slice)!)
+        self.keystreamPosIdx = 0
       }
 
       let xored: Array<UInt8> = xor(plaintext[plaintext.startIndex.advanced(by: processed)...], keystream[keystreamPosIdx...])
@@ -121,14 +121,14 @@ struct CTRModeWorker: StreamModeWorker, SeekableModeWorker, CounterModeWorker {
   }
 
   mutating func decrypt(block ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {
-    return encrypt(block: ciphertext)
+    self.encrypt(block: ciphertext)
   }
 }
 
 private func buildCounterValue(_ iv: Array<UInt8>, counter: UInt64) -> Array<UInt8> {
   let noncePartLen = iv.count / 2
-  let noncePrefix = iv[iv.startIndex ..< iv.startIndex.advanced(by: noncePartLen)]
-  let nonceSuffix = iv[iv.startIndex.advanced(by: noncePartLen) ..< iv.startIndex.advanced(by: iv.count)]
+  let noncePrefix = iv[iv.startIndex..<iv.startIndex.advanced(by: noncePartLen)]
+  let nonceSuffix = iv[iv.startIndex.advanced(by: noncePartLen)..<iv.startIndex.advanced(by: iv.count)]
   let c = UInt64(bytes: nonceSuffix) + counter
   return noncePrefix + c.bytes()
 }

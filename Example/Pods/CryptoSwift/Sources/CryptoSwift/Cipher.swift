@@ -38,10 +38,10 @@ public protocol Cipher: class {
 
 extension Cipher {
   public func encrypt(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
-    return try encrypt(bytes.slice)
+    try self.encrypt(bytes.slice)
   }
 
   public func decrypt(_ bytes: Array<UInt8>) throws -> Array<UInt8> {
-    return try decrypt(bytes.slice)
+    try self.decrypt(bytes.slice)
   }
 }

@@ -16,13 +16,14 @@
 public final class SHA1: DigestType {
   static let digestLength: Int = 20 // 160 / 8
   static let blockSize: Int = 64
-  fileprivate static let hashInitialValue: ContiguousArray<UInt32> = [0x6745_2301, 0xEFCD_AB89, 0x98BA_DCFE, 0x1032_5476, 0xC3D2_E1F0]
+  fileprivate static let hashInitialValue: ContiguousArray<UInt32> = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0]
 
   fileprivate var accumulated = Array<UInt8>()
   fileprivate var processedBytesTotalCount: Int = 0
   fileprivate var accumulatedHash: ContiguousArray<UInt32> = SHA1.hashInitialValue
 
-  public init() {}
+  public init() {
+  }
 
   public func calculate(for bytes: Array<UInt8>) -> Array<UInt8> {
     do {
@@ -42,15 +43,13 @@ public final class SHA1: DigestType {
       M.deallocate()
     }
 
-    for x in 0 ..< 80 {
+    for x in 0..<80 {
       switch x {
-      case 0 ... 15:
-        let start = chunk.startIndex.advanced(by: x * 4) // * MemoryLayout<UInt32>.size
-        M[x] = UInt32(bytes: chunk, fromIndex: start)
-        break
-      default:
-        M[x] = rotateLeft(M[x - 3] ^ M[x - 8] ^ M[x - 14] ^ M[x - 16], by: 1)
-        break
+        case 0...15:
+          let start = chunk.startIndex.advanced(by: x * 4) // * MemoryLayout<UInt32>.size
+          M[x] = UInt32(bytes: chunk, fromIndex: start)
+        default:
+          M[x] = rotateLeft(M[x - 3] ^ M[x - 8] ^ M[x - 14] ^ M[x - 16], by: 1)
       }
     }
 
@@ -61,29 +60,25 @@ public final class SHA1: DigestType {
     var E = hh[4]
 
     // Main loop
-    for j in 0 ... 79 {
+    for j in 0...79 {
       var f: UInt32 = 0
       var k: UInt32 = 0
 
       switch j {
-      case 0 ... 19:
-        f = (B & C) | ((~B) & D)
-        k = 0x5A82_7999
-        break
-      case 20 ... 39:
-        f = B ^ C ^ D
-        k = 0x6ED9_EBA1
-        break
-      case 40 ... 59:
-        f = (B & C) | (B & D) | (C & D)
-        k = 0x8F1B_BCDC
-        break
-      case 60 ... 79:
-        f = B ^ C ^ D
-        k = 0xCA62_C1D6
-        break
-      default:
-        break
+        case 0...19:
+          f = (B & C) | ((~B) & D)
+          k = 0x5a827999
+        case 20...39:
+          f = B ^ C ^ D
+          k = 0x6ed9eba1
+        case 40...59:
+          f = (B & C) | (B & D) | (C & D)
+          k = 0x8f1bbcdc
+        case 60...79:
+          f = B ^ C ^ D
+          k = 0xca62c1d6
+        default:
+          break
       }
 
       let temp = rotateLeft(A, by: 5) &+ f &+ E &+ M[j] &+ k
@@ -105,44 +100,44 @@ public final class SHA1: DigestType {
 extension SHA1: Updatable {
   @discardableResult
   public func update(withBytes bytes: ArraySlice<UInt8>, isLast: Bool = false) throws -> Array<UInt8> {
-    accumulated += bytes
+    self.accumulated += bytes
 
     if isLast {
-      let lengthInBits = (processedBytesTotalCount + accumulated.count) * 8
+      let lengthInBits = (processedBytesTotalCount + self.accumulated.count) * 8
       let lengthBytes = lengthInBits.bytes(totalBytes: 64 / 8) // A 64-bit representation of b
 
       // Step 1. Append padding
-      bitPadding(to: &accumulated, blockSize: SHA1.blockSize, allowance: 64 / 8)
+      bitPadding(to: &self.accumulated, blockSize: SHA1.blockSize, allowance: 64 / 8)
 
       // Step 2. Append Length a 64-bit representation of lengthInBits
-      accumulated += lengthBytes
+      self.accumulated += lengthBytes
     }
 
     var processedBytes = 0
-    for chunk in accumulated.batched(by: SHA1.blockSize) {
-      if isLast || (accumulated.count - processedBytes) >= SHA1.blockSize {
-        process(block: chunk, currentHash: &accumulatedHash)
+    for chunk in self.accumulated.batched(by: SHA1.blockSize) {
+      if isLast || (self.accumulated.count - processedBytes) >= SHA1.blockSize {
+        self.process(block: chunk, currentHash: &self.accumulatedHash)
         processedBytes += chunk.count
       }
     }
-    accumulated.removeFirst(processedBytes)
-    processedBytesTotalCount += processedBytes
+    self.accumulated.removeFirst(processedBytes)
+    self.processedBytesTotalCount += processedBytes
 
     // output current hash
     var result = Array<UInt8>(repeating: 0, count: SHA1.digestLength)
     var pos = 0
-    for idx in 0 ..< accumulatedHash.count {
-      let h = accumulatedHash[idx]
-      result[pos + 0] = UInt8((h >> 24) & 0xFF)
-      result[pos + 1] = UInt8((h >> 16) & 0xFF)
-      result[pos + 2] = UInt8((h >> 8) & 0xFF)
-      result[pos + 3] = UInt8(h & 0xFF)
+    for idx in 0..<self.accumulatedHash.count {
+      let h = self.accumulatedHash[idx]
+      result[pos + 0] = UInt8((h >> 24) & 0xff)
+      result[pos + 1] = UInt8((h >> 16) & 0xff)
+      result[pos + 2] = UInt8((h >> 8) & 0xff)
+      result[pos + 3] = UInt8(h & 0xff)
       pos += 4
     }
 
     // reset hash value for instance
     if isLast {
-      accumulatedHash = SHA1.hashInitialValue
+      self.accumulatedHash = SHA1.hashInitialValue
     }
 
     return result

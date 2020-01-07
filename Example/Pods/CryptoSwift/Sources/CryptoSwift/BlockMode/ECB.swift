@@ -19,10 +19,11 @@
 public struct ECB: BlockMode {
   public let options: BlockModeOption = .paddingRequired
 
-  public init() {}
+  public init() {
+  }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    return ECBModeWorker(blockSize: blockSize, cipherOperation: cipherOperation)
+    ECBModeWorker(blockSize: blockSize, cipherOperation: cipherOperation)
   }
 }
 
@@ -45,6 +46,6 @@ struct ECBModeWorker: BlockModeWorker {
   }
 
   mutating func decrypt(block ciphertext: ArraySlice<UInt8>) -> Array<UInt8> {
-    return encrypt(block: ciphertext)
+    self.encrypt(block: ciphertext)
   }
 }

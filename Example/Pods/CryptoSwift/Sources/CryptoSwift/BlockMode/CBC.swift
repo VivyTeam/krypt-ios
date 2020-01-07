@@ -30,11 +30,11 @@ public struct CBC: BlockMode {
   }
 
   public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
-    if iv.count != blockSize {
+    if self.iv.count != blockSize {
       throw Error.invalidInitializationVector
     }
 
-    return CBCModeWorker(blockSize: blockSize, iv: iv.slice, cipherOperation: cipherOperation)
+    return CBCModeWorker(blockSize: blockSize, iv: self.iv.slice, cipherOperation: cipherOperation)
   }
 }
 
@@ -55,7 +55,7 @@ struct CBCModeWorker: BlockModeWorker {
     guard let ciphertext = cipherOperation(xor(prev ?? iv, plaintext)) else {
       return Array(plaintext)
     }
-    prev = ciphertext.slice
+    self.prev = ciphertext.slice
     return ciphertext
   }
 
@@ -63,8 +63,8 @@ struct CBCModeWorker: BlockModeWorker {
     guard let plaintext = cipherOperation(ciphertext) else {
       return Array(ciphertext)
     }
-    let result: Array<UInt8> = xor(prev ?? iv, plaintext)
-    prev = ciphertext
+    let result: Array<UInt8> = xor(prev ?? self.iv, plaintext)
+    self.prev = ciphertext
     return result
   }
 }

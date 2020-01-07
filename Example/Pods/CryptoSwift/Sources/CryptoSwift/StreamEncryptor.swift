@@ -31,17 +31,17 @@ final class StreamEncryptor: Cryptor, Updatable {
     var accumulated = Array(bytes)
     if isLast {
       // CTR doesn't need padding. Really. Add padding to the last block if really want. but... don't.
-      accumulated = padding.add(to: accumulated, blockSize: blockSize - lastBlockRemainder)
+      accumulated = self.padding.add(to: accumulated, blockSize: self.blockSize - self.lastBlockRemainder)
     }
 
     var encrypted = Array<UInt8>(reserveCapacity: bytes.count)
-    for chunk in accumulated.batched(by: blockSize) {
-      encrypted += worker.encrypt(block: chunk)
+    for chunk in accumulated.batched(by: self.blockSize) {
+      encrypted += self.worker.encrypt(block: chunk)
     }
 
     // omit unecessary calculation if not needed
-    if padding != .noPadding {
-      lastBlockRemainder = encrypted.count.quotientAndRemainder(dividingBy: blockSize).remainder
+    if self.padding != .noPadding {
+      self.lastBlockRemainder = encrypted.count.quotientAndRemainder(dividingBy: self.blockSize).remainder
     }
 
     if var finalizingWorker = worker as? FinalizingEncryptModeWorker, isLast == true {
@@ -51,7 +51,7 @@ final class StreamEncryptor: Cryptor, Updatable {
     return encrypted
   }
 
-  func seek(to _: Int) throws {
+  func seek(to: Int) throws {
     fatalError("Not supported")
   }
 }

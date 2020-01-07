@@ -29,8 +29,8 @@ public final class Scrypt {
   /// Configuration parameters.
   private let salt: SecureBytes
   private let password: SecureBytes
-  fileprivate let blocksize: Int // 128 * r
-  fileprivate let salsaBlock = UnsafeMutableRawPointer.allocate(byteCount: 64, alignment: 64)
+  private let blocksize: Int // 128 * r
+  private let salsaBlock = UnsafeMutableRawPointer.allocate(byteCount: 64, alignment: 64)
   private let dkLen: Int
   private let N: Int
   private let r: Int
@@ -58,7 +58,7 @@ public final class Scrypt {
       throw Error.invalidInput
     }
 
-    blocksize = 128 * r
+    self.blocksize = 128 * r
     self.N = N
     self.r = r
     self.p = p
@@ -70,9 +70,9 @@ public final class Scrypt {
   /// Runs the key derivation function with a specific password.
   public func calculate() throws -> [UInt8] {
     // Allocate memory (as bytes for now) for further use in mixing steps
-    let B = UnsafeMutableRawPointer.allocate(byteCount: 128 * r * p, alignment: 64)
-    let XY = UnsafeMutableRawPointer.allocate(byteCount: 256 * r + 64, alignment: 64)
-    let V = UnsafeMutableRawPointer.allocate(byteCount: 128 * r * N, alignment: 64)
+    let B = UnsafeMutableRawPointer.allocate(byteCount: 128 * self.r * self.p, alignment: 64)
+    let XY = UnsafeMutableRawPointer.allocate(byteCount: 256 * self.r + 64, alignment: 64)
+    let V = UnsafeMutableRawPointer.allocate(byteCount: 128 * self.r * self.N, alignment: 64)
 
     // Deallocate memory when done
     defer {
@@ -83,23 +83,23 @@ public final class Scrypt {
 
     /* 1: (B_0 ... B_{p-1}) <-- PBKDF2(P, S, 1, p * MFLen) */
     // Expand the initial key
-    let barray = try PKCS5.PBKDF2(password: Array(password), salt: Array(salt), iterations: 1, keyLength: p * 128 * r, variant: .sha256).calculate()
+    let barray = try PKCS5.PBKDF2(password: Array(self.password), salt: Array(self.salt), iterations: 1, keyLength: self.p * 128 * self.r, variant: .sha256).calculate()
     barray.withUnsafeBytes { p in
       B.copyMemory(from: p.baseAddress!, byteCount: barray.count)
     }
 
     /* 2: for i = 0 to p - 1 do */
     // do the mixing
-    for i in 0 ..< p {
+    for i in 0 ..< self.p {
       /* 3: B_i <-- MF(B_i, N) */
-      smix(B + i * 128 * r, V.assumingMemoryBound(to: UInt32.self), XY.assumingMemoryBound(to: UInt32.self))
+      smix(B + i * 128 * self.r, V.assumingMemoryBound(to: UInt32.self), XY.assumingMemoryBound(to: UInt32.self))
     }
 
     /* 5: DK <-- PBKDF2(P, B, 1, dkLen) */
     let pointer = B.assumingMemoryBound(to: UInt8.self)
-    let bufferPointer = UnsafeBufferPointer(start: pointer, count: p * 128 * r)
+    let bufferPointer = UnsafeBufferPointer(start: pointer, count: p * 128 * self.r)
     let block = [UInt8](bufferPointer)
-    return try PKCS5.PBKDF2(password: Array(password), salt: block, iterations: 1, keyLength: dkLen, variant: .sha256).calculate()
+    return try PKCS5.PBKDF2(password: Array(self.password), salt: block, iterations: 1, keyLength: self.dkLen, variant: .sha256).calculate()
   }
 }
 
@@ -111,58 +111,58 @@ private extension Scrypt {
   /// aligned to a multiple of 64 bytes.
   @inline(__always) func smix(_ block: UnsafeMutableRawPointer, _ v: UnsafeMutablePointer<UInt32>, _ xy: UnsafeMutablePointer<UInt32>) {
     let X = xy
-    let Y = xy + 32 * r
-    let Z = xy + 64 * r
+    let Y = xy + 32 * self.r
+    let Z = xy + 64 * self.r
 
     /* 1: X <-- B */
     let typedBlock = block.assumingMemoryBound(to: UInt32.self)
-    X.assign(from: typedBlock, count: 32 * r)
+    X.assign(from: typedBlock, count: 32 * self.r)
 
     /* 2: for i = 0 to N - 1 do */
-    for i in stride(from: 0, to: N, by: 2) {
+    for i in stride(from: 0, to: self.N, by: 2) {
       /* 3: V_i <-- X */
-      UnsafeMutableRawPointer(v + i * (32 * r)).copyMemory(from: X, byteCount: 128 * r)
+      UnsafeMutableRawPointer(v + i * (32 * self.r)).copyMemory(from: X, byteCount: 128 * self.r)
 
       /* 4: X <-- H(X) */
-      blockMixSalsa8(X, Y, Z)
+      self.blockMixSalsa8(X, Y, Z)
 
       /* 3: V_i <-- X */
-      UnsafeMutableRawPointer(v + (i + 1) * (32 * r)).copyMemory(from: Y, byteCount: 128 * r)
+      UnsafeMutableRawPointer(v + (i + 1) * (32 * self.r)).copyMemory(from: Y, byteCount: 128 * self.r)
 
       /* 4: X <-- H(X) */
-      blockMixSalsa8(Y, X, Z)
+      self.blockMixSalsa8(Y, X, Z)
     }
 
     /* 6: for i = 0 to N - 1 do */
-    for _ in stride(from: 0, to: N, by: 2) {
+    for _ in stride(from: 0, to: self.N, by: 2) {
       /*
        7: j <-- Integerify (X) mod N
        where Integerify (B[0] ... B[2 * r - 1]) is defined
        as the result of interpreting B[2 * r - 1] as a little-endian integer.
        */
-      var j = Int(integerify(X) & UInt64(N - 1))
+      var j = Int(integerify(X) & UInt64(self.N - 1))
 
       /* 8: X <-- H(X \xor V_j) */
-      blockXor(X, v + j * 32 * r, 128 * r)
-      blockMixSalsa8(X, Y, Z)
+      self.blockXor(X, v + j * 32 * self.r, 128 * self.r)
+      self.blockMixSalsa8(X, Y, Z)
 
       /* 7: j <-- Integerify(X) mod N */
-      j = Int(integerify(Y) & UInt64(N - 1))
+      j = Int(self.integerify(Y) & UInt64(self.N - 1))
 
       /* 8: X <-- H(X \xor V_j) */
-      blockXor(Y, v + j * 32 * r, 128 * r)
-      blockMixSalsa8(Y, X, Z)
+      self.blockXor(Y, v + j * 32 * self.r, 128 * self.r)
+      self.blockMixSalsa8(Y, X, Z)
     }
 
     /* 10: B' <-- X */
-    for k in 0 ..< 32 * r {
+    for k in 0 ..< 32 * self.r {
       UnsafeMutableRawPointer(block + 4 * k).storeBytes(of: X[k], as: UInt32.self)
     }
   }
 
   /// Returns the result of parsing `B_{2r-1}` as a little-endian integer.
   @inline(__always) func integerify(_ block: UnsafeRawPointer) -> UInt64 {
-    let bi = block + (2 * r - 1) * 64
+    let bi = block + (2 * self.r - 1) * 64
     return bi.load(as: UInt64.self).littleEndian
   }
 
@@ -172,31 +172,31 @@ private extension Scrypt {
   /// space `x` must be 64 bytes.
   @inline(__always) func blockMixSalsa8(_ bin: UnsafePointer<UInt32>, _ bout: UnsafeMutablePointer<UInt32>, _ x: UnsafeMutablePointer<UInt32>) {
     /* 1: X <-- B_{2r - 1} */
-    UnsafeMutableRawPointer(x).copyMemory(from: bin + (2 * r - 1) * 16, byteCount: 64)
+    UnsafeMutableRawPointer(x).copyMemory(from: bin + (2 * self.r - 1) * 16, byteCount: 64)
 
     /* 2: for i = 0 to 2r - 1 do */
-    for i in stride(from: 0, to: 2 * r, by: 2) {
+    for i in stride(from: 0, to: 2 * self.r, by: 2) {
       /* 3: X <-- H(X \xor B_i) */
-      blockXor(x, bin + i * 16, 64)
-      salsa20_8_typed(x)
+      self.blockXor(x, bin + i * 16, 64)
+      self.salsa20_8_typed(x)
 
       /* 4: Y_i <-- X */
       /* 6: B' <-- (Y_0, Y_2 ... Y_{2r-2}, Y_1, Y_3 ... Y_{2r-1}) */
       UnsafeMutableRawPointer(bout + i * 8).copyMemory(from: x, byteCount: 64)
 
       /* 3: X <-- H(X \xor B_i) */
-      blockXor(x, bin + i * 16 + 16, 64)
-      salsa20_8_typed(x)
+      self.blockXor(x, bin + i * 16 + 16, 64)
+      self.salsa20_8_typed(x)
 
       /* 4: Y_i <-- X */
       /* 6: B' <-- (Y_0, Y_2 ... Y_{2r-2}, Y_1, Y_3 ... Y_{2r-1}) */
-      UnsafeMutableRawPointer(bout + i * 8 + r * 16).copyMemory(from: x, byteCount: 64)
+      UnsafeMutableRawPointer(bout + i * 8 + self.r * 16).copyMemory(from: x, byteCount: 64)
     }
   }
 
   @inline(__always) func salsa20_8_typed(_ block: UnsafeMutablePointer<UInt32>) {
-    salsaBlock.copyMemory(from: UnsafeRawPointer(block), byteCount: 64)
-    let salsaBlockTyped = salsaBlock.assumingMemoryBound(to: UInt32.self)
+    self.salsaBlock.copyMemory(from: UnsafeRawPointer(block), byteCount: 64)
+    let salsaBlockTyped = self.salsaBlock.assumingMemoryBound(to: UInt32.self)
 
     for _ in stride(from: 0, to: 8, by: 2) {
       salsaBlockTyped[4] ^= rotateLeft(salsaBlockTyped[0] &+ salsaBlockTyped[12], by: 7)
