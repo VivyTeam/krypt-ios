@@ -59,6 +59,7 @@
 		EBE7E19022848ACE003029C8 /* kvconnect-root-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18D22848A00003029C8 /* kvconnect-root-ca-pem */; };
 		EBE7E19122848ACE003029C8 /* kvconnect-user-ca-pem in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18E22848A98003029C8 /* kvconnect-user-ca-pem */; };
 		EBE7E19222848ACE003029C8 /* kvconnect-user-ca-pem-expired in Resources */ = {isa = PBXBuildFile; fileRef = EBE7E18F22848AC2003029C8 /* kvconnect-user-ca-pem-expired */; };
+		F89BB73D23D6F4A300D1163A /* SHA256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */; };
 		F8FE7631CB357489E6F46CAE /* Pods_Krypt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -139,6 +140,7 @@
 		EBE7E18E22848A98003029C8 /* kvconnect-user-ca-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-user-ca-pem"; sourceTree = "<group>"; };
 		EBE7E18F22848AC2003029C8 /* kvconnect-user-ca-pem-expired */ = {isa = PBXFileReference; lastKnownFileType = text; path = "kvconnect-user-ca-pem-expired"; sourceTree = "<group>"; };
 		EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256Tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,6 +227,7 @@
 				EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */,
 				AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
+				F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */,
 				AD13AB55225F7AAB00E65BBD /* SMIMETests.swift */,
 				5021071722C1366B008EFF62 /* PKCS8Tests.swift */,
 				AD6DBE3E237E088E003567FA /* X509Tests.swift */,
@@ -575,6 +578,7 @@
 				AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */,
 				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
 				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
+				F89BB73D23D6F4A300D1163A /* SHA256Tests.swift in Sources */,
 				AD6DBE3F237E088E003567FA /* X509Tests.swift in Sources */,
 				AD9EBA842283279900DB8E73 /* PEMConverterTests.swift in Sources */,
 				EB007E162276EA8F001BD473 /* KVConnectDecryptionTests.swift in Sources */,
