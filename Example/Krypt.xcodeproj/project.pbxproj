@@ -30,7 +30,6 @@
 		AD6DBE3F237E088E003567FA /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DBE3E237E088E003567FA /* X509Tests.swift */; };
 		AD9EBA842283279900DB8E73 /* PEMConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */; };
 		AD9EBA8622832B9300DB8E73 /* openssl-certificate-x509-cer in Resources */ = {isa = PBXBuildFile; fileRef = AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */; };
-		ADB6EE75220840470044C963 /* MedStickerEncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */; };
 		ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */; };
 		ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */; };
 		ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */; };
@@ -107,7 +106,6 @@
 		AD81CB14223178B50097E8AD /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Pods/OpenSSL/OpenSSL/lib/libssl.a; sourceTree = "<group>"; };
 		AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMConverterTests.swift; sourceTree = "<group>"; };
 		AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-certificate-x509-cer"; sourceTree = "<group>"; };
-		ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedStickerEncryptionTests.swift; sourceTree = "<group>"; };
 		ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-cipher-key-base64"; sourceTree = "<group>"; };
 		ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-cipher-key-base64"; sourceTree = "<group>"; };
 		ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-pem"; sourceTree = "<group>"; };
@@ -225,7 +223,6 @@
 				AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */,
 				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
 				EB007E142276EA61001BD473 /* KVConnectDecryptionTests.swift */,
-				ADB6EE74220840470044C963 /* MedStickerEncryptionTests.swift */,
 				AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */,
 				AD1568BE21F8D494008572DA /* RSATests.swift */,
 				AD13AB55225F7AAB00E65BBD /* SMIMETests.swift */,
@@ -578,7 +575,6 @@
 				AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */,
 				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
 				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
-				ADB6EE75220840470044C963 /* MedStickerEncryptionTests.swift in Sources */,
 				AD6DBE3F237E088E003567FA /* X509Tests.swift in Sources */,
 				AD9EBA842283279900DB8E73 /* PEMConverterTests.swift in Sources */,
 				EB007E162276EA8F001BD473 /* KVConnectDecryptionTests.swift in Sources */,
