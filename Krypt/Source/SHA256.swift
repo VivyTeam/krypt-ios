@@ -23,8 +23,12 @@ public struct SHA256 {
 
   // MARK: - Buffered SHA-256 Calculation
 
-  public static func digest(from file: URL, with bufferSize: Int = 1024 * 1024) -> Data? {
-    guard let handle = try? FileHandle(forReadingFrom: file) else { return nil }
+  /// Calculates SHA256 hash of a given file using a buffer to avoid running out of memory for potentially large files
+  /// - Parameters:
+  ///   - url: The url to the file to calculate the SHA256 hash for
+  ///   - bufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
+  public static func digest(file url: URL, with bufferSize: Int = 1024 * 1024) throws -> Data {
+    let handle = try FileHandle(forReadingFrom: url)
     /// Close file handle on scope exit
     defer {
       handle.closeFile()

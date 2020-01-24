@@ -44,6 +44,7 @@ enum TestData: String {
   case kvConnectRootCAPEM = "kvconnect-root-ca-pem"
   case kvConnectUserCAPEM = "kvconnect-user-ca-pem"
   case kvConnectUserCAPEMExpired = "kvconnect-user-ca-pem-expired"
+  case largeTestData = "largeTestFile"
 
   var data: Data {
     guard let data = try? Data(contentsOf: self.url)
