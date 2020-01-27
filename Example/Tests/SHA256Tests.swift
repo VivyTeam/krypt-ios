@@ -22,7 +22,7 @@ class SHA256Tests: XCTestCase {
     XCTAssertEqual(digest, Data(hex: expectedHash))
   }
 
-  func testSHA256Calculation_buffered__shouldProduceCorrectHash() {
+  func testDigestFile_whenDataLargeEnoughFor5BufferFills__shouldProduceExpectedHash() {
     // given
     /// Test data large enough to force at least 5 buffer fills
     let testData = TestData.largeTestData
