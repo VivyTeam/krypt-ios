@@ -20,4 +20,45 @@ public struct SHA256 {
     }
     return status == errSecSuccess ? Data(hash) : nil
   }
+
+  // MARK: - Buffered SHA-256 Calculation
+
+  /// Calculates SHA256 hash of a given file using a buffer to avoid running out of memory for potentially large files
+  /// - Parameters:
+  ///   - url: The url to the file to calculate the SHA256 hash for
+  ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
+  public static func digest(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
+    let handle = try FileHandle(forReadingFrom: url)
+    /// Close file handle on scope exit
+    defer {
+      handle.closeFile()
+    }
+    /// Common Crypto SHA256 Setup
+    var context = CC_SHA256_CTX()
+    CC_SHA256_Init(&context)
+
+    /// Fill buffer in an autoreleasepool so we dont run out of memory for large files
+    while autoreleasepool(invoking: {
+      /// Fill buffer
+      let data = handle.readData(ofLength: withBufferSize)
+      /// Update SHA256
+      if data.count > 0 {
+        data.withUnsafeBytes {
+          _ = CC_SHA256_Update(&context, $0.baseAddress, numericCast(data.count))
+        }
+        return true
+      } else {
+        /// EOF
+        return false
+      }
+    }) {}
+
+    /// SHA256 Digest & Finalize
+    var digest = Data(count: Int(CC_SHA256_DIGEST_LENGTH))
+    digest.withUnsafeMutableBytes {
+      _ = CC_SHA256_Final($0.bindMemory(to: UInt8.self).baseAddress, &context)
+    }
+
+    return digest
+  }
 }
