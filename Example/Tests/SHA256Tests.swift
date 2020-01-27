@@ -13,7 +13,7 @@ class SHA256Tests: XCTestCase {
   // Computed using `openssl dgst -sha256 -hex [file path]
   private let expectedHash = "4b9ecf8a918594442fa56d14f2f8e975b258d134bf71c3a05c913b952d40af46"
 
-  func testSAH256Calculation_nonBuffered__shouldProduceCorrectHash() {
+  func testDigestData__shouldProduceExpectedHash() {
     // given
     let testData = TestData.largeTestData
     // when
