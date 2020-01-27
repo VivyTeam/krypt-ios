@@ -26,8 +26,8 @@ public struct SHA256 {
   /// Calculates SHA256 hash of a given file using a buffer to avoid running out of memory for potentially large files
   /// - Parameters:
   ///   - url: The url to the file to calculate the SHA256 hash for
-  ///   - bufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
-  public static func digest(file url: URL, with bufferSize: Int = 1024 * 1024) throws -> Data {
+  ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
+  public static func digest(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
     let handle = try FileHandle(forReadingFrom: url)
     /// Close file handle on scope exit
     defer {
@@ -40,7 +40,7 @@ public struct SHA256 {
     /// Fill buffer in an autoreleasepool so we dont run out of memory for large files
     while autoreleasepool(invoking: {
       /// Fill buffer
-      let data = handle.readData(ofLength: bufferSize)
+      let data = handle.readData(ofLength: withBufferSize)
       /// Update SHA256
       if data.count > 0 {
         data.withUnsafeBytes {
