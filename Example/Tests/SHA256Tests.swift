@@ -32,7 +32,7 @@ class SHA256Tests: XCTestCase {
     XCTAssertEqual(bufferedDigest, Data(hex: expectedHash))
   }
 
-  func testSHA256Calculation_bufferedWithCustomBufferSize__shouldProduceCorrectHash() {
+  func testDigestFile_withCustomBufferSize__shouldProduceExpectedHash() {
     // given
     /// Test data large enough to force at least 5 buffer fills
     let testData = TestData.largeTestData
