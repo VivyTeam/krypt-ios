@@ -6,7 +6,9 @@
 //
 
 import CommonCrypto
-import CryptoKit
+#if canImport(CryptoKit)
+  import CryptoKit
+#endif
 import Foundation
 
 public struct SHA256 {
