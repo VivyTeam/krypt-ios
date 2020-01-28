@@ -11,6 +11,9 @@ import Foundation
 
 public struct SHA256 {
   public static func digest(_ data: Data) -> Data? {
+    if #available(iOS 13, *) {
+      return Data(CryptoKit.SHA256.hash(data: data))
+    }
     var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
     let status = data.withUnsafeBytes { ptr -> OSStatus in
       guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
@@ -22,20 +25,32 @@ public struct SHA256 {
     return status == errSecSuccess ? Data(hash) : nil
   }
 
-  /// Calculates SHA256 hash of given data using CryptoKit
-  /// - Parameter data: The data to calculate the hash for
-  @available(iOS 13, *)
-  public static func digestV2(_ data: Data) -> Data? {
-    return Data(CryptoKit.SHA256.hash(data: data))
-  }
-
   // MARK: - Buffered SHA-256 Calculation
 
   /// Calculates SHA256 hash of a given file using a buffer to avoid running out of memory for potentially large files
   /// - Parameters:
   ///   - url: The url to the file to calculate the SHA256 hash for
   ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
-  public static func digest(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
+  public static func digest(file url: URL, withBufferSize bufferSize: Int = 1024 * 1024) throws -> Data {
+    if #available(iOS 13, *) {
+      guard let stream = InputStream(fileAtPath: url.path) else {
+        throw SHA256Error.fileOperationError
+      }
+      stream.open()
+      let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+      defer {
+        buffer.deallocate()
+      }
+      var hasher = CryptoKit.SHA256()
+      while stream.hasBytesAvailable {
+        let read = stream.read(buffer, maxLength: bufferSize)
+        let bufferPointer = UnsafeRawBufferPointer(start: buffer, count: read)
+        hasher.update(bufferPointer: bufferPointer)
+      }
+      let digest = hasher.finalize()
+      return Data(digest)
+    }
+
     let handle = try FileHandle(forReadingFrom: url)
     /// Close file handle on scope exit
     defer {
@@ -48,7 +63,7 @@ public struct SHA256 {
     /// Fill buffer in an autoreleasepool so we dont run out of memory for large files
     while autoreleasepool(invoking: {
       /// Fill buffer
-      let data = handle.readData(ofLength: withBufferSize)
+      let data = handle.readData(ofLength: bufferSize)
       /// Update SHA256
       if data.count > 0 {
         data.withUnsafeBytes {
@@ -68,30 +83,6 @@ public struct SHA256 {
     }
 
     return digest
-  }
-
-  /// iOS 13 Variant of SHA256 hash calculation for large files using a buffer and CryptoKit
-  /// - Parameters:
-  ///   - url: The url to the file to calculate the SHA256 hash for
-  ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024*1024 bytes = 1 MB
-  @available(iOS 13, *)
-  public static func digestV2(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
-    guard let stream = InputStream(fileAtPath: url.path) else {
-      throw SHA256Error.fileOperationError
-    }
-    stream.open()
-    let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: withBufferSize)
-    defer {
-      buffer.deallocate()
-    }
-    var hasher = CryptoKit.SHA256()
-    while stream.hasBytesAvailable {
-      let read = stream.read(buffer, maxLength: withBufferSize)
-      let bufferPointer = UnsafeRawBufferPointer(start: buffer, count: read)
-      hasher.update(bufferPointer: bufferPointer)
-    }
-    let digest = hasher.finalize()
-    return Data(digest)
   }
 }
 

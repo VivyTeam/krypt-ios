@@ -41,36 +41,4 @@ class SHA256Tests: XCTestCase {
     // then
     XCTAssertEqual(bufferedDigest, Data(hex: expectedHash))
   }
-
-  @available(iOS 13, *)
-  func testDigestData_usingCryptoKit__shouldProduceExpectedHash() {
-    // given
-    let testData = TestData.largeTestData
-    // when
-    let digest = SHA256.digestV2(testData.data)
-    // then
-    XCTAssertEqual(digest, Data(hex: expectedHash))
-  }
-
-  @available(iOS 13, *)
-  func testDigestFile_usingCryptoKit_whenDataLargeEnoughFor5BufferFills__shouldProduceExpectedHash() {
-    // given
-    /// Test data large enough to force at least 5 buffer fills
-    let testData = TestData.largeTestData
-    // when
-    let bufferedDigest = try! SHA256.digestV2(file: testData.url)
-    // then
-    XCTAssertEqual(bufferedDigest, Data(hex: expectedHash))
-  }
-
-  @available(iOS 13, *)
-  func testDigestFile_usingCryptoKit_withCustomBufferSize__shouldProduceExpectedHash() {
-    // given
-    /// Test data large enough to force at least 5 buffer fills
-    let testData = TestData.largeTestData
-    // when
-    let bufferedDigest = try! SHA256.digestV2(file: testData.url, withBufferSize: 1024)
-    // then
-    XCTAssertEqual(bufferedDigest, Data(hex: expectedHash))
-  }
 }
