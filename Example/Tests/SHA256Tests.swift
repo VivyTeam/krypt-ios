@@ -43,7 +43,7 @@ class SHA256Tests: XCTestCase {
   }
 
   @available(iOS 13, *)
-  func testDigestData_iOS13__shouldProduceExpectedHash() {
+  func testDigestData_usingCryptoKit__shouldProduceExpectedHash() {
     // given
     let testData = TestData.largeTestData
     // when
