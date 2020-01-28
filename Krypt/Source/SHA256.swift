@@ -6,6 +6,7 @@
 //
 
 import CommonCrypto
+import CryptoKit
 import Foundation
 
 public struct SHA256 {
@@ -19,6 +20,13 @@ public struct SHA256 {
       return errSecSuccess
     }
     return status == errSecSuccess ? Data(hash) : nil
+  }
+
+  /// Calculates SHA256 hash of given data using CryptoKit
+  /// - Parameter data: The data to calculate the hash for
+  @available(iOS 13, *)
+  public static func digestV2(_ data: Data) -> Data? {
+    return Data(CryptoKit.SHA256.hash(data: data))
   }
 
   // MARK: - Buffered SHA-256 Calculation
@@ -61,4 +69,34 @@ public struct SHA256 {
 
     return digest
   }
+
+  /// iOS 13 Variant of SHA256 hash calculation for large files using a buffer and CryptoKit
+  /// - Parameters:
+  ///   - url: The url to the file to calculate the SHA256 hash for
+  ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024*1024 bytes = 1 MB
+  @available(iOS 13, *)
+  public static func digestV2(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
+    guard let stream = InputStream(fileAtPath: url.path) else {
+      throw SHA256Error.fileOperationError
+    }
+    stream.open()
+    let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: withBufferSize)
+    defer {
+      buffer.deallocate()
+    }
+    var hasher = CryptoKit.SHA256()
+    while stream.hasBytesAvailable {
+      let read = stream.read(buffer, maxLength: withBufferSize)
+      let bufferPointer = UnsafeRawBufferPointer(start: buffer, count: read)
+      hasher.update(bufferPointer: bufferPointer)
+    }
+    let digest = hasher.finalize()
+    return Data(digest)
+  }
+}
+
+/// Errors that can occur during the SHA256 hash calculation
+public enum SHA256Error: Error {
+  /// An error occured during an operation on the file to calculate the hash for
+  case fileOperationError
 }
