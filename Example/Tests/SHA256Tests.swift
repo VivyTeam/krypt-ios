@@ -64,7 +64,7 @@ class SHA256Tests: XCTestCase {
   }
 
   @available(iOS 13, *)
-  func testDigestFile_iOS13_withCustomBufferSize__shouldProduceExpectedHash() {
+  func testDigestFile_usingCryptoKit_withCustomBufferSize__shouldProduceExpectedHash() {
     // given
     /// Test data large enough to force at least 5 buffer fills
     let testData = TestData.largeTestData
