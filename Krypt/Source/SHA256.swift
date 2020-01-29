@@ -6,10 +6,16 @@
 //
 
 import CommonCrypto
+#if canImport(CryptoKit)
+  import CryptoKit
+#endif
 import Foundation
 
 public struct SHA256 {
   public static func digest(_ data: Data) -> Data? {
+    if #available(iOS 13, *) {
+      return Data(CryptoKit.SHA256.hash(data: data))
+    }
     var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
     let status = data.withUnsafeBytes { ptr -> OSStatus in
       guard let pointer = ptr.baseAddress?.assumingMemoryBound(to: UnsafeRawBufferPointer.self) else {
@@ -27,7 +33,26 @@ public struct SHA256 {
   /// - Parameters:
   ///   - url: The url to the file to calculate the SHA256 hash for
   ///   - withBufferSize: The size of the buffer to use in bytes, defaults to 1024 * 1024 bytes =  1MB
-  public static func digest(file url: URL, withBufferSize: Int = 1024 * 1024) throws -> Data {
+  public static func digest(file url: URL, withBufferSize bufferSize: Int = 1024 * 1024) throws -> Data {
+    if #available(iOS 13, *) {
+      guard let stream = InputStream(fileAtPath: url.path) else {
+        throw SHA256Error.fileOperationError
+      }
+      stream.open()
+      let buffer = UnsafeMutablePointer<UInt8>.allocate(capacity: bufferSize)
+      defer {
+        buffer.deallocate()
+      }
+      var hasher = CryptoKit.SHA256()
+      while stream.hasBytesAvailable {
+        let read = stream.read(buffer, maxLength: bufferSize)
+        let bufferPointer = UnsafeRawBufferPointer(start: buffer, count: read)
+        hasher.update(bufferPointer: bufferPointer)
+      }
+      let digest = hasher.finalize()
+      return Data(digest)
+    }
+
     let handle = try FileHandle(forReadingFrom: url)
     /// Close file handle on scope exit
     defer {
@@ -40,7 +65,7 @@ public struct SHA256 {
     /// Fill buffer in an autoreleasepool so we dont run out of memory for large files
     while autoreleasepool(invoking: {
       /// Fill buffer
-      let data = handle.readData(ofLength: withBufferSize)
+      let data = handle.readData(ofLength: bufferSize)
       /// Update SHA256
       if data.count > 0 {
         data.withUnsafeBytes {
@@ -61,4 +86,10 @@ public struct SHA256 {
 
     return digest
   }
+}
+
+/// Errors that can occur during the SHA256 hash calculation
+public enum SHA256Error: Error {
+  /// An error occured during an operation on the file to calculate the hash for
+  case fileOperationError
 }
