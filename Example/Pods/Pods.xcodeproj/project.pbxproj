@@ -344,7 +344,6 @@
 		1A06972FE8E027A1BD92A5C5AEE24477 /* NoPadding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NoPadding.swift; path = Sources/CryptoSwift/NoPadding.swift; sourceTree = "<group>"; };
 		1A129B92A9B0DF04F5FA1D56C2001806 /* modes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = modes.h; path = OpenSSL/include/openssl/modes.h; sourceTree = "<group>"; };
 		1A79117AF2BBB390A153004F541DCCB7 /* asn1_mac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = asn1_mac.h; path = OpenSSL/include/openssl/asn1_mac.h; sourceTree = "<group>"; };
-		1B8E3B9151F6E53042C720F05F38B972 /* FromHeaderField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FromHeaderField.swift; path = "RFC2046/Header fields/FromHeaderField.swift"; sourceTree = "<group>"; };
 		1C1C8DA6FBA1557F8ECFFE6A82E51C63 /* bnerr.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bnerr.h; path = OpenSSL/include/openssl/bnerr.h; sourceTree = "<group>"; };
 		1C5642DFC11A185EDC6292A35CFDA64C /* ec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ec.h; path = OpenSSL/include/openssl/ec.h; sourceTree = "<group>"; };
 		1EC53A508ABD703221C3CF709A261518 /* Pods-Krypt_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Krypt_Example-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -367,7 +366,6 @@
 		27F8AA0266E806FD92C960A2E79AAA6C /* hmac.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = hmac.h; path = OpenSSL/include/openssl/hmac.h; sourceTree = "<group>"; };
 		291642BE8CA91A42464D2F7D8BDF53CF /* cast.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = cast.h; path = OpenSSL/include/openssl/cast.h; sourceTree = "<group>"; };
 		292CAA2AFA65E055C023916D0348B70F /* md4.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = md4.h; path = OpenSSL/include/openssl/md4.h; sourceTree = "<group>"; };
-		2A182958E68DD4AB5BE45F95D179B269 /* RFC2046Message.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RFC2046Message.swift; path = RFC2046/RFC2046Message.swift; sourceTree = "<group>"; };
 		2A7D08B3838088032CBB53C2D17630CF /* SecureBytes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureBytes.swift; path = Sources/CryptoSwift/SecureBytes.swift; sourceTree = "<group>"; };
 		2ADE83D4601E44E226D1B9F10A7A0133 /* SMIME.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SMIME.swift; path = Krypt/Source/SMIME.swift; sourceTree = "<group>"; };
 		2B3DC7E9F41DF9AFFA693F62A8FD4037 /* Pods-Krypt_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Krypt_Tests-dummy.m"; sourceTree = "<group>"; };
@@ -386,7 +384,6 @@
 		3AAC5BDD940E72C8A9D7FC69E6922692 /* BlockModeOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BlockModeOptions.swift; path = Sources/CryptoSwift/BlockMode/BlockModeOptions.swift; sourceTree = "<group>"; };
 		3AC667A5A4CDEB724207AD3F05F65C0E /* lhash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = lhash.h; path = OpenSSL/include/openssl/lhash.h; sourceTree = "<group>"; };
 		3AF7774E6562529207E9DFCD8B5B86AF /* bn.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = bn.h; path = OpenSSL/include/openssl/bn.h; sourceTree = "<group>"; };
-		3B4296FFF1E390829E2BD03D2B750B9C /* ContentTypeHeaderField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentTypeHeaderField.swift; path = "RFC2046/Header fields/ContentTypeHeaderField.swift"; sourceTree = "<group>"; };
 		3C42D2892179D6C3175019E57BF0FC1E /* ssl2.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl2.h; path = OpenSSL/include/openssl/ssl2.h; sourceTree = "<group>"; };
 		3C9C9298F056BB5CE142E825EF318E80 /* AEAD.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AEAD.swift; path = Sources/CryptoSwift/AEAD/AEAD.swift; sourceTree = "<group>"; };
 		3E4DFC6854D380923C3F88354CB58082 /* OpenSSL.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = OpenSSL.xcconfig; sourceTree = "<group>"; };
@@ -525,7 +522,6 @@
 		CC6C9EBC1CEFD2996B8A2B250C7AF4DD /* ecdh.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ecdh.h; path = OpenSSL/include/openssl/ecdh.h; sourceTree = "<group>"; };
 		CD8DF863208E29E95C1B2C20A2A89DD3 /* Poly1305.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Poly1305.swift; path = Sources/CryptoSwift/Poly1305.swift; sourceTree = "<group>"; };
 		CDADFAB1672DA7CC8927F202D6E1925C /* ecdsa.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ecdsa.h; path = OpenSSL/include/openssl/ecdsa.h; sourceTree = "<group>"; };
-		CDC7598F69ABAD81F6AF115890454A54 /* ContentTransferEncodingHeaderField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContentTransferEncodingHeaderField.swift; path = "RFC2046/Header fields/ContentTransferEncodingHeaderField.swift"; sourceTree = "<group>"; };
 		CE08FE2E24ED622519B2883C05038D69 /* Bit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Bit.swift; path = Sources/CryptoSwift/Bit.swift; sourceTree = "<group>"; };
 		CE0CF3B75B35FC7B6C263CB425597707 /* x509v3.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = x509v3.h; path = OpenSSL/include/openssl/x509v3.h; sourceTree = "<group>"; };
 		CFE82FAD2EC4D21100CDAE9DAE9F0855 /* srtp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = srtp.h; path = OpenSSL/include/openssl/srtp.h; sourceTree = "<group>"; };
@@ -555,9 +551,7 @@
 		E4286E3355596C1FBF587B879CC83089 /* csr.c */ = {isa = PBXFileReference; includeInIndex = 1; name = csr.c; path = Krypt/Source/csr.c; sourceTree = "<group>"; };
 		E4E335867846AD413D5CD063B531ED0E /* ECB.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ECB.swift; path = Sources/CryptoSwift/BlockMode/ECB.swift; sourceTree = "<group>"; };
 		E57E3CD18C099CF52D317EFFCE236FB0 /* Blowfish+Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Blowfish+Foundation.swift"; path = "Sources/CryptoSwift/Foundation/Blowfish+Foundation.swift"; sourceTree = "<group>"; };
-		E6FF8ED12D64D01EC7E5B15FCB13580C /* RFC2046.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RFC2046.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E737AF336017E2AC7A13B8606F1D1C7D /* idea.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = idea.h; path = OpenSSL/include/openssl/idea.h; sourceTree = "<group>"; };
-		E8AF75242BEF99B2A041D471796E30EB /* RFC2046.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = RFC2046.modulemap; sourceTree = "<group>"; };
 		E8F0EFFA2821FE5078D23507B5AD12B8 /* HMAC.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = HMAC.swift; path = Sources/CryptoSwift/HMAC.swift; sourceTree = "<group>"; };
 		EB7D809418D9763C4BEDBD6C3E743C8F /* ossl_typ.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ossl_typ.h; path = OpenSSL/include/openssl/ossl_typ.h; sourceTree = "<group>"; };
 		ECBDEA23C1AF14D6A80A163F3D5C404B /* ct.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ct.h; path = OpenSSL/include/openssl/ct.h; sourceTree = "<group>"; };
@@ -962,7 +956,6 @@
 			children = (
 				984B9FBDD78E42981B5FCAAE32239BB2 /* CryptoSwift.framework */,
 				0A2872F547C40E32EEAA40D531AEF055 /* openssl.framework */,
-				E6FF8ED12D64D01EC7E5B15FCB13580C /* RFC2046.framework */,
 				3441411D1663D8625B36B1E89DCADEBB /* iOS */,
 			);
 			name = Frameworks;
@@ -993,7 +986,6 @@
 				D233F4303C7B4F725E203AE24CFC0130 /* openssl.framework */,
 				57C5A2BE61B0BFB06C372390CFE0E0C3 /* Pods_Krypt_Example.framework */,
 				CB250801BF285483601A2009727AF0A1 /* Pods_Krypt_Tests.framework */,
-				17F574FB86E1D8B35CB4CB1F4A378910 /* RFC2046.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1224,6 +1216,9 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F40F07630C27E5A58568323FF7338C33 /* Headers */ = {
+=======
+		9E88EC2CBA78B36E9E8A6535C5D07913 /* Headers */ = {
+>>>>>>> [MAIN] Removal of KVConnect
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1254,7 +1249,6 @@
 				824AED998F233B9E85D2FB1D3177BBE2 /* PBXTargetDependency */,
 				6BC2ED349DF6A0EC38D2084D6FE5D75C /* PBXTargetDependency */,
 				E96011278F8747C5CFF321A143094318 /* PBXTargetDependency */,
-				34CAD59CFAE193EE4C45355623BAEE47 /* PBXTargetDependency */,
 			);
 			name = "Pods-Krypt_Example";
 			productName = "Pods-Krypt_Example";
@@ -1382,7 +1376,6 @@
 				E2B0CD2B9D9226BEE7AD783D8EBB5D52 /* OpenSSL */,
 				29FA97E64D3F9F5D46D5EB9FA44081A6 /* Pods-Krypt_Example */,
 				969F9AF0D01114AD5C0A5AE4DE9C5533 /* Pods-Krypt_Tests */,
-				C396BC56C6FBF1ECE5595F9A4331EE0A /* RFC2046 */,
 			);
 		};
 /* End PBXProject section */
