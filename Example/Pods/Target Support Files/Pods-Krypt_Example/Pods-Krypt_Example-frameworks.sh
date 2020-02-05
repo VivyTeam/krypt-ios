@@ -164,13 +164,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Krypt/Krypt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OpenSSL/openssl.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RFC2046/RFC2046.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Krypt/Krypt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OpenSSL/openssl.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/RFC2046/RFC2046.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
