@@ -305,7 +305,6 @@
 		25E65D422458895400787D14 /* CSR.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSR.swift; sourceTree = "<group>"; };
 		25E65D432458895400787D14 /* smime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smime.h; sourceTree = "<group>"; };
 		25E65D442458895400787D14 /* Key.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Key.swift; sourceTree = "<group>"; };
-		25E65D452458895400787D14 /* module.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.map; sourceTree = "<group>"; };
 		25E65D462458895400787D14 /* EHREncryption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EHREncryption.swift; sourceTree = "<group>"; };
 		25E65D472458895400787D14 /* String+CString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+CString.swift"; sourceTree = "<group>"; };
 		25E65D482458895500787D14 /* PublicError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicError.swift; sourceTree = "<group>"; };
@@ -553,7 +552,6 @@
 				25E65D3E2458895400787D14 /* helper.h */,
 				25E65D442458895400787D14 /* Key.swift */,
 				25E65D412458895400787D14 /* LocalEncryption.swift */,
-				25E65D452458895400787D14 /* module.map */,
 				25E65D392458895400787D14 /* PBKDF2.swift */,
 				25E65D4C2458895500787D14 /* PEMConverter.swift */,
 				25E65D4F2458895500787D14 /* pkcs8.c */,
