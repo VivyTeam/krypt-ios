@@ -127,7 +127,7 @@ char *pkcs8_decrypt(const char *pem, const char *password) {
 
   out = BIO_new(BIO_s_mem());
   BIO_set_mem_eof_return(out, 0);
-  PEM_write_bio_PrivateKey(out, pkey, NULL, NULL, 0, NULL, NULL);
+  PEM_write_bio_PrivateKey_traditional(out, pkey, NULL, NULL, 0, NULL, NULL);
   if (out == NULL) {
     pkcs8_decrypt_free_all(in, out, pkey, p8inf, p8);
     return NULL;
