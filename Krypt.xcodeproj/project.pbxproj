@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		25C816692459BF3000BB3743 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C815FF2459BF3000BB3743 /* libcrypto.a */; };
-		25C8166A2459BF3000BB3743 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C816002459BF3000BB3743 /* libssl.a */; };
 		25C817A62459C9DF00BB3743 /* pem2.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C8173E2459C9DF00BB3743 /* pem2.h */; };
 		25C817A72459C9DF00BB3743 /* kdf.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C8173F2459C9DF00BB3743 /* kdf.h */; };
 		25C817A82459C9DF00BB3743 /* pem.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C817402459C9DF00BB3743 /* pem.h */; };
@@ -113,6 +111,8 @@
 		25C8180B2459C9DF00BB3743 /* idea.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C817A32459C9DF00BB3743 /* idea.h */; };
 		25C8180C2459C9DF00BB3743 /* lhash.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C817A42459C9DF00BB3743 /* lhash.h */; };
 		25C8180D2459C9DF00BB3743 /* asn1err.h in Headers */ = {isa = PBXBuildFile; fileRef = 25C817A52459C9DF00BB3743 /* asn1err.h */; };
+		25C818102459CACC00BB3743 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C8180E2459CACC00BB3743 /* libssl.a */; platformFilter = ios; };
+		25C818112459CACC00BB3743 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C8180F2459CACC00BB3743 /* libcrypto.a */; platformFilter = ios; };
 		25E65D562458895500787D14 /* pkcs8.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E65D382458895400787D14 /* pkcs8.h */; };
 		25E65D572458895500787D14 /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D392458895400787D14 /* PBKDF2.swift */; };
 		25E65D582458895500787D14 /* smime.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D3A2458895400787D14 /* smime.c */; };
@@ -184,8 +184,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		25C815FF2459BF3000BB3743 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		25C816002459BF3000BB3743 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
 		25C8173E2459C9DF00BB3743 /* pem2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem2.h; sourceTree = "<group>"; };
 		25C8173F2459C9DF00BB3743 /* kdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kdf.h; sourceTree = "<group>"; };
 		25C817402459C9DF00BB3743 /* pem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pem.h; sourceTree = "<group>"; };
@@ -290,6 +288,8 @@
 		25C817A32459C9DF00BB3743 /* idea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = idea.h; sourceTree = "<group>"; };
 		25C817A42459C9DF00BB3743 /* lhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lhash.h; sourceTree = "<group>"; };
 		25C817A52459C9DF00BB3743 /* asn1err.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asn1err.h; sourceTree = "<group>"; };
+		25C8180E2459CACC00BB3743 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
+		25C8180F2459CACC00BB3743 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		25E65CED2458885400787D14 /* Krypt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Krypt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E65CF12458885400787D14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25E65D382458895400787D14 /* pkcs8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs8.h; sourceTree = "<group>"; };
@@ -359,9 +359,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25C816692459BF3000BB3743 /* libcrypto.a in Frameworks */,
+				25C818102459CACC00BB3743 /* libssl.a in Frameworks */,
 				25E65D822458948500787D14 /* CryptoSwift.framework in Frameworks */,
-				25C8166A2459BF3000BB3743 /* libssl.a in Frameworks */,
+				25C818112459CACC00BB3743 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,8 +389,8 @@
 		25C815FE2459BF3000BB3743 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				25C815FF2459BF3000BB3743 /* libcrypto.a */,
-				25C816002459BF3000BB3743 /* libssl.a */,
+				25C8180F2459CACC00BB3743 /* libcrypto.a */,
+				25C8180E2459CACC00BB3743 /* libssl.a */,
 			);
 			path = lib;
 			sourceTree = "<group>";
