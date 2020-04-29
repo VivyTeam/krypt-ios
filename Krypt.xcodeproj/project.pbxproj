@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -36,9 +36,47 @@
 		25E65D702458895500787D14 /* x509.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D532458895500787D14 /* x509.c */; };
 		25E65D712458895500787D14 /* csr.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D542458895500787D14 /* csr.c */; };
 		25E65D722458895500787D14 /* X509.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D552458895500787D14 /* X509.swift */; };
-		25E65D812458947700787D14 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D802458947700787D14 /* OpenSSL.framework */; };
-		25E65D822458948500787D14 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D752458899B00787D14 /* CryptoSwift.framework */; };
+		25E65D812458947700787D14 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D802458947700787D14 /* OpenSSL.framework */; platformFilter = ios; };
+		25E65D822458948500787D14 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D752458899B00787D14 /* CryptoSwift.framework */; platformFilter = ios; };
+		25E65D8C2459616C00787D14 /* Krypt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65CED2458885400787D14 /* Krypt.framework */; platformFilter = ios; };
+		25E65DCC2459625600787D14 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D752458899B00787D14 /* CryptoSwift.framework */; platformFilter = ios; };
+		25E65DEE2459665500787D14 /* EHREncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DCE2459665400787D14 /* EHREncryptionTests.swift */; };
+		25E65DEF2459665500787D14 /* CSRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DCF2459665400787D14 /* CSRTests.swift */; };
+		25E65DF02459665500787D14 /* PKCS8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DD02459665500787D14 /* PKCS8Tests.swift */; };
+		25E65DF12459665500787D14 /* openssl-csr in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD32459665500787D14 /* openssl-csr */; };
+		25E65DF22459665500787D14 /* openssl-csr-with-umlauts in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD42459665500787D14 /* openssl-csr-with-umlauts */; };
+		25E65DF32459665500787D14 /* ehr-gcm-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD62459665500787D14 /* ehr-gcm-contract-cipher-key-base64 */; };
+		25E65DF42459665500787D14 /* ehr-cbc-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD72459665500787D14 /* ehr-cbc-contract-cipher-key-base64 */; };
+		25E65DF52459665500787D14 /* ehr-cbc-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD82459665500787D14 /* ehr-cbc-contract-message-base64 */; };
+		25E65DF62459665500787D14 /* ehr-gcm-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DD92459665500787D14 /* ehr-gcm-contract-message-base64 */; };
+		25E65DF72459665500787D14 /* largeTestFile in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DDB2459665500787D14 /* largeTestFile */; };
+		25E65DF82459665500787D14 /* openssl-private-key-encrypted-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DDD2459665500787D14 /* openssl-private-key-encrypted-pkcs8-pem */; };
+		25E65DF92459665500787D14 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DDE2459665500787D14 /* openssl-public-key-pkcs1-pem */; };
+		25E65DFA2459665500787D14 /* openssl-private-key-pkcs1-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DDF2459665500787D14 /* openssl-private-key-pkcs1-2048-pem */; };
+		25E65DFB2459665500787D14 /* openssl-public-key-pkcs8-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DE02459665500787D14 /* openssl-public-key-pkcs8-2048-pem */; };
+		25E65DFC2459665500787D14 /* openssl-certificate-x509-cer in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DE12459665500787D14 /* openssl-certificate-x509-cer */; };
+		25E65DFD2459665500787D14 /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DE22459665500787D14 /* openssl-private-key-pkcs1-pem */; };
+		25E65DFE2459665500787D14 /* openssl-public-key-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DE32459665500787D14 /* openssl-public-key-pkcs8-pem */; };
+		25E65DFF2459665500787D14 /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 25E65DE42459665500787D14 /* openssl-public-key-ec-prime256r1-pkcs8-pem */; };
+		25E65E002459665500787D14 /* SHA256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DE52459665500787D14 /* SHA256Tests.swift */; };
+		25E65E012459665500787D14 /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DE62459665500787D14 /* RSATests.swift */; };
+		25E65E022459665500787D14 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DE72459665500787D14 /* TestData.swift */; };
+		25E65E032459665500787D14 /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DE82459665500787D14 /* X509Tests.swift */; };
+		25E65E042459665500787D14 /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DE92459665500787D14 /* KeyTests.swift */; };
+		25E65E052459665500787D14 /* AES256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DEA2459665500787D14 /* AES256Tests.swift */; };
+		25E65E062459665500787D14 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DEC2459665500787D14 /* Data+String.swift */; };
+		25E65E072459665500787D14 /* PEMConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65DED2459665500787D14 /* PEMConverterTests.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25E65D8D2459616C00787D14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25E65CE42458885400787D14 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25E65CEC2458885400787D14;
+			remoteInfo = Krypt;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		25E65CED2458885400787D14 /* Krypt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Krypt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +116,34 @@
 		25E65D7C24588A3F00787D14 /* Krypt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Krypt-Bridging-Header.h"; sourceTree = "<group>"; };
 		25E65D7D24588B3200787D14 /* Krypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Krypt.h; sourceTree = "<group>"; };
 		25E65D802458947700787D14 /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Carthage/Build/iOS/OpenSSL.framework; sourceTree = "<group>"; };
+		25E65D872459616C00787D14 /* KryptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25E65D8B2459616C00787D14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25E65DCE2459665400787D14 /* EHREncryptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EHREncryptionTests.swift; sourceTree = "<group>"; };
+		25E65DCF2459665400787D14 /* CSRTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRTests.swift; sourceTree = "<group>"; };
+		25E65DD02459665500787D14 /* PKCS8Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCS8Tests.swift; sourceTree = "<group>"; };
+		25E65DD32459665500787D14 /* openssl-csr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr"; sourceTree = "<group>"; };
+		25E65DD42459665500787D14 /* openssl-csr-with-umlauts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr-with-umlauts"; sourceTree = "<group>"; };
+		25E65DD62459665500787D14 /* ehr-gcm-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		25E65DD72459665500787D14 /* ehr-cbc-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		25E65DD82459665500787D14 /* ehr-cbc-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-message-base64"; sourceTree = "<group>"; };
+		25E65DD92459665500787D14 /* ehr-gcm-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-message-base64"; sourceTree = "<group>"; };
+		25E65DDB2459665500787D14 /* largeTestFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = largeTestFile; sourceTree = "<group>"; };
+		25E65DDD2459665500787D14 /* openssl-private-key-encrypted-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-encrypted-pkcs8-pem"; sourceTree = "<group>"; };
+		25E65DDE2459665500787D14 /* openssl-public-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs1-pem"; sourceTree = "<group>"; };
+		25E65DDF2459665500787D14 /* openssl-private-key-pkcs1-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-2048-pem"; sourceTree = "<group>"; };
+		25E65DE02459665500787D14 /* openssl-public-key-pkcs8-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-2048-pem"; sourceTree = "<group>"; };
+		25E65DE12459665500787D14 /* openssl-certificate-x509-cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-certificate-x509-cer"; sourceTree = "<group>"; };
+		25E65DE22459665500787D14 /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-pem"; sourceTree = "<group>"; };
+		25E65DE32459665500787D14 /* openssl-public-key-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-pem"; sourceTree = "<group>"; };
+		25E65DE42459665500787D14 /* openssl-public-key-ec-prime256r1-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-ec-prime256r1-pkcs8-pem"; sourceTree = "<group>"; };
+		25E65DE52459665500787D14 /* SHA256Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256Tests.swift; sourceTree = "<group>"; };
+		25E65DE62459665500787D14 /* RSATests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
+		25E65DE72459665500787D14 /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		25E65DE82459665500787D14 /* X509Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = X509Tests.swift; sourceTree = "<group>"; };
+		25E65DE92459665500787D14 /* KeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyTests.swift; sourceTree = "<group>"; };
+		25E65DEA2459665500787D14 /* AES256Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256Tests.swift; sourceTree = "<group>"; };
+		25E65DEC2459665500787D14 /* Data+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
+		25E65DED2459665500787D14 /* PEMConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEMConverterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +156,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25E65D842459616C00787D14 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E65DCC2459625600787D14 /* CryptoSwift.framework in Frameworks */,
+				25E65D8C2459616C00787D14 /* Krypt.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -97,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				25E65CEF2458885400787D14 /* Krypt */,
+				25E65D882459616C00787D14 /* KryptTests */,
 				25E65CEE2458885400787D14 /* Products */,
 				25E65D732458899B00787D14 /* Frameworks */,
 			);
@@ -106,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				25E65CED2458885400787D14 /* Krypt.framework */,
+				25E65D872459616C00787D14 /* KryptTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +237,88 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		25E65D882459616C00787D14 /* KryptTests */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DEA2459665500787D14 /* AES256Tests.swift */,
+				25E65DCF2459665400787D14 /* CSRTests.swift */,
+				25E65DCE2459665400787D14 /* EHREncryptionTests.swift */,
+				25E65DEB2459665500787D14 /* Extensions */,
+				25E65DD12459665500787D14 /* Files */,
+				25E65DE92459665500787D14 /* KeyTests.swift */,
+				25E65DED2459665500787D14 /* PEMConverterTests.swift */,
+				25E65DD02459665500787D14 /* PKCS8Tests.swift */,
+				25E65DE62459665500787D14 /* RSATests.swift */,
+				25E65DE52459665500787D14 /* SHA256Tests.swift */,
+				25E65DE72459665500787D14 /* TestData.swift */,
+				25E65DE82459665500787D14 /* X509Tests.swift */,
+				25E65D8B2459616C00787D14 /* Info.plist */,
+			);
+			path = KryptTests;
+			sourceTree = "<group>";
+		};
+		25E65DD12459665500787D14 /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DD22459665500787D14 /* CSR */,
+				25E65DD52459665500787D14 /* E2EE */,
+				25E65DDA2459665500787D14 /* SHA256 */,
+				25E65DDC2459665500787D14 /* OpenSSL */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		25E65DD22459665500787D14 /* CSR */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DD32459665500787D14 /* openssl-csr */,
+				25E65DD42459665500787D14 /* openssl-csr-with-umlauts */,
+			);
+			path = CSR;
+			sourceTree = "<group>";
+		};
+		25E65DD52459665500787D14 /* E2EE */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DD62459665500787D14 /* ehr-gcm-contract-cipher-key-base64 */,
+				25E65DD72459665500787D14 /* ehr-cbc-contract-cipher-key-base64 */,
+				25E65DD82459665500787D14 /* ehr-cbc-contract-message-base64 */,
+				25E65DD92459665500787D14 /* ehr-gcm-contract-message-base64 */,
+			);
+			path = E2EE;
+			sourceTree = "<group>";
+		};
+		25E65DDA2459665500787D14 /* SHA256 */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DDB2459665500787D14 /* largeTestFile */,
+			);
+			path = SHA256;
+			sourceTree = "<group>";
+		};
+		25E65DDC2459665500787D14 /* OpenSSL */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DDD2459665500787D14 /* openssl-private-key-encrypted-pkcs8-pem */,
+				25E65DDE2459665500787D14 /* openssl-public-key-pkcs1-pem */,
+				25E65DDF2459665500787D14 /* openssl-private-key-pkcs1-2048-pem */,
+				25E65DE02459665500787D14 /* openssl-public-key-pkcs8-2048-pem */,
+				25E65DE12459665500787D14 /* openssl-certificate-x509-cer */,
+				25E65DE22459665500787D14 /* openssl-private-key-pkcs1-pem */,
+				25E65DE32459665500787D14 /* openssl-public-key-pkcs8-pem */,
+				25E65DE42459665500787D14 /* openssl-public-key-ec-prime256r1-pkcs8-pem */,
+			);
+			path = OpenSSL;
+			sourceTree = "<group>";
+		};
+		25E65DEB2459665500787D14 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				25E65DEC2459665500787D14 /* Data+String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -197,16 +356,40 @@
 			productReference = 25E65CED2458885400787D14 /* Krypt.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		25E65D862459616C00787D14 /* KryptTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25E65D912459616C00787D14 /* Build configuration list for PBXNativeTarget "KryptTests" */;
+			buildPhases = (
+				25E65D832459616C00787D14 /* Sources */,
+				25E65D842459616C00787D14 /* Frameworks */,
+				25E65D852459616C00787D14 /* Resources */,
+				25E65DCD245962D000787D14 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25E65D8E2459616C00787D14 /* PBXTargetDependency */,
+			);
+			name = KryptTests;
+			productName = KryptTests;
+			productReference = 25E65D872459616C00787D14 /* KryptTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		25E65CE42458885400787D14 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Vivy GmbH";
 				TargetAttributes = {
 					25E65CEC2458885400787D14 = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
+					};
+					25E65D862459616C00787D14 = {
 						CreatedOnToolsVersion = 11.3.1;
 						LastSwiftMigration = 1130;
 					};
@@ -226,6 +409,7 @@
 			projectRoot = "";
 			targets = (
 				25E65CEC2458885400787D14 /* Krypt */,
+				25E65D862459616C00787D14 /* KryptTests */,
 			);
 		};
 /* End PBXProject section */
@@ -235,6 +419,28 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25E65D852459616C00787D14 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E65DF32459665500787D14 /* ehr-gcm-contract-cipher-key-base64 in Resources */,
+				25E65DFD2459665500787D14 /* openssl-private-key-pkcs1-pem in Resources */,
+				25E65DF92459665500787D14 /* openssl-public-key-pkcs1-pem in Resources */,
+				25E65DFC2459665500787D14 /* openssl-certificate-x509-cer in Resources */,
+				25E65DF82459665500787D14 /* openssl-private-key-encrypted-pkcs8-pem in Resources */,
+				25E65DFB2459665500787D14 /* openssl-public-key-pkcs8-2048-pem in Resources */,
+				25E65DFF2459665500787D14 /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */,
+				25E65DF42459665500787D14 /* ehr-cbc-contract-cipher-key-base64 in Resources */,
+				25E65DFE2459665500787D14 /* openssl-public-key-pkcs8-pem in Resources */,
+				25E65DF52459665500787D14 /* ehr-cbc-contract-message-base64 in Resources */,
+				25E65DF72459665500787D14 /* largeTestFile in Resources */,
+				25E65DF62459665500787D14 /* ehr-gcm-contract-message-base64 in Resources */,
+				25E65DFA2459665500787D14 /* openssl-private-key-pkcs1-2048-pem in Resources */,
+				25E65DF22459665500787D14 /* openssl-csr-with-umlauts in Resources */,
+				25E65DF12459665500787D14 /* openssl-csr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +457,24 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/OpenSSL.framework",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		25E65DCD245962D000787D14 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -294,7 +518,34 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		25E65D832459616C00787D14 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25E65E002459665500787D14 /* SHA256Tests.swift in Sources */,
+				25E65DF02459665500787D14 /* PKCS8Tests.swift in Sources */,
+				25E65E062459665500787D14 /* Data+String.swift in Sources */,
+				25E65DEF2459665500787D14 /* CSRTests.swift in Sources */,
+				25E65E052459665500787D14 /* AES256Tests.swift in Sources */,
+				25E65E032459665500787D14 /* X509Tests.swift in Sources */,
+				25E65E022459665500787D14 /* TestData.swift in Sources */,
+				25E65E072459665500787D14 /* PEMConverterTests.swift in Sources */,
+				25E65E042459665500787D14 /* KeyTests.swift in Sources */,
+				25E65DEE2459665500787D14 /* EHREncryptionTests.swift in Sources */,
+				25E65E012459665500787D14 /* RSATests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25E65D8E2459616C00787D14 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 25E65CEC2458885400787D14 /* Krypt */;
+			targetProxy = 25E65D8D2459616C00787D14 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		25E65CF32458885400787D14 /* Debug */ = {
@@ -482,6 +733,53 @@
 			};
 			name = Release;
 		};
+		25E65D8F2459616C00787D14 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZBJ3SN7WC3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = KryptTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		25E65D902459616C00787D14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = ZBJ3SN7WC3;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
+				INFOPLIST_FILE = KryptTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -499,6 +797,15 @@
 			buildConfigurations = (
 				25E65CF62458885400787D14 /* Debug */,
 				25E65CF72458885400787D14 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25E65D912459616C00787D14 /* Build configuration list for PBXNativeTarget "KryptTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25E65D8F2459616C00787D14 /* Debug */,
+				25E65D902459616C00787D14 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
