@@ -1,0 +1,2 @@
+github "krzyzanowskim/CryptoSwift"
+github "VivyTeam/openssl-ios" "carthage"
