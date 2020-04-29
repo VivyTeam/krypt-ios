@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25962109245982B1000AE5EC /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25962108245982B1000AE5EC /* OpenSSL.framework */; platformFilter = ios; };
 		25E65D562458895500787D14 /* pkcs8.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E65D382458895400787D14 /* pkcs8.h */; };
 		25E65D572458895500787D14 /* PBKDF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D392458895400787D14 /* PBKDF2.swift */; };
 		25E65D582458895500787D14 /* smime.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D3A2458895400787D14 /* smime.c */; };
@@ -36,7 +37,6 @@
 		25E65D702458895500787D14 /* x509.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D532458895500787D14 /* x509.c */; };
 		25E65D712458895500787D14 /* csr.c in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D542458895500787D14 /* csr.c */; };
 		25E65D722458895500787D14 /* X509.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E65D552458895500787D14 /* X509.swift */; };
-		25E65D812458947700787D14 /* OpenSSL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D802458947700787D14 /* OpenSSL.framework */; platformFilter = ios; };
 		25E65D822458948500787D14 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D752458899B00787D14 /* CryptoSwift.framework */; platformFilter = ios; };
 		25E65D8C2459616C00787D14 /* Krypt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65CED2458885400787D14 /* Krypt.framework */; platformFilter = ios; };
 		25E65DCC2459625600787D14 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25E65D752458899B00787D14 /* CryptoSwift.framework */; platformFilter = ios; };
@@ -79,6 +79,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25962108245982B1000AE5EC /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Carthage/Build/iOS/OpenSSL.framework; sourceTree = "<group>"; };
 		25E65CED2458885400787D14 /* Krypt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Krypt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E65CF12458885400787D14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25E65D382458895400787D14 /* pkcs8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pkcs8.h; sourceTree = "<group>"; };
@@ -111,11 +112,9 @@
 		25E65D532458895500787D14 /* x509.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = x509.c; sourceTree = "<group>"; };
 		25E65D542458895500787D14 /* csr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = csr.c; sourceTree = "<group>"; };
 		25E65D552458895500787D14 /* X509.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = X509.swift; sourceTree = "<group>"; };
-		25E65D742458899B00787D14 /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = Carthage/Build/iOS/openssl.framework; sourceTree = "<group>"; };
 		25E65D752458899B00787D14 /* CryptoSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoSwift.framework; path = Carthage/Build/iOS/CryptoSwift.framework; sourceTree = "<group>"; };
 		25E65D7C24588A3F00787D14 /* Krypt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Krypt-Bridging-Header.h"; sourceTree = "<group>"; };
 		25E65D7D24588B3200787D14 /* Krypt.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Krypt.h; sourceTree = "<group>"; };
-		25E65D802458947700787D14 /* OpenSSL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenSSL.framework; path = Carthage/Build/iOS/OpenSSL.framework; sourceTree = "<group>"; };
 		25E65D872459616C00787D14 /* KryptTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25E65D8B2459616C00787D14 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25E65DCE2459665400787D14 /* EHREncryptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EHREncryptionTests.swift; sourceTree = "<group>"; };
@@ -151,8 +150,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25962109245982B1000AE5EC /* OpenSSL.framework in Frameworks */,
 				25E65D822458948500787D14 /* CryptoSwift.framework in Frameworks */,
-				25E65D812458947700787D14 /* OpenSSL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,9 +229,8 @@
 		25E65D732458899B00787D14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				25E65D802458947700787D14 /* OpenSSL.framework */,
+				25962108245982B1000AE5EC /* OpenSSL.framework */,
 				25E65D752458899B00787D14 /* CryptoSwift.framework */,
-				25E65D742458899B00787D14 /* openssl.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -682,7 +680,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Krypt";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/openssl-ios/include-ios";
 				INFOPLIST_FILE = Krypt/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -691,6 +689,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/openssl-ios/lib-ios";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -715,7 +714,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Krypt";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/openssl-ios/include-ios";
 				INFOPLIST_FILE = Krypt/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -724,6 +723,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Checkouts/openssl-ios/lib-ios";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
