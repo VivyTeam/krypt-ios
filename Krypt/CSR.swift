@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Krypt_internal
 
 /// Creates Certificate Signing Request (CSR)
 public struct CSR {

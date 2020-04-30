@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Krypt_internal
 
 public struct X509 {
 
