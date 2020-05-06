@@ -1,6 +1,0 @@
-framework module Krypt {
-  umbrella header "Krypt-umbrella.h"
-
-  export *
-  module * { export * }
-}

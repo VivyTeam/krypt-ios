@@ -1,6 +1,0 @@
-framework module Pods_Krypt_Tests {
-  umbrella header "Pods-Krypt_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}
