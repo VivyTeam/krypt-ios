@@ -768,7 +768,8 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = (
-					"-weak_framework CryptoKit",
+					"-weak_framework",
+					CryptoKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -795,7 +796,8 @@
 					"@loader_path/Frameworks",
 				);
 				OTHER_LDFLAGS = (
-					"-weak_framework CryptoKit",
+					"-weak_framework",
+					CryptoKit,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
