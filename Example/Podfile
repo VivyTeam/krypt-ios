@@ -1,3 +1,4 @@
+platform :ios, '11.0'
 use_frameworks!
 
 source 'git@github.com:VivyTeam/specs-ios.git'
@@ -7,8 +8,6 @@ target 'Krypt_Example' do
   pod 'Krypt', :path => '../'
 
   target 'Krypt_Tests' do
-    inherit! :search_paths
-
-    
+    inherit! :search_paths    
   end
 end
