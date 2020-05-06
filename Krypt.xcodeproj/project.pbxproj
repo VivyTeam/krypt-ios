@@ -705,6 +705,10 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/$(TARGET_NAME)/lib";
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CryptoKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -741,6 +745,10 @@
 					"@loader_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(SRCROOT)/$(TARGET_NAME)/lib";
+				OTHER_LDFLAGS = (
+					"-weak_framework",
+					CryptoKit,
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
