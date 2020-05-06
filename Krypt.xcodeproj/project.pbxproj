@@ -767,6 +767,9 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				OTHER_LDFLAGS = (
+					"-weak_framework CryptoKit",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -790,6 +793,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
+				);
+				OTHER_LDFLAGS = (
+					"-weak_framework CryptoKit",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
