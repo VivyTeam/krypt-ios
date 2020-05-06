@@ -1,2 +1,2 @@
-github "VivyTeam/openssl-ios" "7fcb0334254edb4a1ce94776771ac6d876733b84"
+github "VivyTeam/openssl-ios" "1.1.1g-framework"
 github "krzyzanowskim/CryptoSwift" "1.3.1"
