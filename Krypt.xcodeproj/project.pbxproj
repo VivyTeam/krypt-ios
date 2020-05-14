@@ -355,7 +355,6 @@
 				25E65CE92458885400787D14 /* Sources */,
 				25E65CEA2458885400787D14 /* Frameworks */,
 				25E65CEB2458885400787D14 /* Resources */,
-				25E65D37245888CA00787D14 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -373,7 +372,6 @@
 				25E65D832459616C00787D14 /* Sources */,
 				25E65D842459616C00787D14 /* Frameworks */,
 				25E65D852459616C00787D14 /* Resources */,
-				25E65DCD245962D000787D14 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -455,48 +453,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		25E65D37245888CA00787D14 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/OpenSSL.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/CryptoSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/OpenSSL.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-		25E65DCD245962D000787D14 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/CryptoSwift.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		25E65CE92458885400787D14 /* Sources */ = {
