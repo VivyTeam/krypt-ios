@@ -1,0 +1,759 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5021071822C1366B008EFF62 /* PKCS8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021071722C1366B008EFF62 /* PKCS8Tests.swift */; };
+		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
+		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
+		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
+		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		AD1568BF21F8D494008572DA /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568BE21F8D494008572DA /* RSATests.swift */; };
+		AD1568C621F9D2AD008572DA /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568C521F9D2AD008572DA /* TestData.swift */; };
+		AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD1568C721F9E0CB008572DA /* KeyTests.swift */; };
+		AD1AC79823721DA70089378C /* openssl-private-key-encrypted-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD1AC79623721D8E0089378C /* openssl-private-key-encrypted-pkcs8-pem */; };
+		AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2BC30C21F76AA700DD674F /* AES256Tests.swift */; };
+		AD3457072384370400B4265B /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = AD3457052384368600B4265B /* openssl-public-key-ec-prime256r1-pkcs8-pem */; };
+		AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */; };
+		AD536F332201F76D00075B09 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD536F322201F76D00075B09 /* ViewController.swift */; };
+		AD6B2D472231108C00C03EC1 /* openssl-csr in Resources */ = {isa = PBXBuildFile; fileRef = AD6B2D462231108C00C03EC1 /* openssl-csr */; };
+		AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6B2D482231111D00C03EC1 /* CSRTests.swift */; };
+		AD6DBE3F237E088E003567FA /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6DBE3E237E088E003567FA /* X509Tests.swift */; };
+		AD9EBA842283279900DB8E73 /* PEMConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */; };
+		AD9EBA8622832B9300DB8E73 /* openssl-certificate-x509-cer in Resources */ = {isa = PBXBuildFile; fileRef = AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */; };
+		ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */; };
+		ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */; };
+		ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */; };
+		ADC232002204478800A57D6A /* ehr-cbc-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FA2204478800A57D6A /* ehr-cbc-contract-message-base64 */; };
+		ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */; };
+		ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */; };
+		ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */; };
+		BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */; };
+		DAD2CF322302BAA4002F0BD0 /* openssl-csr-with-umlauts in Resources */ = {isa = PBXBuildFile; fileRef = DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */; };
+		EB007E2C22772C0F001BD473 /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB007E2B22772C0F001BD473 /* Data+String.swift */; };
+		EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */; };
+		EB3DD09E22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */; };
+		F89BB73D23D6F4A300D1163A /* SHA256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */; };
+		F8FA64EC23DAEAFD005010DB /* largeTestFile in Resources */ = {isa = PBXBuildFile; fileRef = F8FA64EB23DAEAFD005010DB /* largeTestFile */; };
+		F8FE7631CB357489E6F46CAE /* Pods_Krypt_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		607FACE61AFB9204008FA782 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
+			remoteInfo = Krypt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		22D20F0B320FF38B7169295A /* Pods-Krypt_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.release.xcconfig"; sourceTree = "<group>"; };
+		47AC99E24C799CBB6E81D238 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		5021071722C1366B008EFF62 /* PKCS8Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PKCS8Tests.swift; sourceTree = "<group>"; };
+		5D871296DA4621FD775BC749 /* Pods-Krypt_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* Krypt_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Krypt_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		607FACE51AFB9204008FA782 /* Krypt_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Krypt_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		AD1568BE21F8D494008572DA /* RSATests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
+		AD1568C521F9D2AD008572DA /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		AD1568C721F9E0CB008572DA /* KeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyTests.swift; sourceTree = "<group>"; };
+		AD1AC79623721D8E0089378C /* openssl-private-key-encrypted-pkcs8-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-private-key-encrypted-pkcs8-pem"; sourceTree = "<group>"; };
+		AD2BC30C21F76AA700DD674F /* AES256Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AES256Tests.swift; sourceTree = "<group>"; };
+		AD3457052384368600B4265B /* openssl-public-key-ec-prime256r1-pkcs8-pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-public-key-ec-prime256r1-pkcs8-pem"; sourceTree = "<group>"; };
+		AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EHREncryptionTests.swift; sourceTree = "<group>"; };
+		AD536F322201F76D00075B09 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		AD6B2D462231108C00C03EC1 /* openssl-csr */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-csr"; sourceTree = "<group>"; };
+		AD6B2D482231111D00C03EC1 /* CSRTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSRTests.swift; sourceTree = "<group>"; };
+		AD6DBE3E237E088E003567FA /* X509Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = X509Tests.swift; sourceTree = "<group>"; };
+		AD81CB13223178B50097E8AD /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Pods/OpenSSL/OpenSSL/lib/libcrypto.a; sourceTree = "<group>"; };
+		AD81CB14223178B50097E8AD /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Pods/OpenSSL/OpenSSL/lib/libssl.a; sourceTree = "<group>"; };
+		AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEMConverterTests.swift; sourceTree = "<group>"; };
+		AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */ = {isa = PBXFileReference; lastKnownFileType = text; path = "openssl-certificate-x509-cer"; sourceTree = "<group>"; };
+		ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-pem"; sourceTree = "<group>"; };
+		ADC231FA2204478800A57D6A /* ehr-cbc-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-message-base64"; sourceTree = "<group>"; };
+		ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-pem"; sourceTree = "<group>"; };
+		ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-message-base64"; sourceTree = "<group>"; };
+		ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs1-pem"; sourceTree = "<group>"; };
+		B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4F37220164E1147DCE29591 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Krypt.podspec; path = ../Krypt.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr-with-umlauts"; sourceTree = "<group>"; };
+		E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Krypt_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Krypt_Tests/Pods-Krypt_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		EB007E2B22772C0F001BD473 /* Data+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
+		EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-2048-pem"; sourceTree = "<group>"; };
+		EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-2048-pem"; sourceTree = "<group>"; };
+		EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Krypt_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SHA256Tests.swift; sourceTree = "<group>"; };
+		F8FA64EB23DAEAFD005010DB /* largeTestFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = largeTestFile; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		607FACCD1AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F8FE7631CB357489E6F46CAE /* Pods_Krypt_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE21AFB9204008FA782 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF836E08CD5EB364A148FA54 /* Pods_Krypt_Tests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3C9F8C5DAE7A44D7EF032838 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD81CB13223178B50097E8AD /* libcrypto.a */,
+				AD81CB14223178B50097E8AD /* libssl.a */,
+				B5353F61A433C768E5238155 /* Pods_Krypt_Example.framework */,
+				EE79515EE4A9941AF4F05C9D /* Pods_Krypt_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		607FACC71AFB9204008FA782 = {
+			isa = PBXGroup;
+			children = (
+				607FACF51AFB993E008FA782 /* Podspec Metadata */,
+				607FACD21AFB9204008FA782 /* Example for Krypt */,
+				607FACE81AFB9204008FA782 /* Tests */,
+				607FACD11AFB9204008FA782 /* Products */,
+				E38B0AF28938F7A1A29FA561 /* Pods */,
+				3C9F8C5DAE7A44D7EF032838 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		607FACD11AFB9204008FA782 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD01AFB9204008FA782 /* Krypt_Example.app */,
+				607FACE51AFB9204008FA782 /* Krypt_Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		607FACD21AFB9204008FA782 /* Example for Krypt */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				AD536F322201F76D00075B09 /* ViewController.swift */,
+				607FACDC1AFB9204008FA782 /* Images.xcassets */,
+				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				607FACD31AFB9204008FA782 /* Supporting Files */,
+			);
+			name = "Example for Krypt";
+			path = Krypt;
+			sourceTree = "<group>";
+		};
+		607FACD31AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACD41AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACE81AFB9204008FA782 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				AD2BC30C21F76AA700DD674F /* AES256Tests.swift */,
+				AD6B2D482231111D00C03EC1 /* CSRTests.swift */,
+				AD4513DA21FB3E8D0053C76B /* EHREncryptionTests.swift */,
+				AD1568C721F9E0CB008572DA /* KeyTests.swift */,
+				AD9EBA832283279900DB8E73 /* PEMConverterTests.swift */,
+				AD1568BE21F8D494008572DA /* RSATests.swift */,
+				F89BB73C23D6F4A300D1163A /* SHA256Tests.swift */,
+				5021071722C1366B008EFF62 /* PKCS8Tests.swift */,
+				AD6DBE3E237E088E003567FA /* X509Tests.swift */,
+				AD1568C521F9D2AD008572DA /* TestData.swift */,
+				EB007E2A22772BFD001BD473 /* Extensions */,
+				ADC231F62204478800A57D6A /* Files */,
+				607FACE91AFB9204008FA782 /* Supporting Files */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		607FACE91AFB9204008FA782 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				607FACEA1AFB9204008FA782 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				CA5CB6D76D478F3EAA49FA01 /* Krypt.podspec */,
+				C4F37220164E1147DCE29591 /* README.md */,
+				47AC99E24C799CBB6E81D238 /* LICENSE */,
+			);
+			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		AD13AB4B225F778800E65BBD /* E2EE */ = {
+			isa = PBXGroup;
+			children = (
+				ADC231F82204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 */,
+				ADC231FA2204478800A57D6A /* ehr-cbc-contract-message-base64 */,
+				ADC231F72204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 */,
+				ADC231FC2204478800A57D6A /* ehr-gcm-contract-message-base64 */,
+			);
+			path = E2EE;
+			sourceTree = "<group>";
+		};
+		AD13AB4C225F779500E65BBD /* OpenSSL */ = {
+			isa = PBXGroup;
+			children = (
+				EB3DD09C22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem */,
+				AD1AC79623721D8E0089378C /* openssl-private-key-encrypted-pkcs8-pem */,
+				ADC231F92204478800A57D6A /* openssl-private-key-pkcs1-pem */,
+				ADF06F0622302E0A00E7A185 /* openssl-public-key-pkcs1-pem */,
+				EB3DD09B22647F22007A7C1E /* openssl-public-key-pkcs8-2048-pem */,
+				ADC231FB2204478800A57D6A /* openssl-public-key-pkcs8-pem */,
+				AD3457052384368600B4265B /* openssl-public-key-ec-prime256r1-pkcs8-pem */,
+				AD9EBA8522832B9300DB8E73 /* openssl-certificate-x509-cer */,
+			);
+			path = OpenSSL;
+			sourceTree = "<group>";
+		};
+		AD13AB4D225F77C500E65BBD /* CSR */ = {
+			isa = PBXGroup;
+			children = (
+				DAD2CF302302BAA1002F0BD0 /* openssl-csr-with-umlauts */,
+				AD6B2D462231108C00C03EC1 /* openssl-csr */,
+			);
+			path = CSR;
+			sourceTree = "<group>";
+		};
+		ADC231F62204478800A57D6A /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				F8FA64EA23DAEAD7005010DB /* SHA256 */,
+				AD13AB4B225F778800E65BBD /* E2EE */,
+				AD13AB4C225F779500E65BBD /* OpenSSL */,
+				AD13AB4D225F77C500E65BBD /* CSR */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		E38B0AF28938F7A1A29FA561 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5D871296DA4621FD775BC749 /* Pods-Krypt_Example.debug.xcconfig */,
+				22D20F0B320FF38B7169295A /* Pods-Krypt_Example.release.xcconfig */,
+				E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */,
+				9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		EB007E2A22772BFD001BD473 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EB007E2B22772C0F001BD473 /* Data+String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F8FA64EA23DAEAD7005010DB /* SHA256 */ = {
+			isa = PBXGroup;
+			children = (
+				F8FA64EB23DAEAFD005010DB /* largeTestFile */,
+			);
+			path = SHA256;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		607FACCF1AFB9204008FA782 /* Krypt_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Krypt_Example" */;
+			buildPhases = (
+				2BB856DC20C622BA33FEA2E4 /* [CP] Check Pods Manifest.lock */,
+				607FACCC1AFB9204008FA782 /* Sources */,
+				607FACCD1AFB9204008FA782 /* Frameworks */,
+				607FACCE1AFB9204008FA782 /* Resources */,
+				DC245D33C67B22F47181EF41 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Krypt_Example;
+			productName = Krypt;
+			productReference = 607FACD01AFB9204008FA782 /* Krypt_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		607FACE41AFB9204008FA782 /* Krypt_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Krypt_Tests" */;
+			buildPhases = (
+				5F5A5CE8EF200B066A41B5D7 /* [CP] Check Pods Manifest.lock */,
+				607FACE11AFB9204008FA782 /* Sources */,
+				607FACE21AFB9204008FA782 /* Frameworks */,
+				607FACE31AFB9204008FA782 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
+			);
+			name = Krypt_Tests;
+			productName = Tests;
+			productReference = 607FACE51AFB9204008FA782 /* Krypt_Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		607FACC81AFB9204008FA782 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 1010;
+				ORGANIZATIONNAME = CocoaPods;
+				TargetAttributes = {
+					607FACCF1AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = ZBJ3SN7WC3;
+						LastSwiftMigration = 1100;
+					};
+					607FACE41AFB9204008FA782 = {
+						CreatedOnToolsVersion = 6.3.1;
+						LastSwiftMigration = 1100;
+						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+				};
+			};
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Krypt" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+				Base,
+			);
+			mainGroup = 607FACC71AFB9204008FA782;
+			productRefGroup = 607FACD11AFB9204008FA782 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607FACCF1AFB9204008FA782 /* Krypt_Example */,
+				607FACE41AFB9204008FA782 /* Krypt_Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		607FACCE1AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
+				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE31AFB9204008FA782 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				ADF06F0822302E8000E7A185 /* openssl-public-key-pkcs1-pem in Resources */,
+				AD3457072384370400B4265B /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */,
+				ADC232012204478800A57D6A /* openssl-public-key-pkcs8-pem in Resources */,
+				EB3DD09D22647F23007A7C1E /* openssl-public-key-pkcs8-2048-pem in Resources */,
+				ADC232002204478800A57D6A /* ehr-cbc-contract-message-base64 in Resources */,
+				ADC231FD2204478800A57D6A /* ehr-gcm-contract-cipher-key-base64 in Resources */,
+				AD6B2D472231108C00C03EC1 /* openssl-csr in Resources */,
+				AD9EBA8622832B9300DB8E73 /* openssl-certificate-x509-cer in Resources */,
+				AD1AC79823721DA70089378C /* openssl-private-key-encrypted-pkcs8-pem in Resources */,
+				DAD2CF322302BAA4002F0BD0 /* openssl-csr-with-umlauts in Resources */,
+				ADC231FF2204478800A57D6A /* openssl-private-key-pkcs1-pem in Resources */,
+				ADC231FE2204478800A57D6A /* ehr-cbc-contract-cipher-key-base64 in Resources */,
+				ADC232022204478800A57D6A /* ehr-gcm-contract-message-base64 in Resources */,
+				EB3DD09E22647F23007A7C1E /* openssl-private-key-pkcs1-2048-pem in Resources */,
+				F8FA64EC23DAEAFD005010DB /* largeTestFile in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2BB856DC20C622BA33FEA2E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Krypt_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5F5A5CE8EF200B066A41B5D7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Krypt_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DC245D33C67B22F47181EF41 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Krypt/Krypt.framework",
+				"${BUILT_PRODUCTS_DIR}/OpenSSL/openssl.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Krypt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Krypt_Example/Pods-Krypt_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		607FACCC1AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD536F332201F76D00075B09 /* ViewController.swift in Sources */,
+				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		607FACE11AFB9204008FA782 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD1568C621F9D2AD008572DA /* TestData.swift in Sources */,
+				EB007E2C22772C0F001BD473 /* Data+String.swift in Sources */,
+				5021071822C1366B008EFF62 /* PKCS8Tests.swift in Sources */,
+				AD6B2D492231111D00C03EC1 /* CSRTests.swift in Sources */,
+				AD4513DB21FB3E8D0053C76B /* EHREncryptionTests.swift in Sources */,
+				AD1568C821F9E0CB008572DA /* KeyTests.swift in Sources */,
+				F89BB73D23D6F4A300D1163A /* SHA256Tests.swift in Sources */,
+				AD6DBE3F237E088E003567FA /* X509Tests.swift in Sources */,
+				AD9EBA842283279900DB8E73 /* PEMConverterTests.swift in Sources */,
+				AD1568BF21F8D494008572DA /* RSATests.swift in Sources */,
+				AD2BC30D21F76AA700DD674F /* AES256Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 607FACCF1AFB9204008FA782 /* Krypt_Example */;
+			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDA1AFB9204008FA782 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				607FACDF1AFB9204008FA782 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		607FACED1AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		607FACEE1AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		607FACF01AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D871296DA4621FD775BC749 /* Pods-Krypt_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZBJ3SN7WC3;
+				ENABLE_BITCODE = YES;
+				INFOPLIST_FILE = Krypt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/OpenSSL/OpenSSL/lib",
+				);
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		607FACF11AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22D20F0B320FF38B7169295A /* Pods-Krypt_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = ZBJ3SN7WC3;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = Krypt/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/OpenSSL/OpenSSL/lib",
+				);
+				MODULE_NAME = ExampleApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.Krypt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		607FACF31AFB9204008FA782 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E7D715D6EC69AB54734CACC4 /* Pods-Krypt_Tests.debug.xcconfig */;
+			buildSettings = {
+				ENABLE_BITCODE = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/OpenSSL/OpenSSL/lib\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(PODS_ROOT)/OpenSSL/OpenSSL";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypt_Example.app/Krypt_Example";
+			};
+			name = Debug;
+		};
+		607FACF41AFB9204008FA782 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9ACD51367737227BB7FA0EE0 /* Pods-Krypt_Tests.release.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = Tests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/OpenSSL/OpenSSL/lib\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INCLUDE_PATHS = "$(PODS_ROOT)/OpenSSL/OpenSSL";
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Krypt_Example.app/Krypt_Example";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "Krypt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACED1AFB9204008FA782 /* Debug */,
+				607FACEE1AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Krypt_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF01AFB9204008FA782 /* Debug */,
+				607FACF11AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "Krypt_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607FACF31AFB9204008FA782 /* Debug */,
+				607FACF41AFB9204008FA782 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
+}
