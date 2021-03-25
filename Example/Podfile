@@ -1,4 +1,4 @@
-platform :ios, '11.0'
+platform :ios, '12.0'
 use_frameworks!
 
 source 'git@github.com:VivyTeam/specs-ios.git'
@@ -9,5 +9,11 @@ target 'Krypt_Example' do
 
   target 'Krypt_Tests' do
     inherit! :search_paths    
+  end
+end
+
+post_install do |installer|
+  installer.pods_project.build_configuration_list.build_configurations.each do |configuration|
+    configuration.build_settings['CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES'] = 'YES'
   end
 end

@@ -1,0 +1,6 @@
+framework module RFC2046 {
+  umbrella header "RFC2046-umbrella.h"
+
+  export *
+  module * { export * }
+}
