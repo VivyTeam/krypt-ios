@@ -17,9 +17,11 @@
 // https://csrc.nist.gov/publications/detail/sp/800-38c/final
 
 #if canImport(Darwin)
-  import Darwin
-#else
-  import Glibc
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#elseif canImport(ucrt)
+import ucrt
 #endif
 
 /// Counter with Cipher Block Chaining-Message Authentication Code
@@ -69,7 +71,7 @@ public struct CCM: StreamMode {
     self.authenticationTag = authenticationTag
   }
 
-  public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
+  public func worker(blockSize: Int, cipherOperation: @escaping CipherOperationOnBlock, encryptionOperation: @escaping CipherOperationOnBlock) throws -> CipherModeWorker {
     if self.nonce.isEmpty {
       throw Error.invalidInitializationVector
     }

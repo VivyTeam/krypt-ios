@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.7.3'
+  s.version          = '1.7.4'
   s.summary          = 'Crypto used in Vivy iOS app'
   s.description      = <<-DESC
   Crypto used in Vivy iOS app.
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'git@github.com:VivyTeam/krypt-ios.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/vivy_health'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'Krypt/Source/**/*.{swift,c,h}'
   s.preserve_path = 'Krypt/Source/module.map'
@@ -19,11 +19,10 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     'OTHER_LDFLAGS' => '$(inherited) $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libcrypto.a $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libssl.a -weak_framework CryptoKit',
     'LIBRARY_SEARCH_PATHS' => '$(PROJECT_DIR)/OpenSSL/OpenSSL/lib/',
-    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source',
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
   
-  s.dependency 'OpenSSL', '1.1.1h'
+  s.dependency 'OpenSSL', '1.1.1j'
   s.dependency 'CryptoSwift', '~> 1.0'
   s.dependency 'RFC2046'
 end

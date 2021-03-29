@@ -14,7 +14,6 @@
 #import "asn1.h"
 #import "asn1err.h"
 #import "asn1t.h"
-#import "asn1_mac.h"
 #import "async.h"
 #import "asyncerr.h"
 #import "bio.h"
