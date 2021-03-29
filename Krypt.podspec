@@ -19,8 +19,7 @@ Pod::Spec.new do |s|
   s.pod_target_xcconfig = {
     'OTHER_LDFLAGS' => '$(inherited) $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libcrypto.a $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libssl.a -weak_framework CryptoKit',
     'LIBRARY_SEARCH_PATHS' => '$(PROJECT_DIR)/OpenSSL/OpenSSL/lib/',
-    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source',
-    'CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES' => 'YES'
+    'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
   
   s.dependency 'OpenSSL', '1.1.1j'
