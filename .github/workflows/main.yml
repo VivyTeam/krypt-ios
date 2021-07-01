@@ -1,0 +1,34 @@
+name: Kiuwan Baseline Analysis
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # example of getting PR title and PR link, we might use it for Kiuwan label
+      #- name: Dump GitHub context
+      #  env:
+      #    GITHUB_CONTEXT: ${{ toJSON(github) }}
+      #  run: |
+      #    echo "$GITHUB_CONTEXT"
+      #    echo ${{ github.event.pull_request.title }}
+      #    echo ${{ github.event.pull_request._links.html.href }} 
+
+      - name: Kiuwan Baseline Analysis
+        uses: VivyTeam/KiuwanBaselineAction@5fe31c724672c06060af11af716f5e604ce17c8e
+        with:
+          # label is not working at the moment
+          # label: 'test-label' 
+          userid: ${{ secrets.KIUWAN_USER }}
+          password: ${{ secrets.KIUWAN_PASS }}
