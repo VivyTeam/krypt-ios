@@ -1,0 +1,13 @@
+platform :ios, '13.0'
+
+source 'git@github.com:VivyTeam/specs-ios.git'
+source 'https://cdn.cocoapods.org/'
+
+target 'KryptExample' do
+  use_frameworks! :linkage => :dynamic
+
+  pod 'Krypt', :path => '../'
+  target 'KryptExampleTests' do
+    inherit! :search_paths
+  end
+end
