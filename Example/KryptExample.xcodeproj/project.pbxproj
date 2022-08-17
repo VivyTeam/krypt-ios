@@ -13,7 +13,32 @@
 		1B2154DB28AD0AF70091592B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2154D928AD0AF70091592B /* Main.storyboard */; };
 		1B2154DD28AD0AFA0091592B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1B2154DC28AD0AFA0091592B /* Assets.xcassets */; };
 		1B2154E028AD0AFA0091592B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1B2154DE28AD0AFA0091592B /* LaunchScreen.storyboard */; };
-		1B2154EB28AD0AFB0091592B /* KryptExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B2154EA28AD0AFB0091592B /* KryptExampleTests.swift */; };
+		1B21558328AD0E5D0091592B /* SHA256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554128AD0E5C0091592B /* SHA256Tests.swift */; };
+		1B21558428AD0E5D0091592B /* EHREncryptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554228AD0E5C0091592B /* EHREncryptionTests.swift */; };
+		1B21558528AD0E5D0091592B /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554328AD0E5C0091592B /* TestData.swift */; };
+		1B21558628AD0E5D0091592B /* PEMConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554428AD0E5C0091592B /* PEMConverterTests.swift */; };
+		1B21558728AD0E5D0091592B /* PKCS8Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554528AD0E5C0091592B /* PKCS8Tests.swift */; };
+		1B21558828AD0E5D0091592B /* CSRTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554628AD0E5C0091592B /* CSRTests.swift */; };
+		1B21558928AD0E5D0091592B /* Data+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554828AD0E5C0091592B /* Data+String.swift */; };
+		1B21558A28AD0E5D0091592B /* AES256Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21554928AD0E5C0091592B /* AES256Tests.swift */; };
+		1B21558B28AD0E5D0091592B /* openssl-csr in Resources */ = {isa = PBXBuildFile; fileRef = 1B21554C28AD0E5C0091592B /* openssl-csr */; };
+		1B21558C28AD0E5D0091592B /* openssl-csr-with-umlauts in Resources */ = {isa = PBXBuildFile; fileRef = 1B21554D28AD0E5C0091592B /* openssl-csr-with-umlauts */; };
+		1B21558D28AD0E5D0091592B /* ehr-gcm-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 1B21554F28AD0E5C0091592B /* ehr-gcm-contract-cipher-key-base64 */; };
+		1B21558E28AD0E5D0091592B /* ehr-cbc-contract-cipher-key-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555028AD0E5D0091592B /* ehr-cbc-contract-cipher-key-base64 */; };
+		1B21558F28AD0E5D0091592B /* ehr-cbc-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555128AD0E5D0091592B /* ehr-cbc-contract-message-base64 */; };
+		1B21559028AD0E5D0091592B /* ehr-gcm-contract-message-base64 in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555228AD0E5D0091592B /* ehr-gcm-contract-message-base64 */; };
+		1B21559128AD0E5D0091592B /* largeTestFile in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555428AD0E5D0091592B /* largeTestFile */; };
+		1B21559228AD0E5D0091592B /* openssl-private-key-encrypted-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555628AD0E5D0091592B /* openssl-private-key-encrypted-pkcs8-pem */; };
+		1B21559328AD0E5D0091592B /* openssl-public-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555728AD0E5D0091592B /* openssl-public-key-pkcs1-pem */; };
+		1B21559428AD0E5D0091592B /* openssl-private-key-pkcs1-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555828AD0E5D0091592B /* openssl-private-key-pkcs1-2048-pem */; };
+		1B21559528AD0E5D0091592B /* openssl-public-key-pkcs8-2048-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555928AD0E5D0091592B /* openssl-public-key-pkcs8-2048-pem */; };
+		1B21559628AD0E5D0091592B /* openssl-certificate-x509-cer in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555A28AD0E5D0091592B /* openssl-certificate-x509-cer */; };
+		1B21559728AD0E5D0091592B /* openssl-private-key-pkcs1-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555B28AD0E5D0091592B /* openssl-private-key-pkcs1-pem */; };
+		1B21559828AD0E5D0091592B /* openssl-public-key-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555C28AD0E5D0091592B /* openssl-public-key-pkcs8-pem */; };
+		1B21559928AD0E5D0091592B /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */ = {isa = PBXBuildFile; fileRef = 1B21555D28AD0E5D0091592B /* openssl-public-key-ec-prime256r1-pkcs8-pem */; };
+		1B21559A28AD0E5D0091592B /* RSATests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21555E28AD0E5D0091592B /* RSATests.swift */; };
+		1B21559B28AD0E5D0091592B /* KeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21555F28AD0E5D0091592B /* KeyTests.swift */; };
+		1B2155B728AD0E5D0091592B /* X509Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B21558228AD0E5D0091592B /* X509Tests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +61,32 @@
 		1B2154DF28AD0AFA0091592B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1B2154E128AD0AFA0091592B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1B2154E628AD0AFA0091592B /* KryptExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KryptExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B2154EA28AD0AFB0091592B /* KryptExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KryptExampleTests.swift; sourceTree = "<group>"; };
+		1B21554128AD0E5C0091592B /* SHA256Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SHA256Tests.swift; sourceTree = "<group>"; };
+		1B21554228AD0E5C0091592B /* EHREncryptionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EHREncryptionTests.swift; sourceTree = "<group>"; };
+		1B21554328AD0E5C0091592B /* TestData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		1B21554428AD0E5C0091592B /* PEMConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PEMConverterTests.swift; sourceTree = "<group>"; };
+		1B21554528AD0E5C0091592B /* PKCS8Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKCS8Tests.swift; sourceTree = "<group>"; };
+		1B21554628AD0E5C0091592B /* CSRTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSRTests.swift; sourceTree = "<group>"; };
+		1B21554828AD0E5C0091592B /* Data+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Data+String.swift"; sourceTree = "<group>"; };
+		1B21554928AD0E5C0091592B /* AES256Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AES256Tests.swift; sourceTree = "<group>"; };
+		1B21554C28AD0E5C0091592B /* openssl-csr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr"; sourceTree = "<group>"; };
+		1B21554D28AD0E5C0091592B /* openssl-csr-with-umlauts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-csr-with-umlauts"; sourceTree = "<group>"; };
+		1B21554F28AD0E5C0091592B /* ehr-gcm-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		1B21555028AD0E5D0091592B /* ehr-cbc-contract-cipher-key-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-cipher-key-base64"; sourceTree = "<group>"; };
+		1B21555128AD0E5D0091592B /* ehr-cbc-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-cbc-contract-message-base64"; sourceTree = "<group>"; };
+		1B21555228AD0E5D0091592B /* ehr-gcm-contract-message-base64 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ehr-gcm-contract-message-base64"; sourceTree = "<group>"; };
+		1B21555428AD0E5D0091592B /* largeTestFile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = largeTestFile; sourceTree = "<group>"; };
+		1B21555628AD0E5D0091592B /* openssl-private-key-encrypted-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-encrypted-pkcs8-pem"; sourceTree = "<group>"; };
+		1B21555728AD0E5D0091592B /* openssl-public-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs1-pem"; sourceTree = "<group>"; };
+		1B21555828AD0E5D0091592B /* openssl-private-key-pkcs1-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-2048-pem"; sourceTree = "<group>"; };
+		1B21555928AD0E5D0091592B /* openssl-public-key-pkcs8-2048-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-2048-pem"; sourceTree = "<group>"; };
+		1B21555A28AD0E5D0091592B /* openssl-certificate-x509-cer */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-certificate-x509-cer"; sourceTree = "<group>"; };
+		1B21555B28AD0E5D0091592B /* openssl-private-key-pkcs1-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-private-key-pkcs1-pem"; sourceTree = "<group>"; };
+		1B21555C28AD0E5D0091592B /* openssl-public-key-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-pkcs8-pem"; sourceTree = "<group>"; };
+		1B21555D28AD0E5D0091592B /* openssl-public-key-ec-prime256r1-pkcs8-pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "openssl-public-key-ec-prime256r1-pkcs8-pem"; sourceTree = "<group>"; };
+		1B21555E28AD0E5D0091592B /* RSATests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RSATests.swift; sourceTree = "<group>"; };
+		1B21555F28AD0E5D0091592B /* KeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyTests.swift; sourceTree = "<group>"; };
+		1B21558228AD0E5D0091592B /* X509Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = X509Tests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,9 +142,82 @@
 		1B2154E928AD0AFA0091592B /* KryptExampleTests */ = {
 			isa = PBXGroup;
 			children = (
-				1B2154EA28AD0AFB0091592B /* KryptExampleTests.swift */,
+				1B21554728AD0E5C0091592B /* Extensions */,
+				1B21554A28AD0E5C0091592B /* Files */,
+				1B21554928AD0E5C0091592B /* AES256Tests.swift */,
+				1B21554628AD0E5C0091592B /* CSRTests.swift */,
+				1B21554228AD0E5C0091592B /* EHREncryptionTests.swift */,
+				1B21555F28AD0E5D0091592B /* KeyTests.swift */,
+				1B21554428AD0E5C0091592B /* PEMConverterTests.swift */,
+				1B21554528AD0E5C0091592B /* PKCS8Tests.swift */,
+				1B21555E28AD0E5D0091592B /* RSATests.swift */,
+				1B21554128AD0E5C0091592B /* SHA256Tests.swift */,
+				1B21554328AD0E5C0091592B /* TestData.swift */,
+				1B21558228AD0E5D0091592B /* X509Tests.swift */,
 			);
 			path = KryptExampleTests;
+			sourceTree = "<group>";
+		};
+		1B21554728AD0E5C0091592B /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1B21554828AD0E5C0091592B /* Data+String.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1B21554A28AD0E5C0091592B /* Files */ = {
+			isa = PBXGroup;
+			children = (
+				1B21554B28AD0E5C0091592B /* CSR */,
+				1B21554E28AD0E5C0091592B /* E2EE */,
+				1B21555328AD0E5D0091592B /* SHA256 */,
+				1B21555528AD0E5D0091592B /* OpenSSL */,
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
+		1B21554B28AD0E5C0091592B /* CSR */ = {
+			isa = PBXGroup;
+			children = (
+				1B21554C28AD0E5C0091592B /* openssl-csr */,
+				1B21554D28AD0E5C0091592B /* openssl-csr-with-umlauts */,
+			);
+			path = CSR;
+			sourceTree = "<group>";
+		};
+		1B21554E28AD0E5C0091592B /* E2EE */ = {
+			isa = PBXGroup;
+			children = (
+				1B21554F28AD0E5C0091592B /* ehr-gcm-contract-cipher-key-base64 */,
+				1B21555028AD0E5D0091592B /* ehr-cbc-contract-cipher-key-base64 */,
+				1B21555128AD0E5D0091592B /* ehr-cbc-contract-message-base64 */,
+				1B21555228AD0E5D0091592B /* ehr-gcm-contract-message-base64 */,
+			);
+			path = E2EE;
+			sourceTree = "<group>";
+		};
+		1B21555328AD0E5D0091592B /* SHA256 */ = {
+			isa = PBXGroup;
+			children = (
+				1B21555428AD0E5D0091592B /* largeTestFile */,
+			);
+			path = SHA256;
+			sourceTree = "<group>";
+		};
+		1B21555528AD0E5D0091592B /* OpenSSL */ = {
+			isa = PBXGroup;
+			children = (
+				1B21555628AD0E5D0091592B /* openssl-private-key-encrypted-pkcs8-pem */,
+				1B21555728AD0E5D0091592B /* openssl-public-key-pkcs1-pem */,
+				1B21555828AD0E5D0091592B /* openssl-private-key-pkcs1-2048-pem */,
+				1B21555928AD0E5D0091592B /* openssl-public-key-pkcs8-2048-pem */,
+				1B21555A28AD0E5D0091592B /* openssl-certificate-x509-cer */,
+				1B21555B28AD0E5D0091592B /* openssl-private-key-pkcs1-pem */,
+				1B21555C28AD0E5D0091592B /* openssl-public-key-pkcs8-pem */,
+				1B21555D28AD0E5D0091592B /* openssl-public-key-ec-prime256r1-pkcs8-pem */,
+			);
+			path = OpenSSL;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,6 +273,7 @@
 					};
 					1B2154E528AD0AFA0091592B = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 						TestTargetID = 1B2154CF28AD0AF70091592B;
 					};
 				};
@@ -188,6 +312,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B21558D28AD0E5D0091592B /* ehr-gcm-contract-cipher-key-base64 in Resources */,
+				1B21559728AD0E5D0091592B /* openssl-private-key-pkcs1-pem in Resources */,
+				1B21559328AD0E5D0091592B /* openssl-public-key-pkcs1-pem in Resources */,
+				1B21559628AD0E5D0091592B /* openssl-certificate-x509-cer in Resources */,
+				1B21559228AD0E5D0091592B /* openssl-private-key-encrypted-pkcs8-pem in Resources */,
+				1B21559528AD0E5D0091592B /* openssl-public-key-pkcs8-2048-pem in Resources */,
+				1B21559928AD0E5D0091592B /* openssl-public-key-ec-prime256r1-pkcs8-pem in Resources */,
+				1B21558E28AD0E5D0091592B /* ehr-cbc-contract-cipher-key-base64 in Resources */,
+				1B21559828AD0E5D0091592B /* openssl-public-key-pkcs8-pem in Resources */,
+				1B21558F28AD0E5D0091592B /* ehr-cbc-contract-message-base64 in Resources */,
+				1B21559128AD0E5D0091592B /* largeTestFile in Resources */,
+				1B21559028AD0E5D0091592B /* ehr-gcm-contract-message-base64 in Resources */,
+				1B21559428AD0E5D0091592B /* openssl-private-key-pkcs1-2048-pem in Resources */,
+				1B21558C28AD0E5D0091592B /* openssl-csr-with-umlauts in Resources */,
+				1B21558B28AD0E5D0091592B /* openssl-csr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -208,7 +347,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B2154EB28AD0AFB0091592B /* KryptExampleTests.swift in Sources */,
+				1B21559A28AD0E5D0091592B /* RSATests.swift in Sources */,
+				1B21559B28AD0E5D0091592B /* KeyTests.swift in Sources */,
+				1B21558528AD0E5D0091592B /* TestData.swift in Sources */,
+				1B21558928AD0E5D0091592B /* Data+String.swift in Sources */,
+				1B21558428AD0E5D0091592B /* EHREncryptionTests.swift in Sources */,
+				1B21558828AD0E5D0091592B /* CSRTests.swift in Sources */,
+				1B21558328AD0E5D0091592B /* SHA256Tests.swift in Sources */,
+				1B2155B728AD0E5D0091592B /* X509Tests.swift in Sources */,
+				1B21558A28AD0E5D0091592B /* AES256Tests.swift in Sources */,
+				1B21558628AD0E5D0091592B /* PEMConverterTests.swift in Sources */,
+				1B21558728AD0E5D0091592B /* PKCS8Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +564,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -423,6 +573,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vivy.KryptExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KryptExample.app/KryptExample";
@@ -434,6 +585,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
