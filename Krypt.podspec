@@ -1,10 +1,8 @@
 Pod::Spec.new do |s|
   s.name             = 'Krypt'
-  s.version          = '1.7.4'
+  s.version          = '1.8.0'
   s.summary          = 'Crypto used in Vivy iOS app'
-  s.description      = <<-DESC
-  Crypto used in Vivy iOS app.
-                       DESC
+  s.description      = s.summary
   s.homepage         = 'https://vivy.com'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Vivy GmbH' => 'ios@vivy.com' }
@@ -17,12 +15,11 @@ Pod::Spec.new do |s|
   s.preserve_path = 'Krypt/Source/module.map'
 
   s.pod_target_xcconfig = {
-    'OTHER_LDFLAGS' => '$(inherited) $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libcrypto.a $(PROJECT_DIR)/OpenSSL/OpenSSL/lib/libssl.a -weak_framework CryptoKit',
-    'LIBRARY_SEARCH_PATHS' => '$(PROJECT_DIR)/OpenSSL/OpenSSL/lib/',
+    'OTHER_LDFLAGS' => '$(inherited) -weak_framework CryptoKit',
     'SWIFT_INCLUDE_PATHS' => '$(SRCROOT)/Krypt/Krypt/Source'
   }
-  
-  s.dependency 'OpenSSL', '1.1.1j'
+
+  s.dependency 'OpenSSL', '1.1.1q'
   s.dependency 'CryptoSwift', '~> 1.0'
   s.dependency 'RFC2046'
 end

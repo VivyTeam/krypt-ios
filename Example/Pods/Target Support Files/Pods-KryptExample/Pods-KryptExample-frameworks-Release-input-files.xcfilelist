@@ -1,0 +1,5 @@
+${PODS_ROOT}/Target Support Files/Pods-KryptExample/Pods-KryptExample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework
+${BUILT_PRODUCTS_DIR}/Krypt/Krypt.framework
+${BUILT_PRODUCTS_DIR}/RFC2046/RFC2046.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL
