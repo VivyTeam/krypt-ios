@@ -1,0 +1,6 @@
+framework module Pods_KryptExample {
+  umbrella header "Pods-KryptExample-umbrella.h"
+
+  export *
+  module * { export * }
+}

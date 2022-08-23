@@ -1,0 +1,32 @@
+PODS:
+  - CryptoSwift (1.5.1)
+  - Krypt (1.8.0):
+    - CryptoSwift (~> 1.0)
+    - OpenSSL (= 1.1.1q)
+    - RFC2046
+  - OpenSSL (1.1.1q)
+  - RFC2046 (0.1.5)
+
+DEPENDENCIES:
+  - Krypt (from `../`)
+
+SPEC REPOS:
+  "git@github.com:VivyTeam/specs-ios.git":
+    - OpenSSL
+    - RFC2046
+  trunk:
+    - CryptoSwift
+
+EXTERNAL SOURCES:
+  Krypt:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CryptoSwift: c4f2debceb38bf44c80659afe009f71e23e4a082
+  Krypt: 469c89eaf78a2335339cbc1b94c2df8bbda0ce7e
+  OpenSSL: 49d80191752904d59032f42366cdb0edb1f3edf8
+  RFC2046: aa7ba96cc0e8781a6903e1fb366c32c2243b3e0d
+
+PODFILE CHECKSUM: 2cc34a221a5539f197ee9c70f8c15800ee79bc41
+
+COCOAPODS: 1.11.3
